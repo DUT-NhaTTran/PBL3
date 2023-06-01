@@ -45,5 +45,6 @@ namespace Demo1.Model
         public virtual ICollection<Route> Routes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ShipFee> ShipFees { get; set; }
+        public virtual Warehouse Warehouse { get; set; }
     }
 }

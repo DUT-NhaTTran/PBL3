@@ -180,6 +180,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Parcel_Warehouse2">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="Parcel" Type="Self.Parcel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="warehouseID" />
+            </Principal>
+            <Dependent Role="Parcel">
+              <PropertyRef Name="currentWarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Receptionist_Warehouse1">
           <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
           <End Role="Receptionist" Type="Self.Receptionist" Multiplicity="*" />
@@ -284,6 +296,10 @@
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Parcel" EntitySet="Parcel" />
           </AssociationSet>
+          <AssociationSet Name="FK_Parcel_Warehouse2" Association="Self.FK_Parcel_Warehouse2">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="Parcel" EntitySet="Parcel" />
+          </AssociationSet>
           <AssociationSet Name="FK_Receptionist_Warehouse1" Association="Self.FK_Receptionist_Warehouse1">
             <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="Receptionist" EntitySet="Receptionist" />
@@ -365,7 +381,7 @@
           <Property Name="receptionistName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="receptionistLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="receptionistPhoneNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Warehouse" Relationship="Self.FK_Receptionist_Warehouse1" FromRole="Receptionist" ToRole="Warehouse" />
+          <NavigationProperty Name="Warehouse" Relationship="PBL3_demoModel.FK_Receptionist_Warehouse1" FromRole="Receptionist" ToRole="Warehouse" />
         </EntityType>
         <EntityType Name="Route">
           <Key>
@@ -376,8 +392,8 @@
           <Property Name="relatedWarehouseID" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="details" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="time" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Warehouse" Relationship="Self.FK_Route_Warehouse" FromRole="Route" ToRole="Warehouse" />
           <NavigationProperty Name="Parcel" Relationship="PBL3_demoModel.FK_Route_Parcel" FromRole="Route" ToRole="Parcel" />
+          <NavigationProperty Name="Warehouse" Relationship="PBL3_demoModel.FK_Route_Warehouse" FromRole="Route" ToRole="Warehouse" />
         </EntityType>
         <EntityType Name="ShipFee">
           <Key>
@@ -390,19 +406,6 @@
           <Property Name="parcelID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Parcel" Relationship="PBL3_demoModel.FK_ShipFee_Parcel" FromRole="ShipFee" ToRole="Parcel" />
         </EntityType>
-        <EntityType Name="Warehouse">
-          <Key>
-            <PropertyRef Name="warehouseID" />
-          </Key>
-          <Property Name="warehouseID" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="warehouseName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="warehouseAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="capacity" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Receptionists" Relationship="Self.FK_Receptionist_Warehouse1" FromRole="Warehouse" ToRole="Receptionist" />
-          <NavigationProperty Name="Routes" Relationship="Self.FK_Route_Warehouse" FromRole="Warehouse" ToRole="Route" />
-          <NavigationProperty Name="WarehouseManagers" Relationship="Self.FK_WarehouseManager_Warehouse" FromRole="Warehouse" ToRole="WarehouseManager" />
-          <NavigationProperty Name="WarehouseStaffs" Relationship="Self.FK_WarehouseStaff_Warehouse" FromRole="Warehouse" ToRole="WarehouseStaff" />
-        </EntityType>
         <EntityType Name="WarehouseManager">
           <Key>
             <PropertyRef Name="warehouseManagerID" />
@@ -413,7 +416,7 @@
           <Property Name="warehouseManagerPhoneNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="warehouseID" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="numberOfEmployee" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Warehouse" Relationship="Self.FK_WarehouseManager_Warehouse" FromRole="WarehouseManager" ToRole="Warehouse" />
+          <NavigationProperty Name="Warehouse" Relationship="PBL3_demoModel.FK_WarehouseManager_Warehouse" FromRole="WarehouseManager" ToRole="Warehouse" />
         </EntityType>
         <EntityType Name="WarehouseStaff">
           <Key>
@@ -424,7 +427,7 @@
           <Property Name="warehouseStaffLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="warehouseStaffPhoneNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="warehouseID" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Warehouse" Relationship="Self.FK_WarehouseStaff_Warehouse" FromRole="WarehouseStaff" ToRole="Warehouse" />
+          <NavigationProperty Name="Warehouse" Relationship="PBL3_demoModel.FK_WarehouseStaff_Warehouse" FromRole="WarehouseStaff" ToRole="Warehouse" />
         </EntityType>
         <Association Name="FK_Account_AccessRight">
           <End Role="AccessRight" Type="Self.AccessRight" Multiplicity="1" />
@@ -450,54 +453,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Receptionist_Warehouse1">
-          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
-          <End Role="Receptionist" Type="Self.Receptionist" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Warehouse">
-              <PropertyRef Name="warehouseID" />
-            </Principal>
-            <Dependent Role="Receptionist">
-              <PropertyRef Name="warehouseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Route_Warehouse">
-          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
-          <End Role="Route" Type="Self.Route" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Warehouse">
-              <PropertyRef Name="warehouseID" />
-            </Principal>
-            <Dependent Role="Route">
-              <PropertyRef Name="relatedWarehouseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_WarehouseManager_Warehouse">
-          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
-          <End Role="WarehouseManager" Type="Self.WarehouseManager" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Warehouse">
-              <PropertyRef Name="warehouseID" />
-            </Principal>
-            <Dependent Role="WarehouseManager">
-              <PropertyRef Name="warehouseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_WarehouseStaff_Warehouse">
-          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
-          <End Role="WarehouseStaff" Type="Self.WarehouseStaff" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Warehouse">
-              <PropertyRef Name="warehouseID" />
-            </Principal>
-            <Dependent Role="WarehouseStaff">
-              <PropertyRef Name="warehouseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="PBL3_demoEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AccessRights" EntityType="Self.AccessRight" />
           <EntitySet Name="Accounts" EntityType="Self.Account" />
@@ -506,7 +461,6 @@
           <EntitySet Name="Receptionists" EntityType="Self.Receptionist" />
           <EntitySet Name="Routes" EntityType="Self.Route" />
           <EntitySet Name="ShipFees" EntityType="Self.ShipFee" />
-          <EntitySet Name="Warehouses" EntityType="Self.Warehouse" />
           <EntitySet Name="WarehouseManagers" EntityType="Self.WarehouseManager" />
           <EntitySet Name="WarehouseStaffs" EntityType="Self.WarehouseStaff" />
           <AssociationSet Name="FK_Account_AccessRight" Association="Self.FK_Account_AccessRight">
@@ -516,22 +470,6 @@
           <AssociationSet Name="FK_Invoice_Customer" Association="Self.FK_Invoice_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Invoice" EntitySet="Invoices" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Receptionist_Warehouse1" Association="Self.FK_Receptionist_Warehouse1">
-            <End Role="Warehouse" EntitySet="Warehouses" />
-            <End Role="Receptionist" EntitySet="Receptionists" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Route_Warehouse" Association="Self.FK_Route_Warehouse">
-            <End Role="Warehouse" EntitySet="Warehouses" />
-            <End Role="Route" EntitySet="Routes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_WarehouseManager_Warehouse" Association="Self.FK_WarehouseManager_Warehouse">
-            <End Role="Warehouse" EntitySet="Warehouses" />
-            <End Role="WarehouseManager" EntitySet="WarehouseManagers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_WarehouseStaff_Warehouse" Association="Self.FK_WarehouseStaff_Warehouse">
-            <End Role="Warehouse" EntitySet="Warehouses" />
-            <End Role="WarehouseStaff" EntitySet="WarehouseStaffs" />
           </AssociationSet>
           <EntitySet Name="Parcels" EntityType="PBL3_demoModel.Parcel" />
           <AssociationSet Name="FK_Parcel_Customer" Association="PBL3_demoModel.FK_Parcel_Customer">
@@ -553,6 +491,27 @@
           <AssociationSet Name="FK_ShipFee_Parcel" Association="PBL3_demoModel.FK_ShipFee_Parcel">
             <End Role="Parcel" EntitySet="Parcels" />
             <End Role="ShipFee" EntitySet="ShipFees" />
+          </AssociationSet>
+          <EntitySet Name="Warehouses" EntityType="PBL3_demoModel.Warehouse" />
+          <AssociationSet Name="FK_Parcel_Warehouse2" Association="PBL3_demoModel.FK_Parcel_Warehouse2">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="Parcel" EntitySet="Parcels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receptionist_Warehouse1" Association="PBL3_demoModel.FK_Receptionist_Warehouse1">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="Receptionist" EntitySet="Receptionists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_Warehouse" Association="PBL3_demoModel.FK_Route_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="Route" EntitySet="Routes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarehouseManager_Warehouse" Association="PBL3_demoModel.FK_WarehouseManager_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="WarehouseManager" EntitySet="WarehouseManagers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarehouseStaff_Warehouse" Association="PBL3_demoModel.FK_WarehouseStaff_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="WarehouseStaff" EntitySet="WarehouseStaffs" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Parcel">
@@ -578,7 +537,8 @@
           <NavigationProperty Name="Invoices" Relationship="PBL3_demoModel.FK_Invoice_Parcel" FromRole="Parcel" ToRole="Invoice" />
           <NavigationProperty Name="Routes" Relationship="PBL3_demoModel.FK_Route_Parcel" FromRole="Parcel" ToRole="Route" />
           <NavigationProperty Name="ShipFees" Relationship="PBL3_demoModel.FK_ShipFee_Parcel" FromRole="Parcel" ToRole="ShipFee" />
-        </EntityType>
+          <NavigationProperty Name="Warehouse" Relationship="PBL3_demoModel.FK_Parcel_Warehouse2" FromRole="Parcel" ToRole="Warehouse" />
+          </EntityType>
         <Association Name="FK_Parcel_Customer">
           <End Type="PBL3_demoModel.Customer" Role="Customer" Multiplicity="1" />
           <End Type="PBL3_demoModel.Parcel" Role="Parcel" Multiplicity="*" />
@@ -636,6 +596,80 @@
             </Principal>
             <Dependent Role="ShipFee">
               <PropertyRef Name="parcelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="warehouseID" />
+          </Key>
+          <Property Name="warehouseID" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="warehouseName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="warehouseAddress" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="capacity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Parcels" Relationship="PBL3_demoModel.FK_Parcel_Warehouse2" FromRole="Warehouse" ToRole="Parcel" />
+          <NavigationProperty Name="Receptionists" Relationship="PBL3_demoModel.FK_Receptionist_Warehouse1" FromRole="Warehouse" ToRole="Receptionist" />
+          <NavigationProperty Name="Routes" Relationship="PBL3_demoModel.FK_Route_Warehouse" FromRole="Warehouse" ToRole="Route" />
+          <NavigationProperty Name="WarehouseManagers" Relationship="PBL3_demoModel.FK_WarehouseManager_Warehouse" FromRole="Warehouse" ToRole="WarehouseManager" />
+          <NavigationProperty Name="WarehouseStaffs" Relationship="PBL3_demoModel.FK_WarehouseStaff_Warehouse" FromRole="Warehouse" ToRole="WarehouseStaff" />
+        </EntityType>
+        <Association Name="FK_Parcel_Warehouse2">
+          <End Type="PBL3_demoModel.Warehouse" Role="Warehouse" Multiplicity="0..1" />
+          <End Type="PBL3_demoModel.Parcel" Role="Parcel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="warehouseID" />
+            </Principal>
+            <Dependent Role="Parcel">
+              <PropertyRef Name="currentWarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receptionist_Warehouse1">
+          <End Type="PBL3_demoModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="PBL3_demoModel.Receptionist" Role="Receptionist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="warehouseID" />
+            </Principal>
+            <Dependent Role="Receptionist">
+              <PropertyRef Name="warehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_Warehouse">
+          <End Type="PBL3_demoModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="PBL3_demoModel.Route" Role="Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="warehouseID" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="relatedWarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WarehouseManager_Warehouse">
+          <End Type="PBL3_demoModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="PBL3_demoModel.WarehouseManager" Role="WarehouseManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="warehouseID" />
+            </Principal>
+            <Dependent Role="WarehouseManager">
+              <PropertyRef Name="warehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WarehouseStaff_Warehouse">
+          <End Type="PBL3_demoModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="PBL3_demoModel.WarehouseStaff" Role="WarehouseStaff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="warehouseID" />
+            </Principal>
+            <Dependent Role="WarehouseStaff">
+              <PropertyRef Name="warehouseID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -718,16 +752,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Warehouses">
-            <EntityTypeMapping TypeName="PBL3_demoModel.Warehouse">
-              <MappingFragment StoreEntitySet="Warehouse">
-                <ScalarProperty Name="warehouseID" ColumnName="warehouseID" />
-                <ScalarProperty Name="warehouseName" ColumnName="warehouseName" />
-                <ScalarProperty Name="warehouseAddress" ColumnName="warehouseAddress" />
-                <ScalarProperty Name="capacity" ColumnName="capacity" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="WarehouseManagers">
             <EntityTypeMapping TypeName="PBL3_demoModel.WarehouseManager">
               <MappingFragment StoreEntitySet="WarehouseManager">
@@ -768,6 +792,16 @@
                 <ScalarProperty Name="parcelMass" ColumnName="parcelMass" />
                 <ScalarProperty Name="parcelName" ColumnName="parcelName" />
                 <ScalarProperty Name="parcelID" ColumnName="parcelID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehouses">
+            <EntityTypeMapping TypeName="PBL3_demoModel.Warehouse">
+              <MappingFragment StoreEntitySet="Warehouse">
+                <ScalarProperty Name="capacity" ColumnName="capacity" />
+                <ScalarProperty Name="warehouseAddress" ColumnName="warehouseAddress" />
+                <ScalarProperty Name="warehouseName" ColumnName="warehouseName" />
+                <ScalarProperty Name="warehouseID" ColumnName="warehouseID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

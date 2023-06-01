@@ -11,21 +11,16 @@ namespace Demo1.Model
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Windows;
-
+    
     public partial class Route
     {
         public int routeID { get; set; }
         public int parcelID { get; set; }
-        public int ParcelID { get; internal set; }
         public string relatedWarehouseID { get; set; }
         public string details { get; set; }
         public System.DateTime time { get; set; }
     
-        public virtual Warehouse Warehouse { get; set; }
         public virtual Parcel Parcel { get; set; }
-
-
+        public virtual Warehouse Warehouse { get; set; }
     }
 }

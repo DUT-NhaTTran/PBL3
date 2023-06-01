@@ -23,12 +23,7 @@
                        FontSize="20"
                        VerticalAlignment="Top" HorizontalAlignment="Center"
                        Foreground="#FFFFFF"/>
-                    <fa:IconImage Icon="Spinner"
-                          Width="20"
-                          Height="20"
-                          Foreground="#E8DF04"
-                          VerticalAlignment="Top"
-                          Margin="30 20 0 0"/>
+                    
                     <TextBlock Text="Đang vận chuyển"
                        Margin="10 18 0 0"
                        FontSize="20"
@@ -48,36 +43,28 @@
                             <ColumnDefinition Width="150"/>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <StackPanel>
+                            <fa:IconImage Icon="Spinner"
+                                  Width="15"
+                                  Height="15"
+                                  Foreground="#E8DF04"
+                                  VerticalAlignment="Top"
+                                  Margin="0,20,110,0"/>
+                            <StackPanel Margin="0,0,0,149">
                                 <TextBlock Text="Lộ trình"
                                            Margin="20"
-                                           FontSize="15"
-                                           VerticalAlignment="Top" HorizontalAlignment="Left"
-                                           Foreground="#FFFFFF"/>
+                                           FontSize="15" HorizontalAlignment="Left"
+                                           Foreground="#FFFFFF" Width="87"/>
 
-                                <TextBlock Text="Thời gian:"
-                                           Margin="20 50 0 0"
-                                           FontSize="15"
-                                           VerticalAlignment="Top" HorizontalAlignment="Left"
-Foreground="#FFFFFF"/>
 
-                                <TextBlock Text="4 ngày nữa"
-                                           Margin="20"
-                                           FontSize="15"
-                                           VerticalAlignment="Top" HorizontalAlignment="Left"
-                                           Foreground="#FFFFFF"/>
                             </StackPanel>
                         </Grid>
 
                         <Grid Grid.Column="1">
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="210">
                                 <TextBlock Text="Kho Hồ Chí Minh"
                                            FontSize="15"
-                                           Foreground="#7A8FE4"/>
-                                <materialDesign:PackIcon Kind="Circle" 
-                                                     VerticalAlignment="Center"
-                                                     HorizontalAlignment="Left"
-                                                     Foreground="#7A8FE4"/>
+                                           Foreground="#7A8FE4" Height="154"/>
+
                             </StackPanel>
                         </Grid>
                     </Grid>

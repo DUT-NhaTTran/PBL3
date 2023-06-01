@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using System.Windows.Controls;
+using Caliburn.Micro;
+using Demo1.ViewModel;
+using Prism.Ioc;
 
 namespace Demo1
 {
@@ -13,5 +11,7 @@ namespace Demo1
     /// </summary>
     public partial class App : Application
     {
+        
     }
 }
+

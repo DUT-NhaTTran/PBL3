@@ -17,6 +17,7 @@ namespace Demo1.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Warehouse()
         {
+            this.Parcels = new HashSet<Parcel>();
             this.Receptionists = new HashSet<Receptionist>();
             this.Routes = new HashSet<Route>();
             this.WarehouseManagers = new HashSet<WarehouseManager>();
@@ -28,6 +29,8 @@ namespace Demo1.Model
         public string warehouseAddress { get; set; }
         public int capacity { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Parcel> Parcels { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Receptionist> Receptionists { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

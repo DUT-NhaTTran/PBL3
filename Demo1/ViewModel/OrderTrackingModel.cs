@@ -1,17 +1,26 @@
 ﻿using Demo1.Model;
 using Demo1.UserInfo;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
+
 namespace Demo1.ViewModel
 {
     public class OrderTrackingModel : BaseViewModel
     {
+        
+
         private string _ParcelID;
         public string ParcelID
         {
@@ -23,18 +32,6 @@ namespace Demo1.ViewModel
                 ValidateParcelID();
             }
         }
-        /*       private List<string> _routeInfoList;
-               public List <string> RouteInfoList
-               {
-                   get { return _routeInfoList; }
-                   set
-                   {
-                       _routeInfoList = value;
-                       OnPropertyChanged(nameof(RouteInfoList));
-                   }
-               }*/
-
-
 
         private ObservableCollection<string> _routeInfoList;
         public ObservableCollection<string> RouteInfoList
@@ -46,9 +43,91 @@ namespace Demo1.ViewModel
                 OnPropertyChanged();
             }
         }
+        private ObservableCollection<ParcelInfo> _parcelInfoList;
+        public ObservableCollection<ParcelInfo> ParcelInfoList
+        {
+            get { return _parcelInfoList; }
+            set
+            {
+                _parcelInfoList = value;
+                OnPropertyChanged();
+            }
+        }
+        public class ParcelInfo
+        {
+            public int ID { get; set; }
+            public string ParcelName { get; set; }
+            public string Details { get; set; }
+            public double Mass {get; set; }
+        }
+        public ICommand SelectParcelCommand { get; }
+
+        private void ExecuteSelectParcel(object parameter)
+        {
+            if (parameter is ParcelInfo selectedParcel)
+            {
+                ParcelID = Convert.ToString(selectedParcel.ID);
+            }
+        }
 
 
-        public ICommand ParcelTrackingCommand { get; set; }
+        private void LoadParcelInfoList()
+        {
+            using (var dbContext = new Model.PBL3_demoEntities())
+            {
+                //dbContext.Parcels là bảng Parcels trong context của đối tượng DbContext.
+                //.Join(dbContext.Routes, parcel => parcel.parcelID, route => route.parcelID, (parcel, route) => new { parcel, route }) thực hiện phép kết hợp dữ liệu từ hai bảng Parcels và Routes dựa trên trường parcelID.
+                //Kết quả của phép kết hợp là một danh sách các cặp(parcel, route).
+                //.GroupBy(p => p.parcel) nhóm các kết quả theo parcel, tức là các đối tượng parcel giống nhau được nhóm lại thành một nhóm.
+                //neu khong phan nhom thi ra ve to hop cua 2 bang
+                //key sẽ là một thuộc tính của mỗi nhóm kết quả(parcel) và đại diện cho giá trị parcel được nhóm dựa trên.
+                //elements
+                var query = dbContext.Parcels
+                        .Join(dbContext.Routes, parcel => parcel.parcelID, route => route.parcelID, (parcel, route) => new { parcel, route })
+                        .GroupBy(p => p.parcel)
+                        .Select(g => new ParcelInfo
+                        {
+                            ParcelName = g.Key.parcelName,
+                            ID = g.Key.parcelID,
+                            //Đối tượng g đại diện cho một nhóm các đối tượng có cùng giá trị của Parcel 
+                            //r đại diện cho mỗi đối tượng trong nhóm g.
+                            Details = g.FirstOrDefault(r => r.route.routeID == g.Max(x => x.route.routeID)) != null ? g.FirstOrDefault(r => r.route.routeID == g.Max(x => x.route.routeID)).route.details : null
+                            //xet thu co co routeID khac null khong, neu co thi gan =,khong thi de bang null
+                        });
+                //Kết quả của query sẽ là danh sách các đối tượng ParcelInfo được tạo ra từ các nhóm 
+                //in từ đơn hàng mới tạo gần nhất
+                List<ParcelInfo> queryResult = query.ToList();
+
+                for (int i = queryResult.Count - 1; i >= 0; i--)
+                {
+                    ParcelInfoList.Add(queryResult[i]);
+                }
+            }
+        }
+        void LoadParcelInfoListForWH(string warehouseID)
+        {
+            using (var context = new Model.PBL3_demoEntities())
+            {
+                var parcelInfoList = context.Parcels
+                    .Where(p => p.currentWarehouseID == warehouseID)
+                    .Select(p => new ParcelInfo
+                    {
+                        ParcelName = p.parcelName,
+                        ID = p.parcelID,
+                        Mass = p.parcelMass
+                    });
+                    List<ParcelInfo> queryResult = parcelInfoList.ToList();
+
+                    for (int i = queryResult.Count - 1; i >= 0; i--)
+                    {
+                        ParcelInfoList.Add(queryResult[i]);
+                    }
+
+
+
+            }
+
+        }
         public OrderTrackingModel()
         {
             ParcelTrackingCommand =
@@ -56,13 +135,12 @@ namespace Demo1.ViewModel
                {
                    return true;
                }, (p) => GetParcelRoute());
-
-
+            ParcelInfoList = new ObservableCollection<ParcelInfo>();
+            SelectParcelCommand = new RelayCommand<object>((p) => true,ExecuteSelectParcel);
+            LoadParcelInfoList();
+       
         }
-
-
-
-
+        public ICommand ParcelTrackingCommand { get; set; }
 
         void ValidateParcelID()
         {
@@ -75,17 +153,17 @@ namespace Demo1.ViewModel
                     var thisParcel = context.Parcels.Where(x => x.parcelID == parcelID).FirstOrDefault();
                     if (thisParcel == null)
                     {
-                        MessageBox.Show("Đơn này không tồn tại trong hệ thống");
+                        System.Windows.MessageBox.Show("Đơn này không tồn tại trong hệ thống");
                     }
                 }
             }
             else
             {
                 // Chuỗi không chứa số nguyên hợp lệ
-                MessageBox.Show("Mã đơn hàng vừa nhập không hợp lệ");
+                System.Windows.MessageBox.Show("Mã đơn hàng vừa nhập không hợp lệ");
             }
         }
-
+        
 
 
         void GetParcelRoute()
@@ -123,7 +201,7 @@ namespace Demo1.ViewModel
             }
             else
             {
-                MessageBox.Show("Mã đơn hàng vừa nhập không hợp lệ");
+                System.Windows.MessageBox.Show("Mã đơn hàng vừa nhập không hợp lệ");
             }
 
         }

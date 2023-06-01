@@ -72,27 +72,39 @@
                                    VerticalAlignment="Top"
                                    HorizontalAlignment="Left"
                                    Margin="20,10,0,0"/>
-                                <TextBlock Text="Trần Minh Nhật"
-                                   FontSize="25"
-                                   FontWeight="Medium"
-                                   Foreground="#E6EFF3"
-                                   VerticalAlignment="Top"
-                                   HorizontalAlignment="Left"
-                                   Margin="20,0,0,0"/>
-                                <TextBlock Text="K25/17 Ngũ Hành Sơn, Mỹ An, Đà Nẵng"
-                                   FontSize="25"
-                                   FontWeight="Medium"
-                                   Foreground="#E6EFF3"
-                                   VerticalAlignment="Top"
-                                   HorizontalAlignment="Left"
-                                   Margin="20,0,0,0"/>
-                                <TextBlock Text="0905912809"
-                                   FontSize="25"
-                                   FontWeight="Medium"
-                                   Foreground="#E6EFF3"
-                                   VerticalAlignment="Top"
-                                   HorizontalAlignment="Left"
-                                   Margin="20,0,0,0"/>
+                                <TextBlock
+                                       FontSize="25"
+                                       FontWeight="Medium"
+                                       Foreground="#E6EFF3"
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Left"
+                                       Margin="20,0,0,0">
+                                    <Run Text="Họ Tên :"/>
+                                    <Run Text="{Binding SCustomerName}"/>
+
+                                </TextBlock>
+                                <TextBlock
+                                       FontSize="25"
+                                       FontWeight="Medium"
+                                       Foreground="#E6EFF3"
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Left"
+                                       Margin="20,0,0,0">
+                                    <Run Text="Địa chỉ :"/>
+                                    <Run Text="{Binding SCustomerAddress}"/>
+
+                                </TextBlock>
+                                <TextBlock
+                                       FontSize="25"
+                                       FontWeight="Medium"
+                                       Foreground="#E6EFF3"
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Left"
+                                       Margin="20,30,0,0">
+                                    <Run Text="SĐT :"/>
+                                    <Run Text="{Binding SCustomerPhoneNumber}"/>
+
+                                </TextBlock>
                             </StackPanel>
                         </Border>
                     </Grid>
@@ -108,27 +120,39 @@
                                    VerticalAlignment="Top"
                                    HorizontalAlignment="Left"
                                    Margin="20,10,0,0"/>
-                                <TextBlock Text="Hoàng Lê Anh Tuấn"
-                                   FontSize="25"
-                                   FontWeight="Medium"
-                                   Foreground="#E6EFF3"
-                                   VerticalAlignment="Top"
-                                   HorizontalAlignment="Left"
-                                   Margin="20,0,0,0"/>
-                                <TextBlock Text="Ngách 4, Trần Duy Hưng, Hà Nội"
-                                   FontSize="25"
-                                   FontWeight="Medium"
-                                   Foreground="#E6EFF3"
-                                   VerticalAlignment="Top"
-                                   HorizontalAlignment="Left"
-                                   Margin="20,0,0,0"/>
-                                <TextBlock Text="0969696969"
-                                   FontSize="25"
-                                   FontWeight="Medium"
-                                   Foreground="#E6EFF3"
-                                   VerticalAlignment="Top"
-                                   HorizontalAlignment="Left"
-                                   Margin="20,0,0,0"/>
+                                <TextBlock
+                                       FontSize="25"
+                                       FontWeight="Medium"
+                                       Foreground="#E6EFF3"
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Left"
+                                       Margin="20,0,0,0">
+                                    <Run Text="Họ Tên :"/>
+                                    <Run Text="{Binding SCustomerName}"/>
+
+                                </TextBlock>
+                                <TextBlock
+                                       FontSize="25"
+                                       FontWeight="Medium"
+                                       Foreground="#E6EFF3"
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Left"
+                                       Margin="20,0,0,0">
+                                    <Run Text="Địa chỉ :"/>
+                                    <Run Text="{Binding SCustomerAddress}"/>
+
+                                </TextBlock>
+                                <TextBlock
+                                       FontSize="25"
+                                       FontWeight="Medium"
+                                       Foreground="#E6EFF3"
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Left"
+                                       Margin="20,30,0,0">
+                                    <Run Text="SĐT :"/>
+                                    <Run Text="{Binding SCustomerPhoneNumber}"/>
+
+                                </TextBlock>
                             </StackPanel>
                         </Border>
                     </Grid>
@@ -144,20 +168,25 @@
                 <Grid Grid.Row="0">
                     <Border BorderThickness="0,3,0,0"
                             Margin="20,0,20,0">
-                        <TextBlock Text="Hình thức vận chuyển: Nhanh"
+                        <TextBlock 
                                    FontSize="25"
                                    FontWeight="Medium"
                                    Foreground="#E6EFF3"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
-                                   Margin="20,0,0,0"/>
+                                   Margin="20,0,0,0">
+                            <Run Text="Hình thức vận chuyển :   "/>
+                            <Run Text="{Binding ShippingMethod}"/>
+
+                        </TextBlock>
+
                     </Border>
                 </Grid>
 
                 <Grid Grid.Row="1">
                     <Border BorderThickness="0,3,0,0"
                             Margin="20,0,20,0">
-                        <TextBlock Text="Đang vận chuyển - Đã rời kho Đà Nẵng"
+                        <TextBlock Text="{Binding Details}"
                                    FontSize="25"
                                    FontWeight="Medium"
                                    Foreground="#E6EFF3"
@@ -170,7 +199,7 @@
                 <Grid Grid.Row="2">
                     <Border BorderThickness="0,3,0,0"
                             Margin="20,0,20,0">
-                        <TextBlock Text="Được tạo vào ngày 06/05/2023"
+                        <TextBlock Text="{Binding CreateTime}"
                                    FontSize="25"
                                    FontWeight="Medium"
                                    Foreground="#E6EFF3"
@@ -184,71 +213,10 @@
             <Grid Grid.Row="2">
                 <Border Background="#8ED3F4"
                         CornerRadius="20"
-                        Margin="20">
+                        Margin="30,155,10,30">
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="200"/>
-                            <RowDefinition Height="200"/>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="500"/>
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Grid Grid.Column="0">
-                                    <StackPanel>
-                                        <TextBlock Text="Quần âu nam"
-                                                FontSize="25"
-                                                FontWeight="Medium"
-                                                Foreground="#5A4D4C"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Left"
-                                                Margin="40,20,0,0"/>
-                                        <TextBlock Text="Áo cuban shirt"
-                                                FontSize="25"
-                                                FontWeight="Medium"
-                                                Foreground="#5A4D4C"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Left"
-                                                Margin="40,20,0,0"/>
-                                        <TextBlock Text="Quần âu nam"
-                                                FontSize="25"
-                                                FontWeight="Medium"
-                                                Foreground="#5A4D4C"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Left"
-                                                Margin="40,20,0,0"/>
-                                    </StackPanel>
-                                </Grid>
-
-                                <Grid Grid.Column="1">
-                                    <StackPanel>
-                                        <TextBlock Text="đ129.000"
-                                                FontSize="25"
-                                                FontWeight="Medium"
-                                                Foreground="#5A4D4C"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Left"
-                                                Margin="40,20,0,0"/>
-                                        <TextBlock Text="đ169.000"
-                                                FontSize="25"
-                                                FontWeight="Medium"
-                                                Foreground="#5A4D4C"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Left"
-                                                Margin="40,20,0,0"/>
-                                        <TextBlock Text="đ329.000"
-                                                FontSize="25"
-                                                FontWeight="Medium"
-                                                Foreground="#5A4D4C"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Left"
-                                                Margin="40,20,0,0"/>
-                                    </StackPanel>
-                                </Grid>
-                            </Grid>
-                        </Grid>
+                        
+                        
 
                         <Grid Grid.Row="1">
                             <Grid>
@@ -284,21 +252,21 @@
                                 </Grid>
                                 <Grid Grid.Column="1">
                                     <StackPanel>
-                                        <TextBlock Text="đ627.000"
+                                        <TextBlock Text="{Binding ParcelValue}"
                                                 FontSize="25"
                                                 FontWeight="Medium"
                                                 Foreground="#5A4D4C"
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Left"
                                                 Margin="40,20,0,0"/>
-                                        <TextBlock Text="đ15.000"
+                                        <TextBlock Text="{Binding Cost}"
                                                 FontSize="25"
                                                 FontWeight="Medium"
                                                 Foreground="#5A4D4C"
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Left"
                                                 Margin="40,20,0,0"/>
-                                        <TextBlock Text="đ642.000"
+                                        <TextBlock Text="{Binding ShippingFee}"
                                                 FontSize="25"
                                                 FontWeight="Medium"
                                                 Foreground="#5A4D4C"

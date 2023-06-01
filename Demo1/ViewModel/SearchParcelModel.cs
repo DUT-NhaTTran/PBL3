@@ -10,10 +10,11 @@ using Demo1.DTO;
 using Demo1.Model;
 using Demo1.View;
 using MaterialDesignThemes.Wpf;
+using Demo1.UserInfo;
 
 namespace Demo1.ViewModel
 {
-    public class SearchParcelModel : BaseViewModel
+    public class SearchParcelModel : AddFunctionModel
     {
         private string searchText;
         
@@ -23,18 +24,18 @@ namespace Demo1.ViewModel
         private string senderCustomerInfo;
         private string receiverCustomerInfo;
 
-        public string ParcelName
-        {
-            get { return parcelName; }
-            set
-            {
-                if (parcelName != value)
-                {
-                    parcelName = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        //public string ParcelName
+        //{
+        //    get { return parcelName; }
+        //    set
+        //    {
+        //        if (parcelName != value)
+        //        {
+        //            parcelName = value;
+        //            OnPropertyChanged();
+        //        }
+        //    }
+        //}
 
         public string ParcelType
         {
@@ -50,18 +51,18 @@ namespace Demo1.ViewModel
         }
 
 
-        public string ParcelValue
-        {
-            get { return parcelValue; }
-            set
-            {
-                if (parcelValue != value)
-                {
-                    parcelValue = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        //public string ParcelValue
+        //{
+        //    get { return parcelValue; }
+        //    set
+        //    {
+        //        if (parcelValue != value)
+        //        {
+        //            parcelValue = value;
+        //            OnPropertyChanged();
+        //        }
+        //    }
+        //}
         public string SearchText
         {
             get { return searchText; }
@@ -74,42 +75,80 @@ namespace Demo1.ViewModel
                 }
             }
         }
-
-        public string SenderCustomerInfo
+        private string _Cost;
+        public string Cost
         {
-            get { return senderCustomerInfo; }
+            get { return _Cost; }
             set
             {
-                if (senderCustomerInfo != value)
+                if (_Cost != value)
                 {
-                    senderCustomerInfo = value;
+                    _Cost = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private DateTime? _CreateTime;
+        public DateTime? CreateTime
+        {
+            get { return _CreateTime; }
+            set
+            {
+                if (_CreateTime != value)
+                {
+                    _CreateTime = value;
                     OnPropertyChanged();
                 }
             }
         }
 
-        public string ReceiverCustomerInfo
+        private string _Details;
+        public string Details
         {
-            get { return receiverCustomerInfo; }
+            get { return _Details ; }
             set
             {
-                if (receiverCustomerInfo != value)
+                if (_Details != value)
                 {
-                    receiverCustomerInfo = value;
+                    _Details = value;
                     OnPropertyChanged();
                 }
             }
         }
 
+        //public string SenderCustomerInfo
+        //{
+        //    get { return senderCustomerInfo; }
+        //    set
+        //    {
+        //        if (senderCustomerInfo != value)
+        //        {
+        //            senderCustomerInfo = value;
+        //            OnPropertyChanged();
+        //        }
+        //    }
+        //}
 
+        //public string ReceiverCustomerInfo
+        //{
+        //    get { return receiverCustomerInfo; }
+        //    set
+        //    {
+        //        if (receiverCustomerInfo != value)
+        //        {
+        //            receiverCustomerInfo = value;
+        //            OnPropertyChanged();
+        //        }
+        //    }
+        //}
 
 
         public ICommand SearchCommand { get; set; }
         public ICommand ParcelNameClickCommand { get; set; }
 
-        public ICommand SenderCustomerCommand { get; set; }
+        //public ICommand SenderCustomerCommand { get; set; }
 
-        public ICommand ReceiverCustomerCommand { get; set; }
+        //public ICommand ReceiverCustomerCommand { get; set; }
         public SearchParcelModel()
         {
 
@@ -124,23 +163,33 @@ namespace Demo1.ViewModel
 
         void Search(string _parcelID)
         { 
-            using (var context = new PBL3_demoEntities())
+            if (string.IsNullOrEmpty(_parcelID))
             {
-            int num_parcelID = int.Parse(_parcelID);
-                var parcel = context.Parcels.FirstOrDefault(x => x.parcelID == num_parcelID);
+                
+               MessageBox.Show("Chưa nhập mã đơn hàng");
+            }
+            else
+            {
+                using (var context = new PBL3_demoEntities())
+                {
+                    int num_parcelID = int.Parse(_parcelID);
+
+                    var parcel = context.Parcels.FirstOrDefault(x => x.parcelID == num_parcelID);
                     if (parcel != null)
                     {
 
                         ParcelName = parcel.parcelName;
                         ParcelType = ((bool)parcel.type) ? "Hàng dễ vỡ" : "Hàng bình thường";
                         ParcelValue = parcel.parcelValue.ToString();
-                           
+
                     }
                     else
                     {
                         MessageBox.Show("Đơn hàng không tồn tại trong hệ thống! Xin vui lòng thử lại");
                     }
+                }
             }
+            
             
         }
 
@@ -148,11 +197,27 @@ namespace Demo1.ViewModel
         void OpenResultOfSerchWindow(string _parcelID)
         {
             ResultOfSearch ros = new ResultOfSearch(_parcelID);
+            SetAllParcelInfo(SearchText);
             ros.ShowDialog();
-           
+            
         }
 
+        void SetAllParcelInfo(string parcelID)
+        {
+            SCustomerName = ParcelInfo.Instance.GetCustomerName(SearchText,1);
+            RCustomerName = ParcelInfo.Instance.GetCustomerName(SearchText,2);
+            SCustomerAddress=ParcelInfo.Instance.GetCustomerAddress(SearchText,1);
+            RCustomerAddress = ParcelInfo.Instance.GetCustomerAddress(SearchText, 2);
+            SCustomerPhoneNumber=ParcelInfo.Instance.GetCustomerPhoneNumber(SearchText,1);
+            RCustomerPhoneNumber = ParcelInfo.Instance.GetCustomerPhoneNumber(SearchText, 2);
+            ShippingFee = Convert.ToString(ParcelInfo.Instance.GetParcelTotalCost(SearchText));
+            Cost=Convert.ToString(Convert.ToDouble(ShippingFee)-Convert.ToDouble(ParcelValue));
+            if (ParcelInfo.Instance.GetShippingMethod(SearchText)) ShippingMethod = "Giao hàng nhanh";
+            else ShippingMethod = "Giao hàng chậm";
+            CreateTime=ParcelInfo.Instance.GetCreateTime(SearchText);
+            Details=ParcelInfo.Instance.GetDetails(SearchText);
 
+        }
         string GetSenderCustomerInfo (string _parcelID)
         {
             using (var context = new PBL3_demoEntities())

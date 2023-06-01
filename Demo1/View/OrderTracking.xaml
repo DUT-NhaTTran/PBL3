@@ -7,7 +7,7 @@
                 xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
                 xmlns:viewModel="clr-namespace:Demo1.ViewModel"
                 mc:Ignorable="d"
-             DataContext="{StaticResource OrderTM}"
+                DataContext="{StaticResource OrderTM}"
              
             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
           
@@ -57,20 +57,22 @@
                 <!--Danh sách các đơn hàng có lộ trình-->
                 <!--Khi bấm tìm kiếm ở trên xong thì chỉ có 1 đơn hàng đang được tìm kiếm-->
                 <Grid Grid.Row="1">
-                    <Button Content="Tra cứu" 
-                                    IsDefault="true" 
-                                    Background="#8ED3F4" Foreground="#5A4D4C" 
-                                    FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
-                                    Height="45" Width="200"
-                                    Command="{Binding ParcelTrackingCommand}"
-                                    Margin="-250,0,0,0"/>
-                        <ItemsControl ItemsSource="{Binding RouteParcel}">
-                        <ItemsControl.ItemTemplate>
+                    <ListBox ItemsSource="{Binding ParcelInfoList}"
+                                
+                             MouseDoubleClick="ListBox_MouseDoubleClick">
+                    
+                        <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <local:RouteParcel/>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding ID}" />
+                                    <TextBlock Text="{Binding ParcelName}" />
+                                    <TextBlock Text="{Binding Details}" />
+                                </StackPanel>
+                                
+                              
                             </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </Grid>
             </Grid>
 

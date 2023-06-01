@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PBL3_demoModelStoreContainer" CdmEntityContainer="PBL3_demoEntities">
+    <EntitySetMapping Name="AccessRights">
+      <EntityTypeMapping TypeName="PBL3_demoModel.AccessRight">
+        <MappingFragment StoreEntitySet="AccessRight">
+          <ScalarProperty Name="accessRightID" ColumnName="accessRightID" />
+          <ScalarProperty Name="accessRightName" ColumnName="accessRightName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Accounts">
+      <EntityTypeMapping TypeName="PBL3_demoModel.Account">
+        <MappingFragment StoreEntitySet="Account">
+          <ScalarProperty Name="accountID" ColumnName="accountID" />
+          <ScalarProperty Name="accountName" ColumnName="accountName" />
+          <ScalarProperty Name="accountPassword" ColumnName="accountPassword" />
+          <ScalarProperty Name="accessRightID" ColumnName="accessRightID" />
+          <ScalarProperty Name="Salt" ColumnName="Salt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="PBL3_demoModel.Customer">
+        <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="customerID" ColumnName="customerID" />
+          <ScalarProperty Name="customerName" ColumnName="customerName" />
+          <ScalarProperty Name="customerLocation" ColumnName="customerLocation" />
+          <ScalarProperty Name="customerPhoneNumber" ColumnName="customerPhoneNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Invoices">
+      <EntityTypeMapping TypeName="PBL3_demoModel.Invoice">
+        <MappingFragment StoreEntitySet="Invoice">
+          <ScalarProperty Name="invoiceID" ColumnName="invoiceID" />
+          <ScalarProperty Name="parcelID" ColumnName="parcelID" />
+          <ScalarProperty Name="customerID" ColumnName="customerID" />
+          <ScalarProperty Name="cost" ColumnName="cost" />
+          <ScalarProperty Name="outputTime" ColumnName="outputTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Receptionists">
+      <EntityTypeMapping TypeName="PBL3_demoModel.Receptionist">
+        <MappingFragment StoreEntitySet="Receptionist">
+          <ScalarProperty Name="receptionistID" ColumnName="receptionistID" />
+          <ScalarProperty Name="warehouseID" ColumnName="warehouseID" />
+          <ScalarProperty Name="receptionistName" ColumnName="receptionistName" />
+          <ScalarProperty Name="receptionistLocation" ColumnName="receptionistLocation" />
+          <ScalarProperty Name="receptionistPhoneNumber" ColumnName="receptionistPhoneNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Routes">
+      <EntityTypeMapping TypeName="PBL3_demoModel.Route">
+        <MappingFragment StoreEntitySet="Route">
+          <ScalarProperty Name="routeID" ColumnName="routeID" />
+          <ScalarProperty Name="parcelID" ColumnName="parcelID" />
+          <ScalarProperty Name="relatedWarehouseID" ColumnName="relatedWarehouseID" />
+          <ScalarProperty Name="details" ColumnName="details" />
+          <ScalarProperty Name="time" ColumnName="time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShipFees">
+      <EntityTypeMapping TypeName="PBL3_demoModel.ShipFee">
+        <MappingFragment StoreEntitySet="ShipFee">
+          <ScalarProperty Name="shippingFeeID" ColumnName="shippingFeeID" />
+          <ScalarProperty Name="shippingMethod" ColumnName="shippingMethod" />
+          <ScalarProperty Name="totalCost" ColumnName="totalCost" />
+          <ScalarProperty Name="locations" ColumnName="locations" />
+          <ScalarProperty Name="parcelID" ColumnName="parcelID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WarehouseManagers">
+      <EntityTypeMapping TypeName="PBL3_demoModel.WarehouseManager">
+        <MappingFragment StoreEntitySet="WarehouseManager">
+          <ScalarProperty Name="warehouseManagerID" ColumnName="warehouseManagerID" />
+          <ScalarProperty Name="warehouseManagerName" ColumnName="warehouseManagerName" />
+          <ScalarProperty Name="warehouseManagerLocation" ColumnName="warehouseManagerLocation" />
+          <ScalarProperty Name="warehouseManagerPhoneNumber" ColumnName="warehouseManagerPhoneNumber" />
+          <ScalarProperty Name="warehouseID" ColumnName="warehouseID" />
+          <ScalarProperty Name="numberOfEmployee" ColumnName="numberOfEmployee" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WarehouseStaffs">
+      <EntityTypeMapping TypeName="PBL3_demoModel.WarehouseStaff">
+        <MappingFragment StoreEntitySet="WarehouseStaff">
+          <ScalarProperty Name="warehouseStaffID" ColumnName="warehouseStaffID" />
+          <ScalarProperty Name="warehouseStaffName" ColumnName="warehouseStaffName" />
+          <ScalarProperty Name="warehouseStaffLocation" ColumnName="warehouseStaffLocation" />
+          <ScalarProperty Name="warehouseStaffPhoneNumber" ColumnName="warehouseStaffPhoneNumber" />
+          <ScalarProperty Name="warehouseID" ColumnName="warehouseID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parcels">
+      <EntityTypeMapping TypeName="PBL3_demoModel.Parcel">
+        <MappingFragment StoreEntitySet="Parcel">
+          <ScalarProperty Name="isFinalWarehouse" ColumnName="isFinalWarehouse" />
+          <ScalarProperty Name="currentWarehouseID" ColumnName="currentWarehouseID" />
+          <ScalarProperty Name="isCOD" ColumnName="isCOD" />
+          <ScalarProperty Name="parcelStatus" ColumnName="parcelStatus" />
+          <ScalarProperty Name="shippingMethod" ColumnName="shippingMethod" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="SCustomerID" ColumnName="SCustomerID" />
+          <ScalarProperty Name="RCustomerID" ColumnName="RCustomerID" />
+          <ScalarProperty Name="createTime" ColumnName="createTime" />
+          <ScalarProperty Name="parcelValue" ColumnName="parcelValue" />
+          <ScalarProperty Name="parcelSize" ColumnName="parcelSize" />
+          <ScalarProperty Name="parcelMass" ColumnName="parcelMass" />
+          <ScalarProperty Name="parcelName" ColumnName="parcelName" />
+          <ScalarProperty Name="parcelID" ColumnName="parcelID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Warehouses">
+      <EntityTypeMapping TypeName="PBL3_demoModel.Warehouse">
+        <MappingFragment StoreEntitySet="Warehouse">
+          <ScalarProperty Name="capacity" ColumnName="capacity" />
+          <ScalarProperty Name="warehouseAddress" ColumnName="warehouseAddress" />
+          <ScalarProperty Name="warehouseName" ColumnName="warehouseName" />
+          <ScalarProperty Name="warehouseID" ColumnName="warehouseID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

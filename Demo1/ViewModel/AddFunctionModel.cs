@@ -3,6 +3,7 @@ using Demo1.UserInfo;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -63,7 +64,17 @@ namespace Demo1.ViewModel
         //
         private string _warehouseID;
 
+        private ObservableCollection<string> cities;
 
+        public ObservableCollection<string> Cities
+        {
+            get { return cities; }
+            set
+            {
+                cities = value;
+                OnPropertyChanged(nameof(Cities));
+            }
+        }
         public ICommand CreateInvoiceCommand { get; set; }
 
         private string _ShippingMethod;
@@ -346,7 +357,7 @@ namespace Demo1.ViewModel
             set
             {
                 _SCustomerCity = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(SCustomerCity));
             }
         }
         //
@@ -548,12 +559,50 @@ namespace Demo1.ViewModel
                 OnPropertyChanged(nameof(isCOD));
             }
         }
+        
+        private string selectedSCity;
+        public string SelectedSCity
+        {
+            get { return selectedSCity; }
+            set
+            {
+                selectedSCity = value;
+                
+                OnPropertyChanged(nameof(SelectedSCity));
+               
 
+            }
+        }
+        private string selectedRCity;
+        public string SelectedRCity
+        {
+            get { return selectedRCity; }
+            set
+            {
+                selectedRCity = value;
+
+                OnPropertyChanged(nameof(SelectedRCity));
+
+
+            }
+        }
+        
         public AddFunctionModel()
         {
+          
             string accountID = AccountManager.Instance.GetAccountID();
             WarehouseID = AccountManager.Instance.GetUserWarehouseID(accountID);
+            Cities = new ObservableCollection<string>
+            {
+                "An Giang","Vũng Tàu","Bạc Liêu","Bắc Kạn","Bắc Giang","Bắc Ninh","Bến Tre","Bình Dương","Bình Định","Bình Phước","Cà Mau","Cao Bằng","Cần Thơ",
+                "Đà Nẵng","Đắk Lắk","Đắk Nông", "Điện Biên", "Đồng Nai", "Đồng Tháp", "Gia Lai", "Hà Giang", "Hà Nam", "Hà Nội", "TP.HCM", "Hậu Giang", "Hưng Yên",
+                "Khánh Hoà", "Kiên Giang", "Kon Tum", "Lai Châu", "Lào Cai", "Lạng Sơn", "Lâm Đồng", "Long An", "Nam Định", "Nghệ An", "Ninh Bình",
+                "Ninh Thuận", "Phú Thọ","Phú Yên","Quảng Bình","Quảng Nam","Quảng Ngãi","Quảng Ninh","Quảng Trị","Sóc Trăng","Sơn La","Tây Ninh",
+                "Thái Bình","Thanh Hoá","Thừa Thiên Huế","Tiền Giang","Trà Vinh","Tuyên Quang","Vĩnh Long","Vĩnh Phúc","Yên Bái"
 
+
+            };
+           
             void ResetData()
             {
                 SCustomerName = "";
@@ -591,7 +640,10 @@ namespace Demo1.ViewModel
                 return checkValid();
             }, (p) =>
             {
+               
             //int setParcelID;
+            SCustomerCity=SelectedSCity;
+            RCustomerCity=SelectedRCity;    
             using (var context = new Model.PBL3_demoEntities())
             {
                 var sc = context.Customers.FirstOrDefault(x => x.customerID == SCustomerID);
@@ -691,6 +743,28 @@ namespace Demo1.ViewModel
             {
                 createInvoice();
                 ShippingFee = Convert.ToString(shippingFeeFunc());
+                int lastInvoiceID;
+                using(var context1=new PBL3_demoEntities())
+                {
+                    var maxInvoiceID = context1.Invoices.Max(i => i.invoiceID);
+                    lastInvoiceID= maxInvoiceID;
+                }
+                using (var context = new Model.PBL3_demoEntities())
+                {
+                    // Tạo một đối tượng Invoice mới
+                    var newInvoice = new Model.Invoice
+                    {
+                        invoiceID = lastInvoiceID + 1,
+                        parcelID = Convert.ToInt32(ParcelID),
+                        customerID = SCustomerID,
+                        cost = Convert.ToDouble(ShippingFee),
+                        outputTime = DateTime.Now
+                    };
+
+                    // Thêm đối tượng Invoice mới vào ngữ cảnh và lưu các thay đổi
+                    context.Invoices.Add(newInvoice);
+                    context.SaveChanges();
+                }
                 Invoice invoice = new Invoice();
                
                 invoice.DataContext = this;

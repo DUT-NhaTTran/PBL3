@@ -7,6 +7,7 @@
                 xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
                 xmlns:viewModel="clr-namespace:Demo1.ViewModel"
                 mc:Ignorable="d"
+                DataContext="{StaticResource AddFM}"
                 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                 Height="600" Width="960">
@@ -202,8 +203,8 @@
                                 <Border CornerRadius="20"
                                     Background="White"
                                     Margin="20,10,10,10">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBox Name="SCustomerCity"
+                                    <StackPanel Orientation="Horizontal" Margin="50,0,0,0">
+                                        <!--<TextBox Name="SCustomerCity"
                                               materialDesign:HintAssist.Hint="Tỉnh/Thành phố"
                                               materialDesign:HintAssist.Foreground="Blue"
                                               materialDesign:HintAssist.FloatingScale="0"
@@ -212,7 +213,19 @@
                                               Text="{Binding SCustomerCity,Mode=TwoWay}"  
                                               VerticalAlignment="Center"
                                               Foreground="#5A4D4C" Width="400"
-                                              Height="70" Margin="40,0,0,0"/>
+                                              Height="70" Margin="40,0,0,0"/>-->
+                                        <ComboBox ItemsSource="{Binding Cities}"
+                                                  SelectedItem="{Binding SelectedSCity, Mode=TwoWay}"
+                                                 
+                                                  FontSize="30" BorderThickness="0"
+                                                  Text="{Binding SCustomerCity, Mode=TwoWay}"
+                                                  Foreground="#5A4D4C" Width="400"
+                                                  Height="50"
+                                                  />
+                                       
+
+
+
                                     </StackPanel>
                                 </Border>
                             </Grid>
@@ -346,7 +359,7 @@
                                     Background="White"
                                     Margin="20,10,10,10">
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBox  materialDesign:HintAssist.Hint="Tỉnh/Thành phố"
+                                        <!--<TextBox  materialDesign:HintAssist.Hint="Tỉnh/Thành phố"
                                               materialDesign:HintAssist.Foreground="Blue"
                                               materialDesign:HintAssist.FloatingScale="0"
                                               FontSize="30" BorderThickness="0"
@@ -354,7 +367,16 @@
                                               Text="{Binding RCustomerCity,Mode=TwoWay}"  
                                               VerticalAlignment="Center"
                                               Foreground="#5A4D4C" Width="400"
-                                              Height="70" Margin="40,0,0,0"/>
+                                              Height="70" Margin="40,0,0,0"/>-->
+                                        <ComboBox ItemsSource="{Binding Cities}"
+                                                  SelectedItem="{Binding SelectedRCity, Mode=TwoWay}"
+                                                  
+                                                  
+                                                  FontSize="30" BorderThickness="0"
+                                                  Text="{Binding RCustomerCity, Mode=TwoWay}"
+                                                  Foreground="#5A4D4C" Width="400"
+                                                  Height="50"
+                                                  />
                                     </StackPanel>
                                 </Border>
                             </Grid>
@@ -581,11 +603,7 @@
                                         Command="{Binding AddAndCreateInvoiceCommand}">
 
                                 </Button>
-                                <!--<Button Content="Xuất hoá đơn" 
-                                    Margin="100,0,90,0"
-                                    IsDefault="true"
-                                    Background="#05B790" Foreground="#ffffff" FontSize="18" materialDesign:ButtonAssist.CornerRadius="22" Height="46" Width="150"
-                                    Command="{Binding CreateInvoiceCommand}"/>-->
+                               
                             </StackPanel>
                         </Grid>
                     </Grid>

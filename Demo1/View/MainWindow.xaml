@@ -38,6 +38,9 @@
         <DataTemplate DataType="{x:Type viewModel:OrderTrackingModel}">
             <local:OrderTracking/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:WarehouseTrackingModel}">
+            <local:WarehouseTracking/>
+        </DataTemplate>
     </Window.Resources>
 
     <Border CornerRadius="20"                    
@@ -140,6 +143,7 @@
                     <RadioButton Style="{StaticResource menuButton}"
                                      Tag="{StaticResource color1}"
                                      IsChecked="True"
+                                     
                                      Command="{Binding ShowOrderTrackingCommand}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Minus" 
@@ -153,7 +157,7 @@
                                      Tag="{StaticResource color1}"
                                      IsChecked="True"
                                      Visibility="{Binding Role23, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                     Command="{Binding ShowHomeViewCommand}">
+                                     Command="{Binding ShowWarehouseTrackingCommand}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Minus" 
                                               Height="30" Width="30"
