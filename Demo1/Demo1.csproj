@@ -137,6 +137,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DTO\PropertiesCollection.cs" />
     <Compile Include="DTO\SearchResultDTO.cs" />
     <Compile Include="Model\AccessRight.cs">
       <DependentUpon>Model1.tt</DependentUpon>

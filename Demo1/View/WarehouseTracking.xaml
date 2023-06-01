@@ -304,15 +304,22 @@
                                         </Grid>
                                     </Grid>
                                     <Grid Grid.Row="1">
-                                        <Grid Grid.Column="0">
+                                        <!--<Grid Grid.Column="0">
                                             <TextBlock Text="{Binding WHAddress}"
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Center"
                                                 TextWrapping="Wrap"
                                                 Foreground="{DynamicResource PrimaryHueMidBrush}"/>
                                         </Grid>
-                                        <Grid Grid.ColumnSpan="2">
+                                        <Grid Grid.ColumnSpan="1">
                                             <TextBlock Text="{Binding WHCapacity}"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                TextWrapping="Wrap"
+                                                Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                                        </Grid>-->
+                                        <Grid Grid.ColumnSpan="2">
+                                            <TextBlock Text="{Binding WHContained}"
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Center"
                                                 TextWrapping="Wrap"
@@ -329,11 +336,8 @@
                         <TabItem Header="Thông tin các đơn hàng trong kho">
                             <StackPanel>
                                 <Grid>
-                                   
-                                    <ListBox ItemsSource="{Binding ParcelInfoList}"
-                                
-                                        MouseDoubleClick="ListBox_MouseDoubleClick">
 
+                                    <ListBox ItemsSource="{Binding ParcelInfoList}">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel>
@@ -341,8 +345,6 @@
                                                     <TextBlock Text="{Binding ParcelName}" />
                                                     <TextBlock Text="{Binding Mass }" />
                                                 </StackPanel>
-
-
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>

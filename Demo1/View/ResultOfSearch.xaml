@@ -128,7 +128,7 @@
                                        HorizontalAlignment="Left"
                                        Margin="20,0,0,0">
                                     <Run Text="Họ Tên :"/>
-                                    <Run Text="{Binding SCustomerName}"/>
+                                    <Run Text="{Binding RCustomerName}"/>
 
                                 </TextBlock>
                                 <TextBlock
@@ -139,7 +139,7 @@
                                        HorizontalAlignment="Left"
                                        Margin="20,0,0,0">
                                     <Run Text="Địa chỉ :"/>
-                                    <Run Text="{Binding SCustomerAddress}"/>
+                                    <Run Text="{Binding RCustomerAddress}"/>
 
                                 </TextBlock>
                                 <TextBlock
@@ -150,7 +150,7 @@
                                        HorizontalAlignment="Left"
                                        Margin="20,30,0,0">
                                     <Run Text="SĐT :"/>
-                                    <Run Text="{Binding SCustomerPhoneNumber}"/>
+                                    <Run Text="{Binding RCustomerPhoneNumber}"/>
 
                                 </TextBlock>
                             </StackPanel>

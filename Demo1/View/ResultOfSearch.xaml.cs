@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Demo1.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,8 @@ namespace Demo1
         public ResultOfSearch(string _parcelID)
         {
             InitializeComponent();
+           
+
         }
     }
 }

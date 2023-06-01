@@ -1,4 +1,5 @@
-﻿using Demo1.Model;
+﻿using Demo1.DTO;
+using Demo1.Model;
 using Demo1.ViewModel;
 using Prism.Commands;
 using System;
@@ -15,7 +16,7 @@ using System.Windows.Input;
 
 namespace Demo1.ViewModel
 {
-    public class WarehouseTrackingModel : BaseViewModel
+    public class WarehouseTrackingModel : PropertiesCollection
     {
         private string searchText;
         public string SearchText
@@ -44,81 +45,90 @@ namespace Demo1.ViewModel
             }
         }
         private string _WarehouseID;
-        public string WarehouseID
-        {
-            get { return _WarehouseID; }
-            set
-            {
-                if (_WarehouseID != value)
-                {
-                    _WarehouseID = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        private string _All;
-        public string All
-        {
-            get { return _All; }
-            set
-            {
-                _All = value;
-                OnPropertyChanged();
-            }
-        }
-        private string _South;
-        public string South
-        {
-            get { return _South; }
-            set
-            {
-                _South = value;
-                OnPropertyChanged();
-            }
-        }
-        private string _Center;
-        public string Center
-        {
-            get { return _Center; }
-            set
-            {
-                _Center = value;
-                OnPropertyChanged();
-            }
-        }
-        private string _North;
-        public string North
-        {
-            get { return _North; }
-            set
-            {
-                _North = value;
-                OnPropertyChanged();
-            }
-        }
-        private string _WHAddress;
-        public string WHAddress
-        {
-            get { return _WHAddress; }
-            set
-            {
-                _WHAddress = value;
-                OnPropertyChanged();
-            }
-        }
-        private string _WHCapacity;
-        public string WHCapacity
-        {
-            get { return _WHCapacity; }
-            set
-            {
-                _WHCapacity = value;
-                OnPropertyChanged();
-            }
-        }
-      
+        //public string WarehouseID
+        //{
+        //    get { return _WarehouseID; }
+        //    set
+        //    {
+        //        if (_WarehouseID != value)
+        //        {
+        //            _WarehouseID = value;
+        //            OnPropertyChanged();
+        //        }
+        //    }
+        //}
+        //private string _All;
+        //public string All
+        //{
+        //    get { return _All; }
+        //    set
+        //    {
+        //        _All = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+        //private string _South;
+        //public string South
+        //{
+        //    get { return _South; }
+        //    set
+        //    {
+        //        _South = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+        //private string _Center;
+        //public string Center
+        //{
+        //    get { return _Center; }
+        //    set
+        //    {
+        //        _Center = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+        //private string _North;
+        //public string North
+        //{
+        //    get { return _North; }
+        //    set
+        //    {
+        //        _North = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+        //private string _WHAddress;
+        //public string WHAddress
+        //{
+        //    get { return _WHAddress; }
+        //    set
+        //    {
+        //        _WHAddress = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+        //private string _WHCapacity;
+        //public string WHCapacity
+        //{
+        //    get { return _WHCapacity; }
+        //    set
+        //    {
+        //        _WHCapacity = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+        //private string _WHContained;
+        //public string WHContained
+        //{
+        //    get { return _WHContained; }
+        //    set
+        //    {
+        //        _WHContained = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
-       
+
         public ICommand SearchCommand { get; set; }
         public ICommand StatisticOneWarehouseCommand { get; set; }
 
@@ -166,7 +176,7 @@ namespace Demo1.ViewModel
                 { "Quảng Trị", "Trung" },
                 { "Quảng Bình", "Trung" },
                 { "Thừa Thiên – Huế", "Trung" },
-                { "Khánh Hòa", "Trung" },
+                { "Khánh Hoà", "Trung" },
                 { "Bình Thuận", "Trung" },
                 { "Ninh Thuận", "Trung" },
                 { "Quảng Nam", "Trung" },
@@ -228,6 +238,22 @@ namespace Demo1.ViewModel
                 _parcelInfoList = value;
                 OnPropertyChanged();
             }
+        }
+        public void SetAllParcelInfo()
+        {
+            SCustomerName = UserInfo.ParcelInfo.Instance.GetCustomerName(SearchText, 1);
+            RCustomerName = UserInfo.ParcelInfo.Instance.GetCustomerName(SearchText, 2);
+            SCustomerAddress = UserInfo.ParcelInfo.Instance.GetCustomerAddress(SearchText, 1);
+            RCustomerAddress = UserInfo.ParcelInfo.Instance.GetCustomerAddress(SearchText, 2);
+            SCustomerPhoneNumber = UserInfo.ParcelInfo.Instance.GetCustomerPhoneNumber(SearchText, 1);
+            RCustomerPhoneNumber = UserInfo.ParcelInfo.Instance.GetCustomerPhoneNumber(SearchText, 2);
+            ShippingFee = Convert.ToString(UserInfo.ParcelInfo.Instance.GetParcelTotalCost(SearchText));
+            Cost = Convert.ToString(Convert.ToDouble(ShippingFee) - Convert.ToDouble(ParcelValue));
+            if (UserInfo.ParcelInfo.Instance.GetShippingMethod(SearchText)) ShippingMethod = "Giao hàng nhanh";
+            else ShippingMethod = "Giao hàng chậm";
+            CreateTime = UserInfo.ParcelInfo.Instance.GetCreateTime(SearchText);
+            Details = UserInfo.ParcelInfo.Instance.GetDetails(SearchText);
+
         }
         public class ParcelInfo
         {
@@ -387,6 +413,30 @@ namespace Demo1.ViewModel
             }
             return warehousesOfThisRegionCollection;
         }
-
+        //viewmodel.WarehouseCapacity=Get(warehouseID)
+        public string FindContained(string WHID)
+        {
+            double res = 0;
+            int capacity = 0;
+            int count = 0;
+            //lay suc chua cua kho i
+            using (var context1 = new PBL3_demoEntities())
+            {
+                var Capacity = context1.Warehouses.FirstOrDefault(x => x.warehouseID == WHID);
+                if(Capacity != null) 
+                {
+                    capacity = Capacity.capacity;
+                }
+            }
+            //dem don dang trong kho i
+            using (var context = new PBL3_demoEntities())
+            {
+                var Count= context.Parcels.Count(o => o.currentWarehouseID == WHID);
+                count = Count;
+            }
+            res = (double)count / capacity;
+            return Convert.ToString(res) + "%";
+        }
+      
     }
 }

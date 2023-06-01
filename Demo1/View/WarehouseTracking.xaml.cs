@@ -17,6 +17,7 @@ using static Demo1.ViewModel.WarehouseTrackingModel;
 using Demo1.UserInfo;
 using Demo1.Model;
 using Caliburn.Micro;
+using ParcelInfo = Demo1.ViewModel.WarehouseTrackingModel.ParcelInfo;
 
 namespace Demo1
 {
@@ -42,6 +43,7 @@ namespace Demo1
                 viewModel.WarehouseName = warehouseInfo.WarehouseName;
                 viewModel.WHAddress = WarehouseData.Instance.GetWarehouseAddress(viewModel.WarehouseID);
                 viewModel.WHCapacity = Convert.ToString(WarehouseData.Instance.GetWarehouseCapacity(viewModel.WarehouseID));
+                viewModel.WHContained=viewModel.FindContained(viewModel.WarehouseID);
             }
         }
 
@@ -59,5 +61,8 @@ namespace Demo1
                 // Các tab khác có thể được xử lý tương tự
             }
         }
+
+        
+        
     }
 }

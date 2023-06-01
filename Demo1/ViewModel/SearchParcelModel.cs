@@ -14,134 +14,82 @@ using Demo1.UserInfo;
 
 namespace Demo1.ViewModel
 {
-    public class SearchParcelModel : AddFunctionModel
+    public class SearchParcelModel : PropertiesCollection
     {
-        private string searchText;
+        //private string searchText;
         
-        private string parcelName;
-        private string parcelType;
-        private string parcelValue;
-        private string senderCustomerInfo;
-        private string receiverCustomerInfo;
+      
+        //private string parcelType;
 
-        //public string ParcelName
+        //public string ParcelType
         //{
-        //    get { return parcelName; }
+        //    get { return parcelType; }
         //    set
         //    {
-        //        if (parcelName != value)
+        //        if (parcelType != value)
         //        {
-        //            parcelName = value;
+        //            parcelType = value;
         //            OnPropertyChanged();
         //        }
         //    }
         //}
 
-        public string ParcelType
-        {
-            get { return parcelType; }
-            set
-            {
-                if (parcelType != value)
-                {
-                    parcelType = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
 
-
-        //public string ParcelValue
+        
+        //public string SearchText
         //{
-        //    get { return parcelValue; }
+        //    get { return searchText; }
         //    set
         //    {
-        //        if (parcelValue != value)
+        //        if (searchText != value)
         //        {
-        //            parcelValue = value;
+        //            searchText = value;
         //            OnPropertyChanged();
         //        }
         //    }
         //}
-        public string SearchText
-        {
-            get { return searchText; }
-            set
-            {
-                if (searchText != value)
-                {
-                    searchText = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        private string _Cost;
-        public string Cost
-        {
-            get { return _Cost; }
-            set
-            {
-                if (_Cost != value)
-                {
-                    _Cost = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        private DateTime? _CreateTime;
-        public DateTime? CreateTime
-        {
-            get { return _CreateTime; }
-            set
-            {
-                if (_CreateTime != value)
-                {
-                    _CreateTime = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private string _Details;
-        public string Details
-        {
-            get { return _Details ; }
-            set
-            {
-                if (_Details != value)
-                {
-                    _Details = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        //public string SenderCustomerInfo
+        //private string _Cost;
+        //public string Cost
         //{
-        //    get { return senderCustomerInfo; }
+        //    get { return _Cost; }
         //    set
         //    {
-        //        if (senderCustomerInfo != value)
+        //        if (_Cost != value)
         //        {
-        //            senderCustomerInfo = value;
+        //            _Cost = value;
+        //            OnPropertyChanged();
+        //        }
+        //    }
+        //}
+        //private DateTime? _CreateTime;
+        //public DateTime? CreateTime
+        //{
+        //    get { return _CreateTime; }
+        //    set
+        //    {
+        //        if (_CreateTime != value)
+        //        {
+        //            _CreateTime = value;
         //            OnPropertyChanged();
         //        }
         //    }
         //}
 
-        //public string ReceiverCustomerInfo
+        //private string _Details;
+        //public string Details
         //{
-        //    get { return receiverCustomerInfo; }
+        //    get { return _Details ; }
         //    set
         //    {
-        //        if (receiverCustomerInfo != value)
+        //        if (_Details != value)
         //        {
-        //            receiverCustomerInfo = value;
+        //            _Details = value;
         //            OnPropertyChanged();
         //        }
         //    }
         //}
 
+        
 
         public ICommand SearchCommand { get; set; }
         public ICommand ParcelNameClickCommand { get; set; }
@@ -158,7 +106,7 @@ namespace Demo1.ViewModel
                 (p) => { Search(SearchText); });*/
 
             ParcelNameClickCommand = new RelayCommand<object>((p) => { return true; },
-    (p) => { OpenResultOfSerchWindow(SearchText); });
+    (p) => { OpenResultOfSerchWindow("abc"); });
         }
 
         void Search(string _parcelID)
@@ -194,16 +142,17 @@ namespace Demo1.ViewModel
         }
 
         // Xử lý sự kiện click chuột vào TextBlock ParcelName
-        void OpenResultOfSerchWindow(string _parcelID)
+        public void OpenResultOfSerchWindow(string _parcelID)
         {
             ResultOfSearch ros = new ResultOfSearch(_parcelID);
-            SetAllParcelInfo(SearchText);
+            SetAllParcelInfo();
             ros.ShowDialog();
             
         }
 
-        void SetAllParcelInfo(string parcelID)
+        void SetAllParcelInfo()
         {
+            
             SCustomerName = ParcelInfo.Instance.GetCustomerName(SearchText,1);
             RCustomerName = ParcelInfo.Instance.GetCustomerName(SearchText,2);
             SCustomerAddress=ParcelInfo.Instance.GetCustomerAddress(SearchText,1);
@@ -216,7 +165,7 @@ namespace Demo1.ViewModel
             else ShippingMethod = "Giao hàng chậm";
             CreateTime=ParcelInfo.Instance.GetCreateTime(SearchText);
             Details=ParcelInfo.Instance.GetDetails(SearchText);
-
+           
         }
         string GetSenderCustomerInfo (string _parcelID)
         {
