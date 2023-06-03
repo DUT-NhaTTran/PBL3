@@ -33,8 +33,10 @@
     <Property Name="invoiceID" Type="int" Nullable="false" />
     <Property Name="parcelID" Type="int" Nullable="false" />
     <Property Name="customerID" Type="nvarchar" MaxLength="200" Nullable="false" />
-    <Property Name="cost" Type="float" />
+    <Property Name="cost" Type="float" Nullable="false" />
     <Property Name="outputTime" Type="datetime" />
+    <Property Name="startWarehouseID" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="shippingFee" Type="float" Nullable="false" />
   </EntityType>
   <EntityType Name="Parcel">
     <Key>
@@ -148,6 +150,18 @@
       </Principal>
       <Dependent Role="Invoice">
         <PropertyRef Name="parcelID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_Warehouse">
+    <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+    <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warehouse">
+        <PropertyRef Name="warehouseID" />
+      </Principal>
+      <Dependent Role="Invoice">
+        <PropertyRef Name="startWarehouseID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -281,6 +295,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_Invoice_Parcel" Association="Self.FK_Invoice_Parcel">
       <End Role="Parcel" EntitySet="Parcel" />
+      <End Role="Invoice" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoice_Warehouse" Association="Self.FK_Invoice_Warehouse">
+      <End Role="Warehouse" EntitySet="Warehouse" />
       <End Role="Invoice" EntitySet="Invoice" />
     </AssociationSet>
     <AssociationSet Name="FK_Parcel_Customer" Association="Self.FK_Parcel_Customer">

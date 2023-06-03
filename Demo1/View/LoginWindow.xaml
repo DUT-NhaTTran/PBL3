@@ -11,8 +11,9 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"        
         Name="loginWindow"
         Title="LoginWindow" Height="450" Width="800"
-        WindowStyle="None"
+        
         DataContext="{StaticResource LoginVM}"
+        WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         MouseDown="loginWindow_MouseDown"

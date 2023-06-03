@@ -45,7 +45,7 @@
                                VerticalAlignment="Top"
                                HorizontalAlignment="Right"
                                Margin="0,37,249,0"/>
-                    <TextBlock Text="{Binding SearchText}"
+                    <TextBlock Text="{Binding SearchParcelText,Mode=TwoWay}"
                                FontSize="25"
                                
                                Foreground="#E6EFF3"

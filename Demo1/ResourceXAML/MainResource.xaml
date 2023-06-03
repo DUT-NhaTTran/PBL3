@@ -5,8 +5,8 @@
     <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
     <viewmodel:AddFunctionModel x:Key="AddFM"></viewmodel:AddFunctionModel>
     <viewmodel:SearchParcelModel x:Key="SearchPM"></viewmodel:SearchParcelModel>
-    <viewmodel:Window1Model x:Key="W1"></viewmodel:Window1Model>
     <viewmodel:UpdateParcelModel x:Key="UpdatePM"></viewmodel:UpdateParcelModel>
     <viewmodel:OrderTrackingModel x:Key="OrderTM"></viewmodel:OrderTrackingModel>
     <viewmodel:WarehouseTrackingModel x:Key="WHTM"></viewmodel:WarehouseTrackingModel>
+    <viewmodel:StatisticModel x:Key="SM"></viewmodel:StatisticModel>
 </ResourceDictionary>

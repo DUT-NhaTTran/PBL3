@@ -1,21 +1,10 @@
-﻿using BCrypt.Net;
+﻿
 using Demo1.UserInfo;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using System.Linq;
-using System.Net;
-using System.Security;
-using System.Security.Cryptography;
-using System.Security.Principal;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Xml.Linq;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+
 
 namespace Demo1.ViewModel
 {
@@ -82,7 +71,7 @@ namespace Demo1.ViewModel
                 else
                 {
                     isLogin = false;
-                    MessageBox.Show("Sai tài khoản hoặc mật khẩu!");
+                    MessageBoxWindow.Show("Sai tài khoản hoặc mật khẩu!");
                 }
             }
         }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Demo1.Model;
 using Demo1.ViewModel;
 
 namespace Demo1.DTO
@@ -54,7 +55,29 @@ namespace Demo1.DTO
                 OnPropertyChanged(nameof(Cities));
             }
         }
-        public ICommand CreateInvoiceCommand { get; set; }
+
+        void ValidateParcelID()
+        {
+            int parcelID;
+            if (int.TryParse(ParcelID, out parcelID)||int.TryParse(SearchText,out parcelID))
+            {
+                // Chuỗi chứa số nguyên hợp lệ
+                using (var context = new PBL3_demoEntities())
+                {
+                    var thisParcel = context.Parcels.Where(x => x.parcelID == parcelID).FirstOrDefault();
+                    if (thisParcel == null)
+                    {
+                        MessageBoxWindow.Show("Đơn này không tồn tại trong hệ thống");
+                    }
+                }
+            }
+            else
+            {
+                // Chuỗi không chứa số nguyên hợp lệ
+                MessageBoxWindow.Show("Mã đơn hàng vừa nhập không hợp lệ");
+            }
+        }
+      
 
         private string _ShippingMethod;
         private string _ShippingFee;
@@ -431,6 +454,7 @@ namespace Demo1.DTO
                 {
                     searchText = value;
                     OnPropertyChanged();
+                    ValidateParcelID();
                 }
             }
         }

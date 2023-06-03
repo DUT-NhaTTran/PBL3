@@ -33,6 +33,8 @@
     <EntitySetMapping Name="Invoices">
       <EntityTypeMapping TypeName="PBL3_demoModel.Invoice">
         <MappingFragment StoreEntitySet="Invoice">
+          <ScalarProperty Name="shippingFee" ColumnName="shippingFee" />
+          <ScalarProperty Name="startWarehouseID" ColumnName="startWarehouseID" />
           <ScalarProperty Name="invoiceID" ColumnName="invoiceID" />
           <ScalarProperty Name="parcelID" ColumnName="parcelID" />
           <ScalarProperty Name="customerID" ColumnName="customerID" />

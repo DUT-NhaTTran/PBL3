@@ -97,8 +97,9 @@ namespace Demo1.ViewModel
             public ICommand ShowUpdateParcelCommand { get; set; }
             public ICommand ShowOrderTrackingCommand { get; set; }
             public ICommand ShowWarehouseTrackingCommand { get; set; }
+            public ICommand ShowStatisticCommand { get; set; }
             public ICommand ButtonCommand { get; set; }
-                    private BaseViewModel _currentChildView;
+            private BaseViewModel _currentChildView;
             private string _caption;
             private IconChar _icon;
             private Visibility _buttonVisibility;
@@ -228,12 +229,7 @@ namespace Demo1.ViewModel
                 Caption = "Tra cứu đơn";
                 Icon = IconChar.UserGroup;
             });
-            ShowWindow1Command = new RelayCommand<object>((t) => { return true; }, (t) =>
-            {
-                CurrentChildView = new Window1Model();
-                Caption = "Window1";
-                Icon = IconChar.UserGroup;
-            });
+            
             ShowUpdateParcelCommand = new RelayCommand<object>((o) => { return true; }, (o) =>
             {
                 CurrentChildView = new UpdateParcelModel();
@@ -250,6 +246,12 @@ namespace Demo1.ViewModel
             {
                 CurrentChildView = new WarehouseTrackingModel();
                 Caption = "Theo dõi kho hàng";
+                Icon = IconChar.UserGroup;
+            });
+            ShowStatisticCommand = new RelayCommand<object>((i) => { return true; }, (e) =>
+            {
+                CurrentChildView = new StatisticModel();
+                Caption = "Thống kê";
                 Icon = IconChar.UserGroup;
             });
         }

@@ -38,10 +38,13 @@
     <Property Name="invoiceID" Type="Int32" Nullable="false" />
     <Property Name="parcelID" Type="Int32" Nullable="false" />
     <Property Name="customerID" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="cost" Type="Double" />
+    <Property Name="cost" Type="Double" Nullable="false" />
     <Property Name="outputTime" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Customer" Relationship="Self.FK_Invoice_Customer" FromRole="Invoice" ToRole="Customer" />
     <NavigationProperty Name="Parcel" Relationship="PBL3_demoModel.FK_Invoice_Parcel" FromRole="Invoice" ToRole="Parcel" />
+    <Property Name="startWarehouseID" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="shippingFee" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Warehouse" Relationship="PBL3_demoModel.FK_Invoice_Warehouse" FromRole="Invoice" ToRole="Warehouse" />
   </EntityType>
   <EntityType Name="Receptionist">
     <Key>
@@ -184,6 +187,10 @@
       <End Role="Warehouse" EntitySet="Warehouses" />
       <End Role="WarehouseStaff" EntitySet="WarehouseStaffs" />
     </AssociationSet>
+    <AssociationSet Name="FK_Invoice_Warehouse" Association="PBL3_demoModel.FK_Invoice_Warehouse">
+      <End Role="Warehouse" EntitySet="Warehouses" />
+      <End Role="Invoice" EntitySet="Invoices" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Parcel">
     <Key>
@@ -283,6 +290,7 @@
     <NavigationProperty Name="Routes" Relationship="PBL3_demoModel.FK_Route_Warehouse" FromRole="Warehouse" ToRole="Route" />
     <NavigationProperty Name="WarehouseManagers" Relationship="PBL3_demoModel.FK_WarehouseManager_Warehouse" FromRole="Warehouse" ToRole="WarehouseManager" />
     <NavigationProperty Name="WarehouseStaffs" Relationship="PBL3_demoModel.FK_WarehouseStaff_Warehouse" FromRole="Warehouse" ToRole="WarehouseStaff" />
+    <NavigationProperty Name="Invoices" Relationship="PBL3_demoModel.FK_Invoice_Warehouse" FromRole="Warehouse" ToRole="Invoice" />
   </EntityType>
   <Association Name="FK_Parcel_Warehouse2">
     <End Type="PBL3_demoModel.Warehouse" Role="Warehouse" Multiplicity="0..1" />
@@ -341,6 +349,18 @@
       </Principal>
       <Dependent Role="WarehouseStaff">
         <PropertyRef Name="warehouseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_Warehouse">
+    <End Type="PBL3_demoModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+    <End Type="PBL3_demoModel.Invoice" Role="Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warehouse">
+        <PropertyRef Name="warehouseID" />
+      </Principal>
+      <Dependent Role="Invoice">
+        <PropertyRef Name="startWarehouseID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

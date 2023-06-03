@@ -99,8 +99,11 @@ namespace Demo1.ViewModel
                 if (parcelID != value)
                 {
                     parcelID = value;
+                   
+
                     OnPropertyChanged();
                     ValidateParcelID();
+
                 }
             }
         }
@@ -170,7 +173,7 @@ namespace Demo1.ViewModel
         }
 
 
-        void ValidateParcelID()
+        public void ValidateParcelID()
         {
             int parcelID;
             if (int.TryParse(ParcelID, out parcelID))
@@ -181,17 +184,17 @@ namespace Demo1.ViewModel
                     var thisParcel = context.Parcels.Where(x => x.parcelID == parcelID).FirstOrDefault();
                     if (thisParcel == null)
                     {
-                        MessageBox.Show("Đơn này không tồn tại trong hệ thống");
+                         MessageBoxWindow.Show("Đơn này không tồn tại trong hệ thống ");
                     }
                 }
             }
             else
             {
                 // Chuỗi không chứa số nguyên hợp lệ
-                MessageBox.Show("Mã đơn hàng vừa nhập không hợp lệ");
+                MessageBoxWindow.Show("Mã đơn hàng vừa nhập không hợp lệ");
             }
         }
-
+        
 
         public ICommand ShowParcelInfoCommand { get; set; }
 
@@ -215,7 +218,7 @@ namespace Demo1.ViewModel
             ExportfromWareHouseCommand =
                 new RelayCommand<object>((p) => { return !string.IsNullOrEmpty(ParcelID) && !CanExcuteFinalRouteCommand() && !isThreeTimeDeliveryFail(); }, (p) => ExportFromWarehouse());
 
-            ImportintoWreHouseCommand = new RelayCommand<object>((p) => { return !string.IsNullOrEmpty(ParcelID); }, (p) => ImportIntoWarehouse());
+            ImportintoWreHouseCommand = new RelayCommand<object>((p) => { return !string.IsNullOrEmpty(ParcelID) ; }, (p) => ImportIntoWarehouse());
 
             ParcelRouteCommand = new RelayCommand<object>((p) => { return !string.IsNullOrEmpty(ParcelID); },
                 (p => RouteCollection = ParcelRoute()));
@@ -252,7 +255,7 @@ namespace Demo1.ViewModel
         //tim tinh trang cuoi cung cua don hang phuc vu cho ham GetParcelInfo
         public string LastStatus()
         {
-            int iParcelID = Convert.ToInt32(ParcelID);
+            int iParcelID = TryParseParcelID(ParcelID);
             using (var Context = new PBL3_demoEntities())
             {
                 //TH mới tạo đơn chưa nhập vào kho
@@ -281,10 +284,10 @@ namespace Demo1.ViewModel
         }
         public void GetParcelInfo()
         {
-
+           
             using (var context = new PBL3_demoEntities())
             {
-                int iParcelID = Convert.ToInt32(ParcelID);
+                int iParcelID = TryParseParcelID(ParcelID);
                 var getInfo = context.Parcels.FirstOrDefault(x => x.parcelID == iParcelID);
                 if (getInfo != null)
                 {
@@ -293,10 +296,7 @@ namespace Demo1.ViewModel
                     else ShippingMethod = "Chậm";
                     Status = LastStatus();
                 }
-                else
-                {
-                    MessageBox.Show("Đơn hàng không tồn tại!");
-                }
+               
 
             }
         }
@@ -305,7 +305,7 @@ namespace Demo1.ViewModel
         // check if the warehouseID of this parcelID is equal with the warehouseID of this account
         bool CheckIDParcel(string _parcelID)
         {
-            int parcelID = int.Parse(_parcelID);
+            int parcelID = TryParseParcelID(_parcelID);
             string thisWarehouseID = WarehouseID;
             bool check;
             using (var context = new PBL3_demoEntities())
@@ -313,10 +313,29 @@ namespace Demo1.ViewModel
                 var warehouseIDOfParcel =
                       context.Parcels.Where(x => x.parcelID == parcelID).Select(x => x.currentWarehouseID)
                         .FirstOrDefault();
+                if (warehouseIDOfParcel == null)
+                {
+                    //MessageBox.Show("Đơn hàng không tồn tại nên không thể nhập");
+                    return true;
+                }
                 check = (thisWarehouseID == warehouseIDOfParcel);
+                return check;
             }
 
-            return check;
+        }
+
+        public bool CheckNullParcel(string _parcelID)
+        {
+            int parcelID = TryParseParcelID(_parcelID) ;
+            using (var context = new PBL3_demoEntities())
+            {
+                var thisParcel = context.Parcels.Where(x=>x.parcelID == parcelID) .FirstOrDefault();
+                if (thisParcel == null)
+                {
+                    MessageBoxWindow.Show("Đơn hàng không tồn tại trong hệ thống");
+                }
+                return thisParcel != null;
+            }
         }
 
 
@@ -326,7 +345,7 @@ namespace Demo1.ViewModel
         {
             if (CheckIDParcel(ParcelID))
             {
-                int parcelID = int.Parse(ParcelID);
+                int parcelID = TryParseParcelID(ParcelID);
                 using (var context = new PBL3_demoEntities())
                 {
                     var thisParcel = context.Parcels.Where(x => x.parcelID == parcelID).FirstOrDefault();
@@ -351,12 +370,12 @@ namespace Demo1.ViewModel
                     // if isFinalWarehouse --> after you exportFromwarehouse you cant ImportIntoWarehouse in any warehouse
                     // --> call function checkfinalwarehouse, if it's true -> Parcel.isFinalWarehouse = true
                     CheckFinalWarehouse();
-                    MessageBox.Show("Xuất thành công đơn hàng " + ParcelID + " ra khỏi " + thisWarehouseName);
+                    MessageBoxWindow.Show("Xuất thành công đơn hàng " + ParcelID + " ra khỏi " + thisWarehouseName);
                 }
             }
             else
             {
-                MessageBox.Show(
+                MessageBoxWindow.Show(
                     "Đơn hàng này hiện tại không thuộc kho của bạn nên không thể cập nhật, xin vui lòng kiểm tra lại");
             }
             GetParcelInfo();
@@ -369,7 +388,7 @@ namespace Demo1.ViewModel
         {
             using (var context = new PBL3_demoEntities())
             {
-                int parcelID = int.Parse(ParcelID);
+                int parcelID = TryParseParcelID(ParcelID);
                 var thisParcel = context.Parcels.Where(x => x.parcelID == parcelID).FirstOrDefault();
                 string thisWarehouseID = WarehouseID;
                 string thisWarehouseName = context.Warehouses.Where(x => x.warehouseID == thisWarehouseID)
@@ -387,73 +406,77 @@ namespace Demo1.ViewModel
                     canImportAgainToFinalWarehouse = thisWarehouseID == WarehouseIDAtFinalRoutes;
                 }
                 else canImportAgainToFinalWarehouse = true;
-                // check if this parcel has existed in this warehouse
-                if (!CheckIDParcel(ParcelID))
+                // check if thisParcel is null or not 
+                if (CheckNullParcel(ParcelID))
                 {
-                    // we get the FinalRoute , which means it will check you have delivered successfull/fail before or not , if SuccessOrFailDeliveryRoute == null -> so it have never delivered before, you can continue doing
-                    if (SuccessDeliveryRoute == null)
+                    // check if this parcel has existed in this warehouse
+                    if (!CheckIDParcel(ParcelID))
                     {
-                        // check if this parcel currentWarehouseID is null, if it not null so it wouldn't be this WareHouseID because we had checked it before -> it would be in another wareHouse so we cant update
-                        if (thisParcel.currentWarehouseID == null)
+                        // we get the FinalRoute , which means it will check you have delivered successfull/fail before or not , if SuccessOrFailDeliveryRoute == null -> so it have never delivered before, you can continue doing
+                        if (SuccessDeliveryRoute == null)
                         {
-                            // if it can Import to the FinalWarehouse and not in the FinalWarehouse
-                            if ((thisParcel.isFinalWarehouse == false || thisParcel.isFinalWarehouse == null) &&
-                                canImportAgainToFinalWarehouse)
+                            // check if this parcel currentWarehouseID is null, if it not null so it wouldn't be this WareHouseID because we had checked it before -> it would be in another wareHouse so we cant update
+                            if (thisParcel.currentWarehouseID == null)
                             {
-                                string details;
-                                thisParcel.currentWarehouseID = thisWarehouseID;
-                                //MessageBox.Show(CheckFinalWarehouse().ToString());
-                                // check if it is the final Warehouse , so we update the detail with the final words
-                                // changes the value of isFinalWarehouse
-                                thisParcel.isFinalWarehouse = CheckFinalWarehouse();
-                                if (thisParcel.isFinalWarehouse == true)
+                                // if it can Import to the FinalWarehouse and not in the FinalWarehouse
+                                if ((thisParcel.isFinalWarehouse == false || thisParcel.isFinalWarehouse == null) &&
+                                    canImportAgainToFinalWarehouse)
                                 {
-                                    MessageBox.Show("Tới kho đích rồiii");
-                                    details = "Nhập đơn hàng vào kho đích tại " + thisWarehouseName;
-                                    //FinalWarehouseDetail = "Đơn hàng đã đến đích";
+                                    string details;
+                                    thisParcel.currentWarehouseID = thisWarehouseID;
+                                    //MessageBox.Show(CheckFinalWarehouse().ToString());
+                                    // check if it is the final Warehouse , so we update the detail with the final words
+                                    // changes the value of isFinalWarehouse
+                                    thisParcel.isFinalWarehouse = CheckFinalWarehouse();
+                                    if (thisParcel.isFinalWarehouse == true)
+                                    {
+                                        MessageBoxWindow.Show("Tới kho đích rồiii");
+                                        details = "Nhập đơn hàng vào kho đích tại " + thisWarehouseName;
+                                        //FinalWarehouseDetail = "Đơn hàng đã đến đích";
+                                    }
+                                    else
+                                    {
+                                        details = "Nhập đơn hàng vào " + thisWarehouseName;
+                                        //FinalWarehouseDetail = "";
+                                    }
+
+                                    var newRoute = new Route
+                                    {
+                                        parcelID = parcelID,
+                                        relatedWarehouseID = thisWarehouseID,
+                                        details = details,
+                                        time = DateTime.Now,
+                                    };
+                                    context.Routes.Add(newRoute);
+                                    context.SaveChanges();
+
+                                    MessageBoxWindow.Show(
+                                        "Cập nhật thành công đơn hàng " + ParcelID + " vào " + thisWarehouseName);
                                 }
                                 else
                                 {
-                                    details = "Nhập đơn hàng vào " + thisWarehouseName;
-                                    //FinalWarehouseDetail = "";
+                                    // if it is FinalWarehouse but you Import it into another Warehouse (not the FinalWarehouse) , you cant Import
+                                    MessageBoxWindow.Show(
+                                        "Vì đơn hàng của bạn đã xuất ra khỏi từ kho đích nên không thể nhập vào các kho khác");
                                 }
-
-                                var newRoute = new Route
-                                {
-                                    parcelID = parcelID,
-                                    relatedWarehouseID = thisWarehouseID,
-                                    details = details,
-                                    time = DateTime.Now,
-                                };
-                                context.Routes.Add(newRoute);
-                                context.SaveChanges();
-
-                                MessageBox.Show(
-                                    "Cập nhật thành công đơn hàng " + ParcelID + " vào " + thisWarehouseName);
                             }
                             else
                             {
-                                // if it is FinalWarehouse but you Import it into another Warehouse (not the FinalWarehouse) , you cant Import
-                                MessageBox.Show(
-                                    "Vì đơn hàng của bạn đã xuất ra khỏi từ kho đích nên không thể nhập vào các kho khác");
+                                MessageBoxWindow.Show(
+                                    "Đơn hàng này thuộc thẩm quyền của kho khác, hiện tại không thuộc kho của bạn nên không thể cập nhật, xin vui lòng kiểm tra lại");
+
                             }
                         }
                         else
                         {
-                            MessageBox.Show(
-                                "Đơn hàng này thuộc thẩm quyền của kho khác, hiện tại không thuộc kho của bạn nên không thể cập nhật, xin vui lòng kiểm tra lại");
-
+                            // if you have delivered it one time , you cant update it into wareHouse
+                            MessageBoxWindow.Show("Đơn hàng này đã được giao thành công , không thể cập nhật vào kho");
                         }
                     }
                     else
                     {
-                        // if you have delivered it one time , you cant update it into wareHouse
-                        MessageBox.Show("Đơn hàng này đã được giao thành công , không thể cập nhật vào kho");
+                        MessageBoxWindow.Show("Đã tồn tại đơn hàng này trong kho, không thể cập nhật");
                     }
-                }
-                else
-                {
-                    MessageBox.Show("Đã tồn tại đơn hàng này trong kho, không thể cập nhật");
                 }
             }
             GetParcelInfo();
@@ -466,7 +489,7 @@ namespace Demo1.ViewModel
         ObservableCollection<string> ParcelRoute()
         {
             RouteCollection = new ObservableCollection<string>();
-            int parcelID = int.Parse(ParcelID);
+            int parcelID = TryParseParcelID(ParcelID);
             ObservableCollection<string> parcelRoutes = new ObservableCollection<string>();
             using (var context = new PBL3_demoEntities())
             {
@@ -504,7 +527,7 @@ namespace Demo1.ViewModel
         bool CheckFinalWarehouse()
         {
             bool finalWarehouseCheck = true;
-            int parcelID = int.Parse(ParcelID);
+            int parcelID = TryParseParcelID(ParcelID);
             using (var context = new PBL3_demoEntities())
             {
                 var thisParcel = context.Parcels.Where(x => x.parcelID == parcelID).FirstOrDefault();
@@ -543,7 +566,7 @@ namespace Demo1.ViewModel
 
         void AddSuccessDeliveryIntoRoutes()
         {
-            int parcelID = int.Parse(ParcelID);
+            int parcelID = TryParseParcelID(ParcelID);
             using (var context = new PBL3_demoEntities())
             {
                 var thisParcel = context.Parcels.Where(x => x.parcelID == parcelID).FirstOrDefault();
@@ -571,7 +594,7 @@ namespace Demo1.ViewModel
 
         void AddFailDeliveryIntoRoutes()
         {
-            int parcelID = int.Parse(ParcelID);
+            int parcelID = TryParseParcelID(ParcelID);
             using (var context = new PBL3_demoEntities())
             {
                 var thisParcel = context.Parcels.Where(x => x.parcelID == parcelID).FirstOrDefault();
@@ -597,7 +620,8 @@ namespace Demo1.ViewModel
         }
         bool CanExcuteFinalRouteCommand()
         {
-            int parcelID = int.Parse(ParcelID);
+            int parcelID = TryParseParcelID(ParcelID);
+           
             bool _canexecute = false;
             string thisWarehouseID = WarehouseID;
             using (var context = new PBL3_demoEntities())
@@ -660,13 +684,14 @@ namespace Demo1.ViewModel
         // check if you have delivery fail three times 
         bool isThreeTimeDeliveryFail()
         {
-            int parcelID = int.Parse(ParcelID);
+            int parcelID = TryParseParcelID (ParcelID);
             using (var context = new PBL3_demoEntities())
             {
-                var thisParcel = context.Parcels.Where(x => x.parcelID == parcelID).FirstOrDefault();
-                var TimesOfDeliveryFail = context.Routes.Where(x => x.parcelID == parcelID && x.details.Contains("thất bại")).Count();
-                // if thisParcel.Status == true -> so it not is failed delivery
-                if ((thisParcel.parcelStatus != true))
+            var thisParcel = context.Parcels.Where(x => x.parcelID == parcelID).FirstOrDefault();
+            var TimesOfDeliveryFail = context.Routes.Where(x => x.parcelID == parcelID && x.details.Contains("thất bại")).Count();
+            // if thisParcel.Status == true -> so it not is failed delivery
+            //Nhat : t dinh doi thanh if ((thisParcel!=null)&&(thisParcel.parcelStatus != true))
+                if (thisParcel!=null)
                 {
                     if (TimesOfDeliveryFail == 3)
                     {
@@ -684,7 +709,8 @@ namespace Demo1.ViewModel
                         context.SaveChanges();
                         GetParcelInfo();
                         return true;
-                    } else
+                    }
+                    else
                     {
                         return false;
                     }
@@ -696,5 +722,21 @@ namespace Demo1.ViewModel
                 }
             }
         }
+
+
+        public int TryParseParcelID(string parcelID)
+        {
+            int parsedParcelID;
+            if (int.TryParse(parcelID, out parsedParcelID))
+            {
+                return parsedParcelID;
+            }
+            else
+            {
+                // Xử lý khi không thể chuyển đổi parcelID thành kiểu int
+                return -1;
+            }
+        }
+
     }
 }

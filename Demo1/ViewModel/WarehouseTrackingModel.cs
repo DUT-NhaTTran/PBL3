@@ -18,200 +18,23 @@ namespace Demo1.ViewModel
 {
     public class WarehouseTrackingModel : PropertiesCollection
     {
-        private string searchText;
-        public string SearchText
-        {
-            get { return searchText; }
-            set
-            {
-                if (searchText != value)
-                {
-                    searchText = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        private string _WarehouseName;
-        public string WarehouseName
-        {
-            get { return _WarehouseName; }
-            set
-            {
-                if (_WarehouseName != value)
-                {
-                    _WarehouseName = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        private string _WarehouseID;
-        //public string WarehouseID
-        //{
-        //    get { return _WarehouseID; }
-        //    set
-        //    {
-        //        if (_WarehouseID != value)
-        //        {
-        //            _WarehouseID = value;
-        //            OnPropertyChanged();
-        //        }
-        //    }
-        //}
-        //private string _All;
-        //public string All
-        //{
-        //    get { return _All; }
-        //    set
-        //    {
-        //        _All = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-        //private string _South;
-        //public string South
-        //{
-        //    get { return _South; }
-        //    set
-        //    {
-        //        _South = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-        //private string _Center;
-        //public string Center
-        //{
-        //    get { return _Center; }
-        //    set
-        //    {
-        //        _Center = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-        //private string _North;
-        //public string North
-        //{
-        //    get { return _North; }
-        //    set
-        //    {
-        //        _North = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-        //private string _WHAddress;
-        //public string WHAddress
-        //{
-        //    get { return _WHAddress; }
-        //    set
-        //    {
-        //        _WHAddress = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-        //private string _WHCapacity;
-        //public string WHCapacity
-        //{
-        //    get { return _WHCapacity; }
-        //    set
-        //    {
-        //        _WHCapacity = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-        //private string _WHContained;
-        //public string WHContained
-        //{
-        //    get { return _WHContained; }
-        //    set
-        //    {
-        //        _WHContained = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-
 
         public ICommand SearchCommand { get; set; }
-        public ICommand StatisticOneWarehouseCommand { get; set; }
 
-        public ICommand StatisticAllWarehouseCommand { get; set; }
-
+        private string _WarehouseText;
+        public string WarehouseText
+        {
+            get { return _WarehouseText; }
+            set { _WarehouseText = value; OnPropertyChanged(nameof(WarehouseText)); }
+        }
         public ICommand NorthernWarehousesCollectionCommand { get; set; }
         public ICommand CentralWarehousesCollectionCommand { get; set; }
         public ICommand SouthernWarehousesCollectionCommand { get; set; }
 
         public ICommand AllWarehousesCollectionCommand { get; set; }
+        Dictionary<string, string> provinceRegions = DictionaryData.ProvinceRegions;
 
-        Dictionary<string, string> provinceRegions = new Dictionary<string, string>
-            {
-                // Các tỉnh thành tương ứng ở miền Bắc
-                {"Hà Giang","Bắc"},
-                {"Bắc Cạn","Bắc"},
-                {"Cao Bằng","Bắc"},
-                {"Tuyên Quang","Bắc"},
-                {"Lạng Sơn","Bắc"},
-                {"Thái Nguyên","Bắc"},
-                {"Bắc Giang","Bắc"},
-                {"Phú Thọ","Bắc"},
-                {"Quảng Ninh","Bắc"},
-                {"Lào Cai","Bắc"},
-                {"Điện Biên","Bắc"},
-                {"Yên Bái","Bắc"},
-                {"Lai Châu","Bắc"},
-                {"Hòa Bình","Bắc"},
-                {"Sơn La","Bắc"},
-                {"Hà Nội", "Bắc" },
-                {"Bắc Ninh","Bắc"},
-                {"Hải Dương","Bắc"},
-                {"Hà Nam","Bắc"},
-                {"Hải Phòng", "Bắc" },
-                {"Nam Định", "Bắc" },
-                {"Hưng Yên", "Bắc" },
-                {"Thái Bình", "Bắc" },
-                {"Ninh Bình", "Bắc" },
-                {"Vĩnh Phúc", "Bắc" },
-
-                // Các tỉnh thành tương ứng ở miền Trung
-                { "Nghệ An", "Trung" },
-                { "Thanh Hóa", "Trung" },
-                { "Hà Tĩnh", "Trung" },
-                { "Quảng Trị", "Trung" },
-                { "Quảng Bình", "Trung" },
-                { "Thừa Thiên – Huế", "Trung" },
-                { "Khánh Hoà", "Trung" },
-                { "Bình Thuận", "Trung" },
-                { "Ninh Thuận", "Trung" },
-                { "Quảng Nam", "Trung" },
-                { "Đà Nẵng", "Trung" },
-                { "Quảng Ngãi", "Trung" },
-                { "Bình Định", "Trung" },
-                { "Phú Yên ", "Trung" },
-                { "Kon Tum", "Trung" },
-                { "Gia Lai", "Trung" },
-                { "Đắk Nông", "Trung" },
-                { "Đắk Lắk", "Trung" },
-                { "Lâm Đồng", "Trung" },
-
-                // Các tỉnh thành tương ứng ở miền Nam
-                { "Bình Dương", "Nam" },
-                { "Bình Phước", "Nam" },
-                { "Tây Ninh", "Nam" },
-                { "Đồng Nai", "Nam" },
-                { "Bà Rịa - Vũng Tàu", "Nam" },
-                { "TP.HCM", "Nam" },
-                { "Long An", "Nam" },
-                { "Đồng Tháp", "Nam" },
-                { "An Giang", "Nam" },
-                { "Tiền Giang", "Nam" },
-                { "Bến Tre", "Nam" },
-                { "Trà Vinh", "Nam" },
-                { "Vĩnh Long", "Nam" },
-                { "Kiên Giang", "Nam" },
-                { "Hậu Giang", "Nam" },
-                { "Bạc Liêu", "Nam" },
-                { "Sóc Trăng", "Nam" },
-                { "Cà Mau", "Nam" },
-                { "Cần Thơ", "Nam" },
-
-            };
+     
         public class WarehouseInfo
         {
             public string WarehouseID { get; set; }
@@ -241,18 +64,18 @@ namespace Demo1.ViewModel
         }
         public void SetAllParcelInfo()
         {
-            SCustomerName = UserInfo.ParcelInfo.Instance.GetCustomerName(SearchText, 1);
-            RCustomerName = UserInfo.ParcelInfo.Instance.GetCustomerName(SearchText, 2);
-            SCustomerAddress = UserInfo.ParcelInfo.Instance.GetCustomerAddress(SearchText, 1);
-            RCustomerAddress = UserInfo.ParcelInfo.Instance.GetCustomerAddress(SearchText, 2);
-            SCustomerPhoneNumber = UserInfo.ParcelInfo.Instance.GetCustomerPhoneNumber(SearchText, 1);
-            RCustomerPhoneNumber = UserInfo.ParcelInfo.Instance.GetCustomerPhoneNumber(SearchText, 2);
-            ShippingFee = Convert.ToString(UserInfo.ParcelInfo.Instance.GetParcelTotalCost(SearchText));
+            SCustomerName = UserInfo.ParcelInfo.Instance.GetCustomerName(WarehouseText, 1);
+            RCustomerName = UserInfo.ParcelInfo.Instance.GetCustomerName(WarehouseText, 2);
+            SCustomerAddress = UserInfo.ParcelInfo.Instance.GetCustomerAddress(WarehouseText, 1);
+            RCustomerAddress = UserInfo.ParcelInfo.Instance.GetCustomerAddress(WarehouseText, 2);
+            SCustomerPhoneNumber = UserInfo.ParcelInfo.Instance.GetCustomerPhoneNumber(WarehouseText, 1);
+            RCustomerPhoneNumber = UserInfo.ParcelInfo.Instance.GetCustomerPhoneNumber(WarehouseText, 2);
+            ShippingFee = Convert.ToString(UserInfo.ParcelInfo.Instance.GetParcelTotalCost(WarehouseText));
             Cost = Convert.ToString(Convert.ToDouble(ShippingFee) - Convert.ToDouble(ParcelValue));
-            if (UserInfo.ParcelInfo.Instance.GetShippingMethod(SearchText)) ShippingMethod = "Giao hàng nhanh";
+            if (UserInfo.ParcelInfo.Instance.GetShippingMethod(WarehouseText)) ShippingMethod = "Giao hàng nhanh";
             else ShippingMethod = "Giao hàng chậm";
-            CreateTime = UserInfo.ParcelInfo.Instance.GetCreateTime(SearchText);
-            Details = UserInfo.ParcelInfo.Instance.GetDetails(SearchText);
+            CreateTime = UserInfo.ParcelInfo.Instance.GetCreateTime(WarehouseText);
+            Details = UserInfo.ParcelInfo.Instance.GetDetails(WarehouseText);
 
         }
         public class ParcelInfo
@@ -272,7 +95,7 @@ namespace Demo1.ViewModel
             SouthernWarehousesCollectionCommand = new RelayCommand<object>((p) => { return true; }, (p) =>GetWarehouseFilterd("Nam"));
             AllWarehousesCollectionCommand = new RelayCommand<object>((p) => { return true; }, (p) => GetWarehouseFilterd("All"));
             SearchCommand = new RelayCommand<object>((p) => { return true; },
-                (p) => { GetWarehouseSearched(SearchText);});
+                (p) => { GetWarehouseSearched(WarehouseText);});
             All = SetNumberOfWarehouseFiterd("All");
             South = SetNumberOfWarehouseFiterd("Nam");
             Center = SetNumberOfWarehouseFiterd("Trung");
@@ -295,7 +118,8 @@ namespace Demo1.ViewModel
                     })
                     .ToList();
 
-                
+                ParcelInfoList.Clear();
+
                 foreach (var parcel in parcels)
                 {
                     ParcelInfoList.Add(parcel);
@@ -348,7 +172,7 @@ namespace Demo1.ViewModel
                 }
                 else
                 {
-                    MessageBox.Show("Không tìm thấy thông tin kho");
+                    MessageBoxWindow.Show("Không tìm thấy thông tin kho");
                 }
             }
         }
@@ -413,7 +237,7 @@ namespace Demo1.ViewModel
             }
             return warehousesOfThisRegionCollection;
         }
-        //viewmodel.WarehouseCapacity=Get(warehouseID)
+        
         public string FindContained(string WHID)
         {
             double res = 0;
@@ -435,7 +259,7 @@ namespace Demo1.ViewModel
                 count = Count;
             }
             res = (double)count / capacity;
-            return Convert.ToString(res) + "%";
+            return Convert.ToString(res*100) + "%";
         }
       
     }

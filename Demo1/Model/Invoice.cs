@@ -17,10 +17,13 @@ namespace Demo1.Model
         public int invoiceID { get; set; }
         public int parcelID { get; set; }
         public string customerID { get; set; }
-        public Nullable<double> cost { get; set; }
+        public double cost { get; set; }
         public Nullable<System.DateTime> outputTime { get; set; }
+        public string startWarehouseID { get; set; }
+        public double shippingFee { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Parcel Parcel { get; set; }
+        public virtual Warehouse Warehouse { get; set; }
     }
 }

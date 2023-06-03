@@ -22,6 +22,7 @@ namespace Demo1.Model
             this.Routes = new HashSet<Route>();
             this.WarehouseManagers = new HashSet<WarehouseManager>();
             this.WarehouseStaffs = new HashSet<WarehouseStaff>();
+            this.Invoices = new HashSet<Invoice>();
         }
     
         public string warehouseID { get; set; }
@@ -39,5 +40,7 @@ namespace Demo1.Model
         public virtual ICollection<WarehouseManager> WarehouseManagers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WarehouseStaff> WarehouseStaffs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Invoice> Invoices { get; set; }
     }
 }

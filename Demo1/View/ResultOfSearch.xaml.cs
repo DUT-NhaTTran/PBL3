@@ -20,7 +20,7 @@ namespace Demo1
     /// </summary>
     public partial class ResultOfSearch : Window
     {
-        public ResultOfSearch(string _parcelID)
+        public ResultOfSearch()
         {
             InitializeComponent();
            

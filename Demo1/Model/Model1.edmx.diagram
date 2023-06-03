@@ -28,6 +28,7 @@
         <AssociationConnector Association="PBL3_demoModel.FK_Route_Warehouse" />
         <AssociationConnector Association="PBL3_demoModel.FK_WarehouseManager_Warehouse" />
         <AssociationConnector Association="PBL3_demoModel.FK_WarehouseStaff_Warehouse" />
+        <AssociationConnector Association="PBL3_demoModel.FK_Invoice_Warehouse" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
