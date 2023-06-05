@@ -47,25 +47,25 @@ namespace Demo1
 
         }
 
-        private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
+        //private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        //{
 
-            var listBox = (ListBox)sender;
-            var viewModel = (SearchParcelModel)DataContext;
-            var selectedItem = listBox.SelectedItem as ParcelInfoInSearch;
+        //    var listBox = (ListBox)sender;
+        //    var viewModel = (SearchParcelModel)DataContext;
+        //    var selectedItem = listBox.SelectedItem as ParcelInfoInSearch;
 
-            if (selectedItem != null)
-            {
-                var textBlock = (TextBlock)e.OriginalSource;
-                var id = textBlock.Text;
-                viewModel.SearchParcelText = id;
+        //    if (selectedItem != null)
+        //    {
+        //        var textBlock = (TextBlock)e.OriginalSource;
+        //        var id = textBlock.Text;
+        //        viewModel.SearchParcelText = id;
                
-            }
+        //    }
 
-            viewModel.OpenResultOfSerchWindow();
+        //    viewModel.OpenResultOfSerchWindow();
           
 
-        }
+        //}
 
         private void IDTextBlock_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {

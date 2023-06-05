@@ -57,6 +57,7 @@ namespace Demo1.ViewModel
         {
             using (var context = new PBL3_demoEntities())
             {
+                ParcelInfoListInSearch.Clear();
                 var parcels = context.Parcels.ToList();
                 //ParcelInfoListInSearch = new ObservableCollection<ParcelInfoInSearch>();
 
@@ -130,7 +131,8 @@ namespace Demo1.ViewModel
             RCustomerPhoneNumber = ParcelInfo.Instance.GetCustomerPhoneNumber(SearchParcelText, 2);
             ShippingFee = Convert.ToString(ParcelInfo.Instance.GetParcelTotalCost(SearchParcelText));
             ParcelValue=Convert.ToString(ParcelInfo.Instance.GetParcelValue(SearchParcelText));
-            Cost=Convert.ToString(Convert.ToDouble(ShippingFee)-Convert.ToDouble(ParcelValue));
+            Cost = (isCOD) ? Convert.ToString(Convert.ToDouble(ShippingFee) - Convert.ToDouble(ParcelValue)) : ShippingFee;
+           
             if (ParcelInfo.Instance.GetShippingMethod(SearchParcelText)) ShippingMethod = "Giao hàng nhanh";
             else ShippingMethod = "Giao hàng chậm";
             CreateTime=ParcelInfo.Instance.GetCreateTime(SearchParcelText);

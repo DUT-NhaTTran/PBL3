@@ -27,8 +27,6 @@ namespace Demo1.Model
     
         public virtual DbSet<AccessRight> AccessRights { get; set; }
         public virtual DbSet<Account> Accounts { get; set; }
-        public virtual DbSet<Customer> Customers { get; set; }
-        public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<Receptionist> Receptionists { get; set; }
         public virtual DbSet<Route> Routes { get; set; }
         public virtual DbSet<ShipFee> ShipFees { get; set; }
@@ -36,5 +34,7 @@ namespace Demo1.Model
         public virtual DbSet<WarehouseStaff> WarehouseStaffs { get; set; }
         public virtual DbSet<Parcel> Parcels { get; set; }
         public virtual DbSet<Warehouse> Warehouses { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Invoice> Invoices { get; set; }
     }
 }

@@ -19,33 +19,6 @@
     <Property Name="Salt" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="AccessRight" Relationship="Self.FK_Account_AccessRight" FromRole="Account" ToRole="AccessRight" />
   </EntityType>
-  <EntityType Name="Customer">
-    <Key>
-      <PropertyRef Name="customerID" />
-    </Key>
-    <Property Name="customerID" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="customerName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="customerLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="customerPhoneNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Invoices" Relationship="Self.FK_Invoice_Customer" FromRole="Customer" ToRole="Invoice" />
-    <NavigationProperty Name="Parcels" Relationship="PBL3_demoModel.FK_Parcel_Customer" FromRole="Customer" ToRole="Parcel" />
-    <NavigationProperty Name="Parcels1" Relationship="PBL3_demoModel.FK_Parcel_Customer1" FromRole="Customer" ToRole="Parcel" />
-  </EntityType>
-  <EntityType Name="Invoice">
-    <Key>
-      <PropertyRef Name="invoiceID" />
-    </Key>
-    <Property Name="invoiceID" Type="Int32" Nullable="false" />
-    <Property Name="parcelID" Type="Int32" Nullable="false" />
-    <Property Name="customerID" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="cost" Type="Double" Nullable="false" />
-    <Property Name="outputTime" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="Customer" Relationship="Self.FK_Invoice_Customer" FromRole="Invoice" ToRole="Customer" />
-    <NavigationProperty Name="Parcel" Relationship="PBL3_demoModel.FK_Invoice_Parcel" FromRole="Invoice" ToRole="Parcel" />
-    <Property Name="startWarehouseID" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="shippingFee" Type="Double" Nullable="false" />
-    <NavigationProperty Name="Warehouse" Relationship="PBL3_demoModel.FK_Invoice_Warehouse" FromRole="Invoice" ToRole="Warehouse" />
-  </EntityType>
   <EntityType Name="Receptionist">
     <Key>
       <PropertyRef Name="receptionistID" />
@@ -115,23 +88,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Invoice_Customer">
-    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-    <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Customer">
-        <PropertyRef Name="customerID" />
-      </Principal>
-      <Dependent Role="Invoice">
-        <PropertyRef Name="customerID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="PBL3_demoEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="AccessRights" EntityType="Self.AccessRight" />
     <EntitySet Name="Accounts" EntityType="Self.Account" />
-    <EntitySet Name="Customers" EntityType="Self.Customer" />
-    <EntitySet Name="Invoices" EntityType="Self.Invoice" />
     <EntitySet Name="Receptionists" EntityType="Self.Receptionist" />
     <EntitySet Name="Routes" EntityType="Self.Route" />
     <EntitySet Name="ShipFees" EntityType="Self.ShipFee" />
@@ -141,23 +100,7 @@
       <End Role="AccessRight" EntitySet="AccessRights" />
       <End Role="Account" EntitySet="Accounts" />
     </AssociationSet>
-    <AssociationSet Name="FK_Invoice_Customer" Association="Self.FK_Invoice_Customer">
-      <End Role="Customer" EntitySet="Customers" />
-      <End Role="Invoice" EntitySet="Invoices" />
-    </AssociationSet>
     <EntitySet Name="Parcels" EntityType="PBL3_demoModel.Parcel" />
-    <AssociationSet Name="FK_Parcel_Customer" Association="PBL3_demoModel.FK_Parcel_Customer">
-      <End Role="Customer" EntitySet="Customers" />
-      <End Role="Parcel" EntitySet="Parcels" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Parcel_Customer1" Association="PBL3_demoModel.FK_Parcel_Customer1">
-      <End Role="Customer" EntitySet="Customers" />
-      <End Role="Parcel" EntitySet="Parcels" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Invoice_Parcel" Association="PBL3_demoModel.FK_Invoice_Parcel">
-      <End Role="Parcel" EntitySet="Parcels" />
-      <End Role="Invoice" EntitySet="Invoices" />
-    </AssociationSet>
     <AssociationSet Name="FK_Route_Parcel" Association="PBL3_demoModel.FK_Route_Parcel">
       <End Role="Parcel" EntitySet="Parcels" />
       <End Role="Route" EntitySet="Routes" />
@@ -187,6 +130,24 @@
       <End Role="Warehouse" EntitySet="Warehouses" />
       <End Role="WarehouseStaff" EntitySet="WarehouseStaffs" />
     </AssociationSet>
+    <EntitySet Name="Customers" EntityType="PBL3_demoModel.Customer" />
+    <EntitySet Name="Invoices" EntityType="PBL3_demoModel.Invoice" />
+    <AssociationSet Name="FK_Invoice_Customer" Association="PBL3_demoModel.FK_Invoice_Customer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Invoice" EntitySet="Invoices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parcel_Customer" Association="PBL3_demoModel.FK_Parcel_Customer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Parcel" EntitySet="Parcels" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parcel_Customer1" Association="PBL3_demoModel.FK_Parcel_Customer1">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Parcel" EntitySet="Parcels" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoice_Parcel" Association="PBL3_demoModel.FK_Invoice_Parcel">
+      <End Role="Parcel" EntitySet="Parcels" />
+      <End Role="Invoice" EntitySet="Invoices" />
+    </AssociationSet>
     <AssociationSet Name="FK_Invoice_Warehouse" Association="PBL3_demoModel.FK_Invoice_Warehouse">
       <End Role="Warehouse" EntitySet="Warehouses" />
       <End Role="Invoice" EntitySet="Invoices" />
@@ -210,49 +171,13 @@
     <Property Name="isCOD" Type="Boolean" />
     <Property Name="currentWarehouseID" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="isFinalWarehouse" Type="Boolean" />
-    <NavigationProperty Name="Customer" Relationship="PBL3_demoModel.FK_Parcel_Customer" FromRole="Parcel" ToRole="Customer" />
-    <NavigationProperty Name="Customer1" Relationship="PBL3_demoModel.FK_Parcel_Customer1" FromRole="Parcel" ToRole="Customer" />
-    <NavigationProperty Name="Invoices" Relationship="PBL3_demoModel.FK_Invoice_Parcel" FromRole="Parcel" ToRole="Invoice" />
     <NavigationProperty Name="Routes" Relationship="PBL3_demoModel.FK_Route_Parcel" FromRole="Parcel" ToRole="Route" />
     <NavigationProperty Name="ShipFees" Relationship="PBL3_demoModel.FK_ShipFee_Parcel" FromRole="Parcel" ToRole="ShipFee" />
     <NavigationProperty Name="Warehouse" Relationship="PBL3_demoModel.FK_Parcel_Warehouse2" FromRole="Parcel" ToRole="Warehouse" />
+    <NavigationProperty Name="Customer" Relationship="PBL3_demoModel.FK_Parcel_Customer" FromRole="Parcel" ToRole="Customer" />
+    <NavigationProperty Name="Customer1" Relationship="PBL3_demoModel.FK_Parcel_Customer1" FromRole="Parcel" ToRole="Customer" />
+    <NavigationProperty Name="Invoices" Relationship="PBL3_demoModel.FK_Invoice_Parcel" FromRole="Parcel" ToRole="Invoice" />
   </EntityType>
-  <Association Name="FK_Parcel_Customer">
-    <End Type="PBL3_demoModel.Customer" Role="Customer" Multiplicity="1" />
-    <End Type="PBL3_demoModel.Parcel" Role="Parcel" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Customer">
-        <PropertyRef Name="customerID" />
-      </Principal>
-      <Dependent Role="Parcel">
-        <PropertyRef Name="RCustomerID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Parcel_Customer1">
-    <End Type="PBL3_demoModel.Customer" Role="Customer" Multiplicity="1" />
-    <End Type="PBL3_demoModel.Parcel" Role="Parcel" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Customer">
-        <PropertyRef Name="customerID" />
-      </Principal>
-      <Dependent Role="Parcel">
-        <PropertyRef Name="SCustomerID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Invoice_Parcel">
-    <End Type="PBL3_demoModel.Parcel" Role="Parcel" Multiplicity="1" />
-    <End Type="PBL3_demoModel.Invoice" Role="Invoice" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Parcel">
-        <PropertyRef Name="parcelID" />
-      </Principal>
-      <Dependent Role="Invoice">
-        <PropertyRef Name="parcelID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Route_Parcel">
     <End Type="PBL3_demoModel.Parcel" Role="Parcel" Multiplicity="1" />
     <End Type="PBL3_demoModel.Route" Role="Route" Multiplicity="*" />
@@ -349,6 +274,82 @@
       </Principal>
       <Dependent Role="WarehouseStaff">
         <PropertyRef Name="warehouseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="customerID" />
+    </Key>
+    <Property Name="customerID" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="customerName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="customerLocation" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="customerPhoneNumber" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="joinTime" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Invoices" Relationship="PBL3_demoModel.FK_Invoice_Customer" FromRole="Customer" ToRole="Invoice" />
+    <NavigationProperty Name="Parcels" Relationship="PBL3_demoModel.FK_Parcel_Customer" FromRole="Customer" ToRole="Parcel" />
+    <NavigationProperty Name="Parcels1" Relationship="PBL3_demoModel.FK_Parcel_Customer1" FromRole="Customer" ToRole="Parcel" />
+  </EntityType>
+  <EntityType Name="Invoice">
+    <Key>
+      <PropertyRef Name="invoiceID" />
+    </Key>
+    <Property Name="invoiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="parcelID" Type="Int32" Nullable="false" />
+    <Property Name="customerID" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="cost" Type="Double" Nullable="false" />
+    <Property Name="outputTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="startWarehouseID" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="shippingFee" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="PBL3_demoModel.FK_Invoice_Customer" FromRole="Invoice" ToRole="Customer" />
+    <NavigationProperty Name="Parcel" Relationship="PBL3_demoModel.FK_Invoice_Parcel" FromRole="Invoice" ToRole="Parcel" />
+    <NavigationProperty Name="Warehouse" Relationship="PBL3_demoModel.FK_Invoice_Warehouse" FromRole="Invoice" ToRole="Warehouse" />
+  </EntityType>
+  <Association Name="FK_Invoice_Customer">
+    <End Type="PBL3_demoModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="PBL3_demoModel.Invoice" Role="Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="customerID" />
+      </Principal>
+      <Dependent Role="Invoice">
+        <PropertyRef Name="customerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parcel_Customer">
+    <End Type="PBL3_demoModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="PBL3_demoModel.Parcel" Role="Parcel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="customerID" />
+      </Principal>
+      <Dependent Role="Parcel">
+        <PropertyRef Name="RCustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parcel_Customer1">
+    <End Type="PBL3_demoModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="PBL3_demoModel.Parcel" Role="Parcel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="customerID" />
+      </Principal>
+      <Dependent Role="Parcel">
+        <PropertyRef Name="SCustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_Parcel">
+    <End Type="PBL3_demoModel.Parcel" Role="Parcel" Multiplicity="1" />
+    <End Type="PBL3_demoModel.Invoice" Role="Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parcel">
+        <PropertyRef Name="parcelID" />
+      </Principal>
+      <Dependent Role="Invoice">
+        <PropertyRef Name="parcelID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

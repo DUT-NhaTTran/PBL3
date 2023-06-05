@@ -18,7 +18,9 @@ namespace Demo1.Model
         public int parcelID { get; set; }
         public string customerID { get; set; }
         public double cost { get; set; }
-        public Nullable<System.DateTime> outputTime { get; set; }
+        //public Nullable<System.DateTime> outputTime { get; set; }
+        public System.DateTime outputTime { get; set; }
+
         public string startWarehouseID { get; set; }
         public double shippingFee { get; set; }
     

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Demo1.ViewModel;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Demo1.View
+namespace Demo1
 {
     /// <summary>
     /// Interaction logic for StatisticsView.xaml
@@ -23,6 +25,32 @@ namespace Demo1.View
         public StatisticsView()
         {
             InitializeComponent();
+        }
+
+        private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is DatePicker datePicker)
+            {
+                if (datePicker.SelectedDate.HasValue)
+                {
+                    DateTime selectedDate = datePicker.SelectedDate.Value;
+                    ((StatisticModel)DataContext).SelectedDateChangedAction(selectedDate);
+                }
+            }
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var viewModel = (StatisticModel)DataContext;
+
+            if (viewModel != null)
+            {
+                viewModel.SearchWHID = ((TextBox)sender).Text; // Cập nhật giá trị SearchWHIDText từ TextBox
+
+                //MessageBox.Show(viewModel.SearchParcelText); // Hiển thị kết quả mới nhất
+                viewModel.LoadAllWHInfoSearched(); // Tải danh sách Parcel mới dựa trên kết quả tìm kiếm
+
+            }
         }
     }
 }

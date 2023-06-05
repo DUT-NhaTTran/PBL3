@@ -1,12 +1,13 @@
-﻿<UserControl x:Class="Demo1.View.StatisticsView"
+﻿<UserControl x:Class="Demo1.StatisticsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Demo1.View"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
+             DataContext="{StaticResource SM}"
              d:DesignHeight="700" d:DesignWidth="1000">
     <Border CornerRadius="20"
             Background="#8A8683">
@@ -22,8 +23,9 @@
                         Background="#1ECFD6" Grid.ColumnSpan="2">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="440"/>
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
                         <Grid Grid.Column="0">
@@ -41,33 +43,73 @@
                                            Margin="0 10 0 0"
                                            Width="280" Height="50"
                                            Foreground="#5A4D4C"/>
-                                <TextBlock Text="1512"
+                                <TextBlock Text="{Binding TotalParcel}"
                                            FontSize="40"
                                            Width="Auto" Height="Auto"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center"
                                            Foreground="#5A4D4C"
                                            Margin="-280 20 0 0"/>
-                                <TextBlock Text="so với tháng trước"
+                                <!--<TextBlock Text="so với tháng trước"
                                            FontSize="20"
                                            Width="Auto" Height="Auto"
                                            VerticalAlignment="Bottom"
                                            HorizontalAlignment="Center"
                                            Foreground="#5A4D4C"
-                                           Margin="-280 0 0 10"/>
-                                
-                                <TextBlock Text="+25%"
+                                           Margin="-280 0 0 10"/>-->
+
+                                <TextBlock Text="{Binding ComparedParcelFigure}"
                                            FontSize="20"
                                            Width="Auto" Height="Auto"
                                            VerticalAlignment="Bottom"
                                            HorizontalAlignment="Center"
                                            Foreground="#5A4D4C"
                                            Margin="-550 0 0 10"/>
-                                
+
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <StackPanel Orientation="Vertical">
+                                <fa:IconImage Icon="ChartLine"
+                                              Width="40" Height="40"
+                                              Margin="20 15 20 0"
+                                              Foreground="#5A4D4C"
+                                              VerticalAlignment="Top"
+                                              HorizontalAlignment="Left"/>
+                                <TextBlock Text="Khách hàng mới"
+                                           FontSize="20"
+                                           FontFamily="Montserrat"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Center"
+                                           Margin="0 -45 50 0"
+                                           Width="Auto" Height="Auto"
+                                           Foreground="#5A4D4C"/>
+                                <TextBlock Text="{Binding NewCustomer}"
+                                           FontSize="40"
+                                           Width="Auto" Height="Auto"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Foreground="#5A4D4C"
+                                           Margin="0 5 0 0"/>
+                                <!--<TextBlock Text="so với tháng trước"
+                                           FontSize="20"
+                                           Width="Auto" Height="Auto"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Foreground="#5A4D4C"
+                                           Margin="20 5 0 0"/>-->
+
+                                <TextBlock Text="{Binding ComparedNewCustomerFigure}"
+                                           FontSize="20"
+                                           Width="Auto" Height="Auto"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           Foreground="#5A4D4C"
+                                           Margin="50 -25 0 0"/>
                             </StackPanel>
                         </Grid>
 
-                        <Grid Grid.Column="1">
+                        <Grid Grid.Column="2">
                             <StackPanel Orientation="Vertical">
                                 <fa:IconImage Icon="ChartLine"
                                               Width="40" Height="40"
@@ -83,22 +125,22 @@
                                            Margin="0 -45 50 0"
                                            Width="Auto" Height="Auto"
                                            Foreground="#5A4D4C"/>
-                                <TextBlock Text="900,5124,596 vnđ"
+                                <TextBlock Text="{Binding Revenue}"
                                            FontSize="40"
                                            Width="Auto" Height="Auto"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center"
                                            Foreground="#5A4D4C"
                                            Margin="0 5 0 0"/>
-                                <TextBlock Text="so với tháng trước"
+                                <!--<TextBlock Text="so với tháng trước"
                                            FontSize="20"
                                            Width="Auto" Height="Auto"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center"
                                            Foreground="#5A4D4C"
-                                           Margin="20 5 0 0"/>
+                                           Margin="20 5 0 0"/>-->
 
-                                <TextBlock Text="+0.3%"
+                                <TextBlock Text="{Binding ComparedRevenueFigure}"
                                            FontSize="20"
                                            Width="Auto" Height="Auto"
                                            VerticalAlignment="Top"
@@ -110,13 +152,31 @@
                     </Grid>
                 </Border>
             </Grid>
+            <Grid Grid.Row="1">
+                <StackPanel Margin="10">
 
+
+                    <Grid>
+                        <StackPanel>
+                            <DatePicker FontSize="24"
+                                        Foreground="Red"
+                                        SelectedDateChanged="DatePicker_SelectedDateChanged"
+                                        SelectedDate="{Binding SelectedDate}"
+                                        SelectedDateFormat="Long"/>
+                            <!--SelectedDate="1/1/2023"-->
+
+
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Grid>
             <Grid Grid.Row="2">
                 <Border CornerRadius="20"
                         Background="#1ECFD6"
                         Margin="20">
                     <Grid>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="100"/>
                             <RowDefinition Height="100"/>
                             <RowDefinition />
                         </Grid.RowDefinitions>
@@ -145,22 +205,136 @@
                                                    materialDesign:HintAssist.FloatingScale="0"
                                                    materialDesign:HintAssist.Foreground="Blue"
                                                    FontSize="30" 
+                                                   TextChanged="TextBox_TextChanged"
                                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                                    Text="{Binding CustomerName}" 
                                                    BorderThickness="0"
                                                    Foreground="Black" Width="270" Height="70" />
                                     </StackPanel>
                                 </Border>
-                                <Button Content="Tìm kiếm" 
+                                <Button Content="Mới" 
+                                        IsDefault="true" 
+                                        Command="{Binding ResetSortCommand}"
+                                        Background="#8ED3F4" Foreground="#5A4D4C" 
+                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
+                                        Height="44" Width="100"
+                                        />
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="180"/>
+
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <TextBlock Text="STT" FontSize="35"/>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <Button Content="Asc" 
                                         IsDefault="true" 
                                         Background="#8ED3F4" Foreground="#5A4D4C" 
                                         FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
                                         Height="45" Width="150"
-                                        Margin="15,0,0,0"/>
-                            </StackPanel>                            
+                                        Command="{Binding IDSortAscendingCommand}"
+                                        Margin="0,0,0,55"/>
+                                <Button Content="Des" 
+                                        IsDefault="true" 
+                                        Background="#8ED3F4" Foreground="#5A4D4C" 
+                                        Command="{Binding IDSortCommand}"
+                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
+                                        Height="45" Width="150"
+                                        Margin="0,50,0,5"/>
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <Button Content="Asc" 
+                                        IsDefault="true" 
+                                        Command="{Binding CapacitySortAscendingCommand}"
+                                        Background="#8ED3F4" Foreground="#5A4D4C" 
+                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
+                                        Height="45" Width="150"
+                                        Margin="0,0,0,55"/>
+                                <Button Content="Des" 
+                                        IsDefault="true" 
+                                        Command="{Binding CapacitySortCommand}"
+                                        Background="#8ED3F4" Foreground="#5A4D4C" 
+                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
+                                        Height="45" Width="150"
+                                        Margin="0,50,0,5"/>
+                            </Grid>
+                            <Grid Grid.Column="3">
+                                <Button Content="Asc" 
+                                        IsDefault="true" 
+                                        Background="#8ED3F4" Foreground="#5A4D4C" 
+                                        Command="{Binding NumberOfParcelSortAscendingCommand}"
+                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
+                                        Height="45" Width="150"
+                                        Margin="0,0,0,55"/>
+                                <Button Content="Des" 
+                                        IsDefault="true" 
+                                        Command="{Binding NumberOfParcelSortCommand}"
+                                        Background="#8ED3F4" Foreground="#5A4D4C" 
+                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
+                                        Height="45" Width="150"
+                                        Margin="0,50,0,5"/>
+                            </Grid>
+                            <Grid Grid.Column="4">
+                                <Button Content="Asc" 
+                                        IsDefault="true" 
+                                        Command="{Binding RevenueSortAscendingCommand}"
+                                        Background="#8ED3F4" Foreground="#5A4D4C" 
+                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
+                                        Height="45" Width="150"
+                                        Margin="0,0,0,55"/>
+                                <Button Content="Des" 
+                                        IsDefault="true" 
+                                        Command="{Binding RevenueSortCommand}"
+                                        Background="#8ED3F4" Foreground="#5A4D4C" 
+                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
+                                        Height="45" Width="150"
+                                        Margin="0,50,0,5"/>
+                            </Grid>
+
+                            <Grid Grid.Column="5">
+                                <Button Content="Asc" 
+                                        IsDefault="true" 
+                                        Background="#8ED3F4" Foreground="#5A4D4C" 
+                                        Command="{Binding NumberOfStaffSortAscendingCommand}"
+                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
+                                        Height="45" Width="150"
+                                        Margin="0,0,0,55"/>
+                                <Button Content="Des" 
+                                        IsDefault="true" 
+                                        Background="#8ED3F4" Foreground="#5A4D4C" 
+                                        Command="{Binding NumberOfStaffSortCommand}"
+                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
+                                        Height="45" Width="150"
+                                        Margin="0,50,0,5"/>
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Row="2">
+
+                            <ListView ItemsSource="{Binding warehouseList}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <WrapPanel>
+                                            <TextBlock Text="{Binding STT}" Margin="0,0,10,0" />
+                                            <TextBlock Grid.Column="1" Text="{Binding WHID}" Margin="10,0,10,0" />
+                                            <TextBlock Grid.Column="2" Text="{Binding Capacity}" Margin="10,0,10,0" />
+                                            <TextBlock Grid.Column="3" Text="{Binding NumParcels}" Margin="10,0,10,0" />
+                                            <TextBlock Grid.Column="4" Text="{Binding Revenue}" Margin="10,0,10,0" />
+                                            <TextBlock Grid.Column="5" Text="{Binding NumStaffs}" Margin="10,0,0,0" />
+                                        </WrapPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
                         </Grid>
                     </Grid>
-                    
+
                 </Border>
             </Grid>
         </Grid>

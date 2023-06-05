@@ -355,7 +355,7 @@
             <local:WarehouseTracking/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:StatisticModel}">
-            <local:Window1/>
+            <local:StatisticsView/>
         </DataTemplate>
     </Window.Resources>
 

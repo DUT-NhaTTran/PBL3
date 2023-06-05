@@ -121,7 +121,7 @@ namespace Demo1.ViewModel
                 }
             }
         }
-       
+        
         //public string SetBasicParcelStatus(ParcelInfo parcelInfo)
         //{
 
@@ -135,7 +135,7 @@ namespace Demo1.ViewModel
 
         //    }
         //    //check xem đơn giao thành công/thất bại/bị trả lại
-            
+
         //    using(var context1 = new PBL3_demoEntities()) 
         //    {
         //        int check = GetDeliveryStatus();

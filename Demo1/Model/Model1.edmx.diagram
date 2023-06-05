@@ -7,19 +7,13 @@
       <Diagram DiagramId="c9418f0090eb4ed9996b3370b0936d64" Name="Diagram1">
         <EntityTypeShape EntityType="PBL3_demoModel.AccessRight" Width="1.5" PointX="10.75" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="PBL3_demoModel.Account" Width="1.5" PointX="13" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="PBL3_demoModel.Customer" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="PBL3_demoModel.Invoice" Width="1.5" PointX="5.25" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="PBL3_demoModel.Receptionist" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="PBL3_demoModel.Route" Width="1.5" PointX="8.875" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PBL3_demoModel.ShipFee" Width="1.5" PointX="5.25" PointY="10.625" IsExpanded="true" />
         <EntityTypeShape EntityType="PBL3_demoModel.WarehouseManager" Width="1.5" PointX="8.25" PointY="11.375" IsExpanded="true" />
         <EntityTypeShape EntityType="PBL3_demoModel.WarehouseStaff" Width="1.5" PointX="8.25" PointY="14.5" IsExpanded="true" />
         <AssociationConnector Association="PBL3_demoModel.FK_Account_AccessRight" ManuallyRouted="false" />
-        <AssociationConnector Association="PBL3_demoModel.FK_Invoice_Customer" ManuallyRouted="false" />
         <EntityTypeShape EntityType="PBL3_demoModel.Parcel" Width="1.5" PointX="3" PointY="3.125" />
-        <AssociationConnector Association="PBL3_demoModel.FK_Parcel_Customer" />
-        <AssociationConnector Association="PBL3_demoModel.FK_Parcel_Customer1" />
-        <AssociationConnector Association="PBL3_demoModel.FK_Invoice_Parcel" />
         <AssociationConnector Association="PBL3_demoModel.FK_Route_Parcel" />
         <AssociationConnector Association="PBL3_demoModel.FK_ShipFee_Parcel" />
         <EntityTypeShape EntityType="PBL3_demoModel.Warehouse" Width="1.5" PointX="0.75" PointY="8.5" />
@@ -28,6 +22,12 @@
         <AssociationConnector Association="PBL3_demoModel.FK_Route_Warehouse" />
         <AssociationConnector Association="PBL3_demoModel.FK_WarehouseManager_Warehouse" />
         <AssociationConnector Association="PBL3_demoModel.FK_WarehouseStaff_Warehouse" />
+        <EntityTypeShape EntityType="PBL3_demoModel.Customer" Width="1.5" PointX="0.75" PointY="4.25" />
+        <EntityTypeShape EntityType="PBL3_demoModel.Invoice" Width="1.5" PointX="5.25" PointY="5.875" />
+        <AssociationConnector Association="PBL3_demoModel.FK_Invoice_Customer" />
+        <AssociationConnector Association="PBL3_demoModel.FK_Parcel_Customer" />
+        <AssociationConnector Association="PBL3_demoModel.FK_Parcel_Customer1" />
+        <AssociationConnector Association="PBL3_demoModel.FK_Invoice_Parcel" />
         <AssociationConnector Association="PBL3_demoModel.FK_Invoice_Warehouse" />
         </Diagram>
     </edmx:Diagrams>

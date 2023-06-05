@@ -3,136 +3,66 @@ using Demo1.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static Demo1.ViewModel.SearchParcelModel;
 
 namespace Demo1.ViewModel
 {
     public class StatisticModel : BaseViewModel
     {
-        private string password;
-        private string accountName;
-        private string accoutWarehouse;
-        private string parcelID;
-        private string warehouseID;
-
-        private ObservableCollection<string> satisfiedWarehouses;
-
-
-        private ObservableCollection<string> routeCollection;
-        private ObservableCollection<Parcel> parcelCollection;
-
         private ObservableCollection<Warehouse> sortedWarehouseToView;
         private ObservableCollection<string> sortedWarehouseString;
-        public string Password
+        private string statisticInfoString;
+        private string statisticCompareString;
+
+        private DateTime _selectedDate;
+        private int _selectedMonth;
+        private int _selectedYear;
+        private string _SearchWHID;
+        public string SearchWHID
         {
-            get { return password; }
+            get { return _SearchWHID; }
+            set { _SearchWHID = value; OnPropertyChanged(nameof(SearchWHID)); }
+        }
+        public DateTime SelectedDate
+        {
+            get { return _selectedDate; }
             set
             {
-                if (password != value)
-                {
-                    password = value;
-                    OnPropertyChanged();
-                }
+                _selectedDate = value;
+                SelectedMonth = _selectedDate.Month;
+                SelectedYear = _selectedDate.Year;
+                OnPropertyChanged(nameof(SelectedDate));
             }
         }
 
-
-        public string AccountName
+        public int SelectedMonth
         {
-            get { return accountName; }
+            get { return _selectedMonth; }
             set
             {
-                if (accountName != value)
-                {
-                    accountName = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        // this property below not is Login , but I for temporary use
-        public string AccountWarehouse
-        {
-            get { return accoutWarehouse; }
-            set
-            {
-                if (accoutWarehouse != value)
-                {
-                    accoutWarehouse = value;
-                    OnPropertyChanged();
-                }
+                _selectedMonth = value;
+                OnPropertyChanged(nameof(SelectedMonth));
             }
         }
 
-
-
-        public string ParcelID
+        public int SelectedYear
         {
-            get { return parcelID; }
+            get { return _selectedYear; }
             set
             {
-                if (parcelID != value)
-                {
-                    parcelID = value;
-                    OnPropertyChanged();
-                    ValidateParcelID();
-                }
+                _selectedYear = value;
+                OnPropertyChanged(nameof(SelectedYear));
             }
         }
 
-
-        public ObservableCollection<string> RouteCollection
-        {
-            get { return routeCollection; }
-            set
-            {
-                routeCollection = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-        public string WarehouseID
-        {
-            get { return warehouseID; }
-            set
-            {
-                if (warehouseID != value)
-                {
-                    warehouseID = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-
-        public ObservableCollection<Parcel> ParcelCollection
-        {
-            get { return parcelCollection; }
-            set
-            {
-                parcelCollection = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-
-        public ObservableCollection<string> SatisfiedWarehouses
-        {
-            get { return satisfiedWarehouses; }
-            set
-            {
-                satisfiedWarehouses = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-
+        
         public ObservableCollection<Warehouse> SortedWarehouseToView
         {
             get { return sortedWarehouseToView; }
@@ -153,18 +83,78 @@ namespace Demo1.ViewModel
             }
         }
 
-
-        void ValidateParcelID()
+        public string StatisticInfoString
         {
-            int parcelID = int.Parse(ParcelID);
-            using (var context = new PBL3_demoEntities())
+            get { return statisticInfoString; }
+            set
             {
-                var thisParcel = context.Parcels.Where(x => x.parcelID == parcelID).FirstOrDefault();
-                if (thisParcel == null)
-                {
-                    MessageBox.Show("Đơn này không tồn tại trong hệ thống hoặc không hợp lệ");
-                }
+                statisticInfoString = value;
+                OnPropertyChanged();
             }
+        }
+
+        public string StatisticCompareString
+        {
+            get { return statisticCompareString; }
+            set
+            {
+                statisticCompareString = value;
+                OnPropertyChanged();
+            }
+        }
+        private int  _TotalParcel;
+        public int TotalParcel
+        {
+            get
+            {
+                return _TotalParcel;
+            }
+            set
+            {
+                _TotalParcel = value;
+                OnPropertyChanged();
+            }
+        }
+        private int _NewCustomer;
+        public int NewCustomer
+        {
+            get
+            {
+                return _NewCustomer;
+            }
+            set
+            {
+                _NewCustomer = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _ComparedParcelFigure;
+        public string ComparedParcelFigure
+        {
+            get => _ComparedParcelFigure;
+            set
+            {
+                _ComparedParcelFigure = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _ComparedNewCustomerFigure;
+        public string ComparedNewCustomerFigure
+        {
+            get { return _ComparedNewCustomerFigure; }
+            set { _ComparedNewCustomerFigure = value; OnPropertyChanged(); }   
+        }
+        private string _ComparedRevenueFigure;
+        public string ComparedRevenueFigure
+        {
+            get { return _ComparedRevenueFigure; }
+            set { _ComparedRevenueFigure = value; OnPropertyChanged(); }
+        }
+        private double _Revenue;
+        public double Revenue
+        {
+            get { return _Revenue; }
+            set { _Revenue = value; OnPropertyChanged();}
         }
         public ICommand IDSortCommand { get; set; }
         public ICommand CapacitySortCommand { get; set; }
@@ -172,17 +162,35 @@ namespace Demo1.ViewModel
 
         public ICommand NumberOfParcelSortCommand { get; set; }
         public ICommand RevenueSortCommand { get; set; }
+
+        // ham sort nguoc 
+        public ICommand IDSortAscendingCommand { get; set; }
+        public ICommand CapacitySortAscendingCommand { get; set; }
+        public ICommand NumberOfStaffSortAscendingCommand { get; set; }
+
+        public ICommand NumberOfParcelSortAscendingCommand { get; set; }
+        public ICommand RevenueSortAscendingCommand { get; set; }
+
         public ICommand ResetSortCommand { get; set; }
 
-        //
-        public ICommand IDSortDescendingCommand { get; set; }
-        public ICommand CapacitySortDescendingCommand { get; set; }
-        public ICommand NumberOfStaffSortDescendingCommand { get; set; }
+        private List<WarehouseModel> _warehouseList;
 
-        public ICommand NumberOfParcelSortDescendingCommand { get; set; }
-        public ICommand RevenueSortDescendingCommand { get; set; }
+        public List<WarehouseModel> warehouseList
+        {
+            get { return _warehouseList; }
+            set
+            {
+                if (_warehouseList != value)
+                {
+                    _warehouseList = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public StatisticModel()
         {
+            SelectedDate = DateTime.Now;
+
             SortedWarehouseToView = new ObservableCollection<Warehouse>();
             using (var context = new PBL3_demoEntities())
             {
@@ -191,27 +199,96 @@ namespace Demo1.ViewModel
                 {
                     SortedWarehouseToView.Add(w);
                 }
+                //int monthView = 5;
+                //int yearView = 2023;
+
+                //StatisticInfoString = $"Doanh thu : {TotalRevenue(monthView, yearView)}, Tổng đơn : {TotalNumberOfParcel()}, Khách hàng mới : {TotalNumberOfNewCustomer(monthView, yearView)}";
+                //StatisticCompareString = $"So sánh danh thu : {PercentageOfRevenue(monthView, yearView, TotalRevenue(monthView, yearView))} \n" +
+                //                         $"So sánh tổng đơn : {PercentageOfParcel(monthView, yearView, TotalNumberOfParcel(monthView, yearView))} \n" +
+                //                         $"So sánh khách hàng mới : {PercentageOfNewCustomer(monthView, yearView, TotalNumberOfNewCustomer(monthView, yearView))}";
                 SortedWarehouseString = new ObservableCollection<string>();
-                SortedWarehouseString = ToStringAfterSort(SortedWarehouseToView, "none", context);
+                SortedWarehouseString = ToStringAfterSort(SortedWarehouseToView, "none", SelectedMonth, SelectedYear, context);
+                IDSortCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = ToStringAfterSort(SortedWarehouseToView, "ID", SelectedMonth, SelectedYear, context); Change(); });
 
-                IDSortCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = ToStringAfterSort(SortedWarehouseToView, "ID", context); });
-                CapacitySortCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = ToStringAfterSort(SortedWarehouseToView, "capacity", context); });
-                NumberOfStaffSortCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = ToStringAfterSort(SortedWarehouseToView, "numOfEmployee", context); });
-                NumberOfParcelSortCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = ToStringAfterSort(SortedWarehouseToView, "numOfParcel", context); });
-                RevenueSortCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = ToStringAfterSort(SortedWarehouseToView, "revenue", context); });
-                ResetSortCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = ToStringAfterSort(SortedWarehouseToView, "del", context); });
-                //
-                IDSortDescendingCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = Reverse(ToStringAfterSort(SortedWarehouseToView, "ID", context)); });
-                CapacitySortDescendingCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = Reverse(ToStringAfterSort(SortedWarehouseToView, "capacity", context)); });
-                NumberOfParcelSortDescendingCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = Reverse(ToStringAfterSort(SortedWarehouseToView, "numOfEmployee", context)); });
-                NumberOfParcelSortDescendingCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = Reverse(ToStringAfterSort(SortedWarehouseToView, "numOfParcel", context)); });
-                RevenueSortDescendingCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = Reverse(ToStringAfterSort(SortedWarehouseToView, "revenue", context)); });
+                IDSortAscendingCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = Reverse(ToStringAfterSort(SortedWarehouseToView, "ID", SelectedMonth, SelectedYear, context)); Change(); });
+                CapacitySortCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = ToStringAfterSort(SortedWarehouseToView, "capacity", SelectedMonth, SelectedYear, context); Change(); });
+                NumberOfStaffSortCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = ToStringAfterSort(SortedWarehouseToView, "numOfEmployee", SelectedMonth, SelectedYear, context); Change(); });
+                NumberOfParcelSortCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = ToStringAfterSort(SortedWarehouseToView, "numOfParcel", SelectedMonth, SelectedYear, context); Change(); });
+                RevenueSortCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = ToStringAfterSort(SortedWarehouseToView, "revenue", SelectedMonth, SelectedYear, context); Change(); });
+                ResetSortCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = ToStringAfterSort(SortedWarehouseToView, "del", SelectedMonth, SelectedYear, context); Change(); });
+
+
+                CapacitySortAscendingCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = Reverse(ToStringAfterSort(SortedWarehouseToView, "capacity",SelectedMonth, SelectedYear, context)); Change(); });
+                NumberOfStaffSortAscendingCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = Reverse(ToStringAfterSort(SortedWarehouseToView, "numOfEmployee", SelectedMonth, SelectedYear, context)); Change(); });
+                NumberOfParcelSortAscendingCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = Reverse(ToStringAfterSort(SortedWarehouseToView, "numOfParcel", SelectedMonth, SelectedYear, context)); Change(); });
+                RevenueSortAscendingCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = Reverse(ToStringAfterSort(SortedWarehouseToView, "revenue", SelectedMonth, SelectedYear, context)); Change(); });
             }
-
-
-
         }
-        public ObservableCollection<string> ToStringAfterSort(ObservableCollection<Warehouse> warehouses, string typeOfSort, PBL3_demoEntities context)
+
+        public void LoadAllWHInfoSearched()
+        {
+            warehouseList = new List<WarehouseModel>();
+
+            foreach (string row in SortedWarehouseString)
+            {
+                string[] elements = row.Split(',');
+
+                WarehouseModel warehouseModel = new WarehouseModel
+                {
+                    STT = warehouseList.Count + 1,
+                    WHID = elements[0],
+                    Capacity = elements[1],
+                    NumParcels = elements[2],
+                    Revenue = elements[3],
+                    NumStaffs = elements[4]
+                };
+                if(warehouseModel.WHID.Contains(SearchWHID))
+                warehouseList.Add(warehouseModel);
+            }
+        }
+        public void SelectedDateChangedAction(DateTime selectedDate)
+        {
+            //xem co nen bo tham so SelectedMonth,SelectedYear khong
+            // Thực hiện hành động cần thiết khi người dùng chọn ngày
+            //Phần statistic phía trên
+            SelectedDate = selectedDate;
+            SelectedMonth = selectedDate.Month;
+            SelectedYear = selectedDate.Year;
+            if(SelectedYear > DateTime.Now.Year || (SelectedYear == DateTime.Now.Year && SelectedMonth > DateTime.Now.Month))
+                    MessageBoxWindow.Show("Thời gian hiện tại là tháng " + DateTime.Now.Month + ". Vui lòng lựa chọn lại!");
+            // Ví dụ: Cập nhật dữ liệu thống kê dựa trên ngày được chọn
+            TotalParcel = TotalNumberOfParcel(SelectedMonth,SelectedYear);
+            NewCustomer=TotalNumberOfNewCustomer(SelectedMonth,SelectedYear);
+            Revenue = TotalRevenue(SelectedMonth,SelectedYear);
+            ComparedParcelFigure = PercentageOfParcel(SelectedMonth, SelectedYear, TotalNumberOfParcel(SelectedMonth, SelectedYear));
+            ComparedNewCustomerFigure = PercentageOfNewCustomer(SelectedMonth, SelectedYear, TotalNumberOfNewCustomer(SelectedMonth, SelectedYear));
+            ComparedRevenueFigure = PercentageOfRevenue(SelectedMonth, SelectedYear, TotalRevenue(SelectedMonth, SelectedYear));
+            //phần statistic phía dưới là command
+        }
+        //set lai view sau moi lan thuc hien command
+        void Change()
+        {
+            warehouseList = new List<WarehouseModel>();
+
+            foreach (string row in SortedWarehouseString)
+            {
+                string[] elements = row.Split(',');
+
+                WarehouseModel warehouseModel = new WarehouseModel
+                {
+                    STT = warehouseList.Count + 1,
+                    WHID = elements[0],
+                    Capacity = elements[1],
+                    NumParcels = elements[2],
+                    Revenue = elements[3],
+                    NumStaffs = elements[4]
+                };
+
+                warehouseList.Add(warehouseModel);
+            }
+        }
+ 
+        public ObservableCollection<string> ToStringAfterSort(ObservableCollection<Warehouse> warehouses, string typeOfSort, int month, int year, PBL3_demoEntities context)
         {
             List<string> warehouseStrings = new List<string>();
             using (var newContext = new PBL3_demoEntities())
@@ -229,16 +306,16 @@ namespace Demo1.ViewModel
                 }
                 else if (typeOfSort != "del")
                 {
-                    warehouseListAfterSort = CallSortWarehouse(warehouses, typeOfSort, context);
+                    warehouseListAfterSort = CallSortWarehouse(warehouses, typeOfSort, month, year, context);
                 }
                 var query = newContext.Warehouses.Include("Parcels").ToList();
                 foreach (var item in warehouseListAfterSort)
                 {
                     double totalRevenue = 0.0;
-                    int numParcel = query.FirstOrDefault(w => w.warehouseID == item.warehouseID)?.Parcels.Count ?? 0;
+                    int numParcel = query.FirstOrDefault(w => w.warehouseID == item.warehouseID)?.Parcels.Count(p => p.createTime.Month == month && p.createTime.Year == year) ?? 0;
 
                     double warehouseRevenue = item.Invoices
-                        .Where(x => x.startWarehouseID == item.warehouseID) // Lọc các hóa đơn thuộc kho hàng hiện tại
+                        .Where(x => x.startWarehouseID == item.warehouseID && x.outputTime.Month == month && x.outputTime.Year == year) // Lọc các hóa đơn thuộc kho hàng hiện tại và tháng đã chọn
                         .Sum(x => x.shippingFee);// lấy ra giá tiền của từng đơn
                     totalRevenue += warehouseRevenue; // Cộng tổng doanh thu của các đơn vào tổng doanh thu chung của kho hàng hiện tại
                     // tính tổng số nhân viên 
@@ -250,7 +327,8 @@ namespace Demo1.ViewModel
                     (queryR.FirstOrDefault(c => c.warehouseID == item.warehouseID)?.Receptionists.Count ?? 0) +
                     (queryS.FirstOrDefault(c => c.warehouseID == item.warehouseID)?.WarehouseStaffs.Count ?? 0) +
                     (queryM.FirstOrDefault(c => c.warehouseID == item.warehouseID)?.WarehouseManagers.Count ?? 0);
-                    string resultString = $"WarehouseID: {item.warehouseID}, Capacity: {item.capacity}, Address: {item.warehouseAddress}, NumParcels: {numParcel}, Revenue : {totalRevenue}, TotalEmployees: {totalEmployees}";
+                    //string resultString = $"WarehouseID: {item.warehouseID}, Capacity: {item.capacity}, Address: {item.warehouseAddress}, NumParcels: {numParcel}, Revenue : {totalRevenue}, TotalEmployees: {totalEmployees}";
+                    string resultString = $"{item.warehouseID},{item.capacity},{numParcel},{totalRevenue},{totalEmployees}";
 
                     warehouseStrings.Add(resultString);
 
@@ -259,6 +337,20 @@ namespace Demo1.ViewModel
 
             return new ObservableCollection<string>(warehouseStrings);
         }
+
+        public class WarehouseModel
+        {
+            public int STT { get; set; }
+            public string WHID { get; set; }
+            public string Capacity { get; set; }  
+            public string NumParcels { get; set; }
+            public string Revenue { get; set; }
+            public string NumStaffs {get;set; }
+            
+        }
+
+
+
         public ObservableCollection<string> Reverse(ObservableCollection<string> warehouses)
         {
             var reversedCollection = new ObservableCollection<string>();
@@ -272,28 +364,23 @@ namespace Demo1.ViewModel
 
 
 
-
-
-
-
-
-        public ObservableCollection<Warehouse> SortWarehouse<T>(ObservableCollection<Warehouse> warehouses, Func<Warehouse, T> keySelector, PBL3_demoEntities context) where T : IComparable<T>
+        public ObservableCollection<Warehouse> SortWarehouse<T>(ObservableCollection<Warehouse> warehouses, Func<Warehouse, T> keySelector) where T : IComparable<T>
         {
             var sortedWarehouses = warehouses.OrderByDescending(keySelector).ToList();
             return new ObservableCollection<Warehouse>(sortedWarehouses);
+
         }
 
-
-        public ObservableCollection<Warehouse> CallSortWarehouse(ObservableCollection<Warehouse> warehouses, string typeOfSort, PBL3_demoEntities context)
+        public ObservableCollection<Warehouse> CallSortWarehouse(ObservableCollection<Warehouse> warehouses, string typeOfSort, int month, int year, PBL3_demoEntities context)
         {
             ObservableCollection<Warehouse> tempWarehouses = new ObservableCollection<Warehouse>();
             if (typeOfSort == "ID")
             {
-                tempWarehouses = SortWarehouse(warehouses, w => w.warehouseID, context);
+                tempWarehouses = SortWarehouse(warehouses, w => w.warehouseID);
             }
             else if (typeOfSort == "capacity")
             {
-                tempWarehouses = SortWarehouse(warehouses, w => w.capacity, context);
+                tempWarehouses = SortWarehouse(warehouses, w => w.capacity);
             }
             else if (typeOfSort == "numOfEmployee")
             {
@@ -306,8 +393,7 @@ namespace Demo1.ViewModel
                     tempWarehouses = SortWarehouse(warehouses, w =>
                         (queryR.FirstOrDefault(c => c.warehouseID == w.warehouseID)?.Receptionists.Count ?? 0) +
                         (queryS.FirstOrDefault(c => c.warehouseID == w.warehouseID)?.WarehouseStaffs.Count ?? 0) +
-                        (queryM.FirstOrDefault(c => c.warehouseID == w.warehouseID)?.WarehouseManagers.Count ?? 0),
-                        context);
+                        (queryM.FirstOrDefault(c => c.warehouseID == w.warehouseID)?.WarehouseManagers.Count ?? 0));
                 }
 
             }
@@ -316,7 +402,7 @@ namespace Demo1.ViewModel
                 using (var newContext = new PBL3_demoEntities())
                 {
                     var query = newContext.Warehouses.Include("Parcels").ToList();
-                    tempWarehouses = SortWarehouse(warehouses, w => query.FirstOrDefault(c => c.warehouseID == w.warehouseID)?.Parcels.Count ?? 0, context);
+                    tempWarehouses = SortWarehouse(warehouses, w => query.FirstOrDefault(c => c.warehouseID == w.warehouseID)?.Parcels.Count(p => p.createTime.Month == month && p.createTime.Year == year) ?? 0);
                 }
             }
             else if (typeOfSort == "revenue")
@@ -324,13 +410,13 @@ namespace Demo1.ViewModel
                 using (var newContext = new PBL3_demoEntities())
                 {
                     var query = newContext.Warehouses.Include("Invoices").ToList();
-                    tempWarehouses = SortWarehouse(warehouses, w => query.FirstOrDefault(c => c.warehouseID == w.warehouseID)?.Invoices.Sum(i => i.shippingFee) ?? 0.0, context);
+                    tempWarehouses = SortWarehouse(warehouses, w => query.FirstOrDefault(c => c.warehouseID == w.warehouseID)?.Invoices.Where(x => x.outputTime.Month == month && x.outputTime.Year == year).Sum(i => i.shippingFee) ?? 0.0);
                 }
             }
 
-            else
+            else if (typeOfSort == "none")
             {
-                tempWarehouses.Clear();
+                // tempWarehouses.Clear();
                 List<Warehouse> tempList = context.Warehouses.Select(x => x).ToList();
                 foreach (var item in tempList)
                 {
@@ -343,6 +429,147 @@ namespace Demo1.ViewModel
                 warehouses.Add(w);
             }
             return warehouses;
+        }
+
+        //tam done binding
+        public string PercentageTextOutput(decimal percentage)
+        {
+
+            // Tạo chuỗi kết quả
+            string result;
+            if (percentage > 0)
+            {
+                result = string.Format("Tăng {0}% so với tháng trước.", Math.Abs(percentage));
+            }
+            else if (percentage < 0)
+            {
+                result = string.Format("Giảm {0}% so với tháng trước.", Math.Abs(percentage));
+            }
+            else
+            {
+                result = "Không có sự thay đổi so với tháng trước.";
+            }
+
+            return result;
+        }
+
+
+        public int TotalNumberOfParcel(int month,int year)
+        {
+            month = SelectedMonth;
+            year = SelectedYear;
+            int numberOfParcel;
+            using (var context = new PBL3_demoEntities())
+            {
+
+                numberOfParcel = context.Parcels.Count(x => x.createTime.Month == month && x.createTime.Year == year);
+            }
+            return numberOfParcel;
+        }
+
+        public string PercentageOfParcel(int month, int year, int numberOfParcel)
+        {
+            // tính toán thời gian tháng trước
+            int previousMonth = month - 1;
+            int previousYear = year;
+            if (month == 1)
+            {
+                previousMonth = 12;
+                previousYear = year - 1;
+
+            }
+
+            // Lấy số lượng đơn hàng của tháng trước đó
+            using (var context = new PBL3_demoEntities())
+            {
+                int previousNumberOfParcel = TotalNumberOfParcel(previousMonth, previousYear);
+                if (previousNumberOfParcel == 0)
+                {
+                    return "N/A"; // Trả về giá trị "N/A" nếu không có tổng đơn hàng của tháng trước
+                }
+                // Tính phần trăm tăng hoặc giảm
+                decimal percentage = ((decimal)numberOfParcel - previousNumberOfParcel) / previousNumberOfParcel * 100;
+                decimal roundedPercentage = decimal.Round(percentage, 3);
+                return PercentageTextOutput(roundedPercentage);
+
+            }
+        }
+
+
+        public int TotalNumberOfNewCustomer(int month, int year)
+        {
+            
+            int numberOfNewCustomer;
+            using (var context = new PBL3_demoEntities())
+            {
+                numberOfNewCustomer = context.Customers.Count(x => x.joinTime.Month == month && x.joinTime.Year == year);
+            }
+            return numberOfNewCustomer;
+        }
+
+        public string PercentageOfNewCustomer(int month, int year, int numberOfNewCustomer)
+        {
+            // tính toán thời gian tháng trước
+            int previousMonth = month - 1;
+            int previousYear = year;
+            if (month == 1)
+            {
+                previousMonth = 12;
+                previousYear = year - 1;
+
+            }
+            // Lấy số lượng đơn hàng của tháng trước đó
+            using (var context = new PBL3_demoEntities())
+            {
+                int previousNumberOfNewCustomer = TotalNumberOfNewCustomer(previousMonth, previousYear);
+                if (previousNumberOfNewCustomer == 0)
+                {
+                    return "N/A"; // Trả về giá trị "N/A" nếu không có khách hàng mới của tháng trước
+                }
+                // Tính phần trăm tăng hoặc giảm
+                decimal percentage = ((decimal)numberOfNewCustomer - previousNumberOfNewCustomer) / previousNumberOfNewCustomer * 100;
+                decimal roundedPercentage = decimal.Round(percentage, 3);
+                return PercentageTextOutput(roundedPercentage);
+            }
+        }
+
+        public double TotalRevenue(int month, int year)
+        {
+            double revenue = 0.0;
+            using (var context = new PBL3_demoEntities())
+            {
+                revenue = context.Invoices
+                    .Where(x => x.outputTime.Month == month && x.outputTime.Year == year) // Lọc các hóa đơn có outputTime trùng với month
+                    .Sum(x => (double?)x.shippingFee) ?? 0.0; // Tính tổng giá trị shippingFee của các hóa đơn và sử dụng giá trị mặc định 0.0 nếu giá trị là null
+
+            }
+            return revenue;
+        }
+
+        public string PercentageOfRevenue(int month, int year, double revenue)
+        {
+            // tính toán thời gian tháng trước
+            int previousMonth = month - 1;
+            int previousYear = year;
+            if (month == 1)
+            {
+                previousMonth = 12;
+                previousYear = year - 1;
+
+            }
+            // Lấy số lượng đơn hàng của tháng trước đó
+            using (var context = new PBL3_demoEntities())
+            {
+                double previousRevenue = TotalRevenue(previousMonth, previousYear);
+                if (previousRevenue == 0.0)
+                {
+                    return "N/A"; // Trả về giá trị "N/A" nếu không có doanh thu tháng trước
+                }
+                // Tính phần trăm tăng hoặc giảm
+                decimal percentage = ((decimal)revenue - (decimal)previousRevenue) / (decimal)previousRevenue * 100;
+                decimal roundedPercentage = decimal.Round(percentage, 3);
+                return PercentageTextOutput(roundedPercentage);
+            }
         }
 
     }

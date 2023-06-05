@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Drawing.Text;
 using System.Linq;
 using System.Windows.Input;
-
+using System.Windows.Media.Media3D;
 
 namespace Demo1.ViewModel
 {
@@ -157,7 +157,7 @@ namespace Demo1.ViewModel
                 var sc = context.Customers.FirstOrDefault(x => x.customerID == SCustomerID);
                 if (sc == null)
                 {
-                    var newSCustomer = new Customer { customerID = SCustomerID, customerLocation = SCustomerAddress + "," + SCustomerDistrict + "," + SCustomerCity, customerPhoneNumber = SCustomerPhoneNumber, customerName = SCustomerName };
+                    var newSCustomer = new Customer { customerID = SCustomerID, customerLocation = SCustomerAddress + "," + SCustomerDistrict + "," + SCustomerCity, customerPhoneNumber = SCustomerPhoneNumber, customerName = SCustomerName,joinTime=DateTime.Now};
                     context.Customers.Add(newSCustomer);
                 }
                 else
@@ -173,7 +173,7 @@ namespace Demo1.ViewModel
                 var rc = context.Customers.FirstOrDefault(x => x.customerID == RCustomerID);
                 if (rc == null)
                 {
-                    var newRCustomer = new Customer { customerID = RCustomerID, customerLocation = RCustomerAddress + "," + RCustomerDistrict + "," + RCustomerCity, customerPhoneNumber = RCustomerPhoneNumber, customerName = RCustomerName };
+                    var newRCustomer = new Customer { customerID = RCustomerID, customerLocation = RCustomerAddress + "," + RCustomerDistrict + "," + RCustomerCity, customerPhoneNumber = RCustomerPhoneNumber, customerName = RCustomerName,joinTime=DateTime.Now};
                     context.Customers.Add(newRCustomer);
                 }
                 else
@@ -251,26 +251,22 @@ namespace Demo1.ViewModel
             {
                 CreateInvoice();
                 TotalCost = shippingFeeFunc();
-                int lastInvoiceID;
-                using(var context1=new PBL3_demoEntities())
-                {
-                    var maxInvoiceID = context1.Invoices.Max(i => i.invoiceID);
-                    lastInvoiceID= maxInvoiceID;
-                }
+               
                 string account = AccountManager.Instance.GetAccountID();
                 string startWHID = AccountManager.Instance.GetUserWarehouseID(account);
                 using (var context = new Model.PBL3_demoEntities())
                 {
-                   
+
                     // Tạo một đối tượng Invoice mới
                     var newInvoice = new Model.Invoice
                     {
-                        invoiceID = lastInvoiceID + 1,
+                        //invoiceID = lastInvoiceID + 1,
                         parcelID = Convert.ToInt32(ParcelID),
                         customerID = SCustomerID,
                         cost = Convert.ToDouble(TotalCost),
                         outputTime = DateTime.Now,
-                        shippingFee = TotalCost - Convert.ToDouble(ParcelValue),
+
+                        shippingFee = GetShippingFee(),
                         startWarehouseID = startWHID
                     };
 
@@ -287,6 +283,11 @@ namespace Demo1.ViewModel
             AddAndCreateInvoiceCommand.RegisterCommand(AddCommand);
             AddAndCreateInvoiceCommand.RegisterCommand(CreateInvoiceCommand);
             
+        }
+        double GetShippingFee()
+        {
+            double res = isCOD ? (TotalCost - Convert.ToDouble(ParcelValue)) : TotalCost;
+            return res;
         }
     }
 }

@@ -25,16 +25,17 @@
     <Property Name="customerName" Type="nvarchar" MaxLength="200" Nullable="false" />
     <Property Name="customerLocation" Type="nvarchar" MaxLength="200" Nullable="false" />
     <Property Name="customerPhoneNumber" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="joinTime" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="Invoice">
     <Key>
       <PropertyRef Name="invoiceID" />
     </Key>
-    <Property Name="invoiceID" Type="int" Nullable="false" />
+    <Property Name="invoiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="parcelID" Type="int" Nullable="false" />
     <Property Name="customerID" Type="nvarchar" MaxLength="200" Nullable="false" />
     <Property Name="cost" Type="float" Nullable="false" />
-    <Property Name="outputTime" Type="datetime" />
+    <Property Name="outputTime" Type="datetime" Nullable="false" />
     <Property Name="startWarehouseID" Type="nvarchar" MaxLength="200" Nullable="false" />
     <Property Name="shippingFee" Type="float" Nullable="false" />
   </EntityType>
@@ -189,7 +190,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Parcel_Warehouse2">
+  <Association Name="FK_Parcel_Warehouse">
     <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
     <End Role="Parcel" Type="Self.Parcel" Multiplicity="*" />
     <ReferentialConstraint>
@@ -309,7 +310,7 @@
       <End Role="Customer" EntitySet="Customer" />
       <End Role="Parcel" EntitySet="Parcel" />
     </AssociationSet>
-    <AssociationSet Name="FK_Parcel_Warehouse2" Association="Self.FK_Parcel_Warehouse2">
+    <AssociationSet Name="FK_Parcel_Warehouse" Association="Self.FK_Parcel_Warehouse">
       <End Role="Warehouse" EntitySet="Warehouse" />
       <End Role="Parcel" EntitySet="Parcel" />
     </AssociationSet>

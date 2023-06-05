@@ -20,29 +20,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Customers">
-      <EntityTypeMapping TypeName="PBL3_demoModel.Customer">
-        <MappingFragment StoreEntitySet="Customer">
-          <ScalarProperty Name="customerID" ColumnName="customerID" />
-          <ScalarProperty Name="customerName" ColumnName="customerName" />
-          <ScalarProperty Name="customerLocation" ColumnName="customerLocation" />
-          <ScalarProperty Name="customerPhoneNumber" ColumnName="customerPhoneNumber" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Invoices">
-      <EntityTypeMapping TypeName="PBL3_demoModel.Invoice">
-        <MappingFragment StoreEntitySet="Invoice">
-          <ScalarProperty Name="shippingFee" ColumnName="shippingFee" />
-          <ScalarProperty Name="startWarehouseID" ColumnName="startWarehouseID" />
-          <ScalarProperty Name="invoiceID" ColumnName="invoiceID" />
-          <ScalarProperty Name="parcelID" ColumnName="parcelID" />
-          <ScalarProperty Name="customerID" ColumnName="customerID" />
-          <ScalarProperty Name="cost" ColumnName="cost" />
-          <ScalarProperty Name="outputTime" ColumnName="outputTime" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Receptionists">
       <EntityTypeMapping TypeName="PBL3_demoModel.Receptionist">
         <MappingFragment StoreEntitySet="Receptionist">
@@ -126,6 +103,30 @@
           <ScalarProperty Name="warehouseAddress" ColumnName="warehouseAddress" />
           <ScalarProperty Name="warehouseName" ColumnName="warehouseName" />
           <ScalarProperty Name="warehouseID" ColumnName="warehouseID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="PBL3_demoModel.Customer">
+        <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="joinTime" ColumnName="joinTime" />
+          <ScalarProperty Name="customerPhoneNumber" ColumnName="customerPhoneNumber" />
+          <ScalarProperty Name="customerLocation" ColumnName="customerLocation" />
+          <ScalarProperty Name="customerName" ColumnName="customerName" />
+          <ScalarProperty Name="customerID" ColumnName="customerID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Invoices">
+      <EntityTypeMapping TypeName="PBL3_demoModel.Invoice">
+        <MappingFragment StoreEntitySet="Invoice">
+          <ScalarProperty Name="shippingFee" ColumnName="shippingFee" />
+          <ScalarProperty Name="startWarehouseID" ColumnName="startWarehouseID" />
+          <ScalarProperty Name="outputTime" ColumnName="outputTime" />
+          <ScalarProperty Name="cost" ColumnName="cost" />
+          <ScalarProperty Name="customerID" ColumnName="customerID" />
+          <ScalarProperty Name="parcelID" ColumnName="parcelID" />
+          <ScalarProperty Name="invoiceID" ColumnName="invoiceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
