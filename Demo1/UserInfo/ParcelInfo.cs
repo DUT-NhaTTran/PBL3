@@ -45,9 +45,25 @@ namespace Demo1.UserInfo
 
             }
         }
-        public bool IsParcelExist(string ParcelID)
+
+        public Parcel GetParcelRecordInt(int parcelID)
         {
-            int parcelID = Convert.ToInt32(ParcelID);
+            using (var context = new PBL3_demoEntities())
+            {
+                var thisParcel = context.Parcels.Where(x => x.parcelID == parcelID).FirstOrDefault();
+                if (thisParcel != null)
+                {
+                    return thisParcel;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+        }
+        public bool IsParcelExist(int parcelID)
+        {
             using (var context = new PBL3_demoEntities())
             {
                 var thisParcel = context.Parcels.Where(x => x.parcelID == parcelID).FirstOrDefault();
@@ -93,7 +109,7 @@ namespace Demo1.UserInfo
             if (thisParcel != null) return thisParcel.SCustomerID;
             else return "";
         }
-        public string GetCustomerName(string ParcelID,int mode)
+        public string GetCustomerName(string ParcelID, int mode)
         {
             string customerid = "";
             if (mode == 1) customerid = GetSCustomerID(ParcelID);
@@ -101,7 +117,7 @@ namespace Demo1.UserInfo
             string res = "";
             if (customerid != null)
             {
-                using(var context=new Model.PBL3_demoEntities())
+                using (var context = new Model.PBL3_demoEntities())
                 {
                     var customerName = context.Customers.FirstOrDefault(x => x.customerID == customerid)?.customerName;
                     res = customerName;
@@ -109,7 +125,7 @@ namespace Demo1.UserInfo
                 }
             }
             return res;
-           
+
         }
         public string GetCustomerPhoneNumber(string ParcelID, int mode)
         {
@@ -135,8 +151,8 @@ namespace Demo1.UserInfo
             if (thisParcel != null) return thisParcel.RCustomerID;
             else return "";
         }
-        
-        public string GetCustomerAddress(string ParcelID,int mode)
+
+        public string GetCustomerAddress(string ParcelID, int mode)
         {
 
             string customerid = "";
@@ -160,7 +176,7 @@ namespace Demo1.UserInfo
         {
             double res;
             int iParcelID = Convert.ToInt32(ParcelID);
-            using (var context=new Model.PBL3_demoEntities())
+            using (var context = new Model.PBL3_demoEntities())
             {
                 var totalcost = context.Invoices.FirstOrDefault(x => x.parcelID == iParcelID)?.cost;
                 res = (double)totalcost;
@@ -170,7 +186,7 @@ namespace Demo1.UserInfo
         public string GetDetails(string ParcelID)
         {
             string details = null;
-            int iParcelID=Convert.ToInt32(ParcelID);
+            int iParcelID = Convert.ToInt32(ParcelID);
             using (var dbContext = new Model.PBL3_demoEntities())
             {
                 var maxRouteID = dbContext.Routes

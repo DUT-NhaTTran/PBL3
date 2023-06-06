@@ -197,11 +197,11 @@ namespace Demo1.ViewModel
                     context1.Parcels.Add(newParcel);
                     context1.SaveChanges();
                 }
-                using (var context = new Model.PBL3_demoEntities())
+                using (var context2 = new Model.PBL3_demoEntities())
                 {
                     var newRoute = new Route {parcelID= Convert.ToInt32(ParcelID),relatedWarehouseID=WarehouseID,time=DateTime.Now,details="Đơn hàng đã được khởi tạo"};
-                    context.Routes.Add(newRoute);
-                    context.SaveChanges();
+                    context2.Routes.Add(newRoute);
+                    context2.SaveChanges();
                 }
             });
 
@@ -251,7 +251,12 @@ namespace Demo1.ViewModel
             {
                 CreateInvoice();
                 TotalCost = shippingFeeFunc();
-               
+                int lastInvoiceID;
+                using (var context = new PBL3_demoEntities())
+                {
+                    var maxInvoiceID = context.Invoices.Max(i => i.invoiceID);
+                    lastInvoiceID = maxInvoiceID;
+                }
                 string account = AccountManager.Instance.GetAccountID();
                 string startWHID = AccountManager.Instance.GetUserWarehouseID(account);
                 using (var context = new Model.PBL3_demoEntities())
@@ -260,7 +265,7 @@ namespace Demo1.ViewModel
                     // Tạo một đối tượng Invoice mới
                     var newInvoice = new Model.Invoice
                     {
-                        //invoiceID = lastInvoiceID + 1,
+                        invoiceID = lastInvoiceID + 1,
                         parcelID = Convert.ToInt32(ParcelID),
                         customerID = SCustomerID,
                         cost = Convert.ToDouble(TotalCost),

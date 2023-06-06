@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -255,18 +256,23 @@ namespace Demo1.ViewModel
             SelectedMonth = selectedDate.Month;
             SelectedYear = selectedDate.Year;
             if(SelectedYear > DateTime.Now.Year || (SelectedYear == DateTime.Now.Year && SelectedMonth > DateTime.Now.Month))
-                    MessageBoxWindow.Show("Thời gian hiện tại là tháng " + DateTime.Now.Month + ". Vui lòng lựa chọn lại!");
-            // Ví dụ: Cập nhật dữ liệu thống kê dựa trên ngày được chọn
-            TotalParcel = TotalNumberOfParcel(SelectedMonth,SelectedYear);
-            NewCustomer=TotalNumberOfNewCustomer(SelectedMonth,SelectedYear);
-            Revenue = TotalRevenue(SelectedMonth,SelectedYear);
+                MessageBoxWindow.Show("Thời gian hiện tại là tháng " + DateTime.Now.Month + ". Vui lòng lựa chọn lại!");
+               
+
+
+                // Ví dụ: Cập nhật dữ liệu thống kê dựa trên ngày được chọn
+            TotalParcel = TotalNumberOfParcel(SelectedMonth, SelectedYear);
+            NewCustomer = TotalNumberOfNewCustomer(SelectedMonth, SelectedYear);
+            Revenue = TotalRevenue(SelectedMonth, SelectedYear);
             ComparedParcelFigure = PercentageOfParcel(SelectedMonth, SelectedYear, TotalNumberOfParcel(SelectedMonth, SelectedYear));
             ComparedNewCustomerFigure = PercentageOfNewCustomer(SelectedMonth, SelectedYear, TotalNumberOfNewCustomer(SelectedMonth, SelectedYear));
             ComparedRevenueFigure = PercentageOfRevenue(SelectedMonth, SelectedYear, TotalRevenue(SelectedMonth, SelectedYear));
+            
+         
             //phần statistic phía dưới là command
         }
         //set lai view sau moi lan thuc hien command
-        void Change()
+        public void Change()
         {
             warehouseList = new List<WarehouseModel>();
 

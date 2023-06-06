@@ -31,7 +31,7 @@
     <Key>
       <PropertyRef Name="invoiceID" />
     </Key>
-    <Property Name="invoiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="invoiceID" Type="int" Nullable="false" />
     <Property Name="parcelID" Type="int" Nullable="false" />
     <Property Name="customerID" Type="nvarchar" MaxLength="200" Nullable="false" />
     <Property Name="cost" Type="float" Nullable="false" />

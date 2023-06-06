@@ -237,7 +237,7 @@ namespace Demo1.ViewModel
             }
             return warehousesOfThisRegionCollection;
         }
-        
+
         public string FindContained(string WHID)
         {
             double res = 0;
@@ -247,7 +247,7 @@ namespace Demo1.ViewModel
             using (var context1 = new PBL3_demoEntities())
             {
                 var Capacity = context1.Warehouses.FirstOrDefault(x => x.warehouseID == WHID);
-                if(Capacity != null) 
+                if (Capacity != null)
                 {
                     capacity = Capacity.capacity;
                 }
@@ -255,12 +255,14 @@ namespace Demo1.ViewModel
             //dem don dang trong kho i
             using (var context = new PBL3_demoEntities())
             {
-                var Count= context.Parcels.Count(o => o.currentWarehouseID == WHID);
+                var Count = context.Parcels.Count(o => o.currentWarehouseID == WHID);
                 count = Count;
             }
             res = (double)count / capacity;
-            return Convert.ToString(res*100) + "%";
+            double roundedResult = Math.Round(res * 100, 3);
+            return roundedResult.ToString() + "%";
         }
-      
+
+
     }
 }

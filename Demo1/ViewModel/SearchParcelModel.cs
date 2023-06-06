@@ -88,9 +88,9 @@ namespace Demo1.ViewModel
         
         public void LoadAllParcelSearched()
         {
-            int parcelID;
-            if (int.TryParse(SearchParcelText, out parcelID))
-            {
+            //int parcelID;
+            //if (int.TryParse(SearchParcelText, out parcelID))
+            //{
                 using (var dbContext = new Model.PBL3_demoEntities())
                 {
                     var query = dbContext.Parcels
@@ -113,11 +113,11 @@ namespace Demo1.ViewModel
                         ParcelInfoListInSearch.Add(item);
                     }
                 }
-            }
-            else
-            {
-                ParcelInfoListInSearch.Clear();
-            }
+            //}
+            //else
+            //{
+            //    ParcelInfoListInSearch.Clear();
+            //}
         }
         
         void SetAllParcelInfo()

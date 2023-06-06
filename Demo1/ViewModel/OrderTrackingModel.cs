@@ -4,14 +4,17 @@ using System;
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Demo1.ViewModel
 {
     public class OrderTrackingModel : BaseViewModel
     {
+        public ICommand LoadParcelInfoCommand { get; private set; }
+
 
         private string _BasicStatus;
         public string BasicStatus
@@ -74,6 +77,7 @@ namespace Demo1.ViewModel
 
         public OrderTrackingModel()
         {
+            
             ParcelTrackingCommand =
                new RelayCommand<object>((p) =>
                {
@@ -81,6 +85,11 @@ namespace Demo1.ViewModel
                }, (p) => GetParcelRoute());
             ParcelInfoList = new ObservableCollection<ParcelInfo>();
             SelectParcelCommand = new RelayCommand<object>((p) => true, ExecuteSelectParcel);
+            LoadParcelInfoCommand = new RelayCommand<object>((p) => true, (p) =>
+            {
+                ParcelInfoList.Clear();
+                LoadParcelInfoList();
+            } ) ;
             LoadParcelInfoList();
 
         }
@@ -121,66 +130,158 @@ namespace Demo1.ViewModel
                 }
             }
         }
-        
+
         //public string SetBasicParcelStatus(ParcelInfo parcelInfo)
         //{
-
         //    int iParcelID = parcelInfo.ID;
-        //    string startWHID = "";
+        //    string basicStatus = string.Empty;
+        //    bool isNhapKhoDich = false;
         //    using (var context = new PBL3_demoEntities())
         //    {
-        //        var res = context.Invoices.FirstOrDefault(x => x.parcelID ==iParcelID);
-        //        //if !=null
-        //        startWHID = res.startWarehouseID;
 
+        //        var route = context.Routes
+        //            .Join(context.Parcels,
+        //                r => r.parcelID,
+        //                p => p.parcelID,
+        //                (r, p) => new { Route = r, Parcel = p })
+        //            .Where(rp => rp.Route.parcelID == iParcelID)
+        //            .OrderByDescending(rp => rp.Route.routeID)
+        //            .Select(rp => new { rp.Route.details, rp.Parcel.parcelStatus })
+        //            .FirstOrDefault();
+
+        //        if (route != null)
+        //        {
+        //            string details = route.details;
+        //            bool status = context.Parcels
+        //                .Where(p => p.parcelID == iParcelID)
+        //                .Select(p => p.parcelStatus)
+        //                .FirstOrDefault() ?? false;
+
+        //            //if (details.Contains("thành công"))
+        //            //    basicStatus = "Giao thành công";
+        //            //else if (details.Contains("khởi tạo"))
+        //            //    basicStatus = "Vừa được khởi tạo";
+        //            //else if (details.Contains("kho đích") && status == true)
+        //            //    basicStatus = "Bị trả lại";
+        //            //else if (details.Contains("Nhập đơn hàng vào kho đích") && status == false)
+        //            //{
+        //            //    basicStatus = "Đến kho đích"; 
+
+        //            //}
+
+
+        //            //else if (details.Contains("thất bại") && status == false)
+        //            //    basicStatus = "Giao thất bại";
+        //            //else
+        //            //    basicStatus = "Đang vận chuyển";
+
+
+
+
+        //            if (details.Contains("thành công"))
+        //            {
+        //                basicStatus = "Giao thành công";
+        //            }
+        //            else if (details.Contains("khởi tạo"))
+        //            {
+        //                basicStatus = "Vừa được khởi tạo";
+        //            }
+        //            else if (details.Contains("kho đích") && status == true)
+        //            {
+        //                basicStatus = "Bị trả lại";
+        //            }
+        //            else if (details.Contains("kho đích") && status == false)
+        //            {
+        //                basicStatus = "Đến kho đích";
+        //                isNhapKhoDich = true;
+
+        //            }
+        //            else if (isNhapKhoDich)
+        //            {
+        //                MessageBox.Show("Đây nè");
+        //                basicStatus = "Đang giao hàng";
+        //            }
+        //            else if (details.Contains("thất bại") && status == false)
+        //            {
+        //                basicStatus = "Giao thất bại";
+        //            }
+        //            else
+        //            {
+        //                basicStatus = "Đang vận chuyển";
+        //            }
+
+        //        }
         //    }
-        //    //check xem đơn giao thành công/thất bại/bị trả lại
 
-        //    using(var context1 = new PBL3_demoEntities()) 
-        //    {
-        //        int check = GetDeliveryStatus();
-        //        var res = context1.Parcels.FirstOrDefault(x => x.parcelID == iParcelID);
-
-        //        if (res.currentWarehouseID == startWHID) BasicStatus = "Đơn hàng vừa được khởi tạo";
-        //        if(res.currentWarehouseID!=startWHID && res.isFinalWarehouse==false) BasicStatus= "Đơn hàng vừa nhập kho";
-        //        if (res.isFinalWarehouse == true && check==-1) BasicStatus = "Đơn hàng đang ở kho đích";
-        //        if (res.isFinalWarehouse == true && check == 1) BasicStatus = "Đơn hàng đã được giao thành công";
-        //        if(res.isFinalWarehouse == true && res.parcelStatus==true) BasicStatus = "Đơn hàng bị trả lại";
-        //        else if (res.isFinalWarehouse == true && check == 0) BasicStatus = "Đơn hàng giao thất bại";
-        //        if (res.currentWarehouseID == null) BasicStatus = "Đang vận chuyển";
-        //    }
-        //    return BasicStatus;
+        //    return basicStatus;
         //}
         public string SetBasicParcelStatus(ParcelInfo parcelInfo)
         {
             int iParcelID = parcelInfo.ID;
-            
-            using(var context =new PBL3_demoEntities())
+            string basicStatus = string.Empty;
+            bool isNhapKhoDich = false;
+            bool isXuatKhoDich = false;
+
+            using (var context = new PBL3_demoEntities())
             {
-                bool status=false;
-                var check = context.Parcels.FirstOrDefault(x => x.parcelStatus == true);
-                if (check != null)
+                var routes = context.Routes
+                    .Join(context.Parcels,
+                        r => r.parcelID,
+                        p => p.parcelID,
+                        (r, p) => new { Route = r, Parcel = p })
+                    .Where(rp => rp.Route.parcelID == iParcelID)
+                    .OrderBy(rp => rp.Route.routeID)
+                    .ToList();
+
+                foreach (var route in routes)
                 {
-                    status = check.parcelStatus ?? false;
+                    string details = route.Route.details;
+                    bool status = route.Parcel.parcelStatus ?? false;
 
+                    // Kiểm tra điều kiện nhập kho đích và xuất kho đích
+                    if (details.Contains("Nhập đơn hàng vào kho đích"))
+                    {
+                        isNhapKhoDich = true;
+                    }
+                    else if (details.Contains("Xuất đơn hàng") && isNhapKhoDich)
+                    {
+                        isXuatKhoDich = true;
+                    }
+
+                    if (details.Contains("thành công"))
+                    {
+                        basicStatus = "Giao thành công";
+                    }
+                    else if (details.Contains("khởi tạo"))
+                    {
+                        basicStatus = "Vừa được khởi tạo";
+                    }
+                    else if (details.Contains("kho đích") && status)
+                    {
+                        basicStatus = "Bị trả lại";
+                    }
+                    else if (details.Contains("kho đích") && !status)
+                    {
+                        basicStatus = "Đến kho đích";
+                    }
+                    else if (isXuatKhoDich)
+                    {
+                        basicStatus = "Đang giao hàng";
+                    }
+                    else if (details.Contains("thất bại") && !status)
+                    {
+                        basicStatus = "Giao thất bại";
+                    }
+                    else
+                    {
+                        basicStatus = "Đang vận chuyển";
+                    }
                 }
-                var route = context.Routes
-                     .Where(x=> x.parcelID == iParcelID)
-                     .OrderByDescending(x=> x.routeID)
-                     .FirstOrDefault();
-
-                string details = route?.details;
-                if (details.Contains("thành công")) BasicStatus = "Đơn được giao thành công";
-                else if (details.Contains("khởi tạo")) BasicStatus = "Đơn vừa được khởi tạo";
-                else if (details.Contains("kho đích") && status) BasicStatus = "Đơn hàng bị trả lại";
-                else if (details.Contains("kho đích")&&status==false) BasicStatus = "Đơn được giao đến kho đích";                
-                else if (details.Contains("thất bại")&& status == false) BasicStatus = "Đơn được giao thất bại";
-
-                else BasicStatus = "Đang vận chuyển";
             }
-            return BasicStatus;
 
+            return basicStatus;
         }
+
         int GetDeliveryStatus()
         {
             int iParcelID = TryParseParcelID(ParcelID);
@@ -218,7 +319,7 @@ namespace Demo1.ViewModel
                 MessageBoxWindow.Show("Mã đơn hàng vừa nhập không hợp lệ");
             }
         }
-        
+
 
 
         void GetParcelRoute()
@@ -242,8 +343,8 @@ namespace Demo1.ViewModel
 
                         var checkWarehouseNull = context.Parcels.Where(x => x.parcelID == iParcelID)
                             .Select(x => x.currentWarehouseID).FirstOrDefault() == null;
-                        
-                        if (checkWarehouseNull)
+                        var thisParcel = UserInfo.ParcelInfo.Instance.GetParcelRecordInt(iParcelID).parcelStatus;
+                        if (checkWarehouseNull && (thisParcel != false))
                         {
                             RouteInfoList.Add("Đang vận chuyển " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + "\n");
                         }
@@ -260,7 +361,6 @@ namespace Demo1.ViewModel
             }
 
         }
-
         public int TryParseParcelID(string parcelID)
         {
             int parsedParcelID;

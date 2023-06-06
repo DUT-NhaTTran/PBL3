@@ -1,4 +1,5 @@
-﻿using Demo1.ViewModel;
+﻿using Demo1.Model;
+using Demo1.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -35,10 +36,20 @@ namespace Demo1
                 {
                     DateTime selectedDate = datePicker.SelectedDate.Value;
                     ((StatisticModel)DataContext).SelectedDateChangedAction(selectedDate);
+                    using (var context = new PBL3_demoEntities())
+                    {
+                        if (DataContext is StatisticModel statisticModel)
+                        {
+
+                            statisticModel.SortedWarehouseString = statisticModel.ToStringAfterSort(
+                                statisticModel.SortedWarehouseToView, "del", statisticModel.SelectedMonth,
+                                statisticModel.SelectedYear, context);
+                            statisticModel.Change();
+                        }
+                    }
                 }
             }
         }
-
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var viewModel = (StatisticModel)DataContext;

@@ -194,6 +194,7 @@
                                        Text="{Binding ParcelID,Mode=TwoWay}" 
                                        Margin="5 0 0 0"
                                        Foreground="#B0B0B2" Width="250" Height="70" />
+                           
                         </StackPanel>
                     </Border>
                 </Grid>
@@ -338,14 +339,7 @@
                                HorizontalAlignment="Left"
                                HorizontalContentAlignment="Center"
                                Foreground="#B0B0B2" Width="100" Height="70" />
-                    <fa:IconImage Icon="{Binding StatusIcon}"
-                                  Height="30" Width="30"
-                                  Style="{StaticResource menuButtonIcon}"
-                                  Foreground="YellowGreen"
-                                  Margin="80 0 0 0"
-                                  VerticalAlignment="Center"
-                                  HorizontalAlignment="Center"/>
-
+                    <Button Content="Làm mới" Command="{Binding LoadParcelInfoCommand}" Width="124" Margin="316,14,10,14" />
 
                     <!--Dùng khi thất bại-->
                     <!--<fa:IconImage Icon="CircleXmark"
@@ -401,18 +395,8 @@
                     <!--Trạng thái đơn hàng ứng với từng Icon-->
                     <!--Đang vận chuyển, Tới kho đích, giao thất bại, giao thành công, đang ở kho-->
                     <!---->
-                    <TextBox   materialDesign:HintAssist.Hint="{Binding StatusText}"
-                               materialDesign:HintAssist.FloatingScale="0"
-                               materialDesign:HintAssist.Foreground="Blue"
-                               FontSize="20" BorderThickness="0"
-                               Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                               Text="{Binding SearchText}" 
-                               Margin="0 0 40 0"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Right"
-                               HorizontalContentAlignment="Center"
-                               Foreground="YellowGreen" Width="170" Height="70" />
-
+                    
+                    
                 </Grid>
 
                 <Grid Grid.Row="1">
@@ -423,21 +407,21 @@
                                Foreground="#496DFE" />
                 </Grid>
                 <Grid Grid.Row="2">
-                    <ScrollViewer Margin="0,0,10,30">
-                        <!-- Items Control for Route Items -->
-                        <ItemsControl ItemsSource="{Binding RouteInfoList}" Margin="0,0,0,0" Width="NaN">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <!-- Icon or Indicator for Route Status -->
-                                        <Ellipse Width="10" Height="10" Fill ="#6D83DD" Margin="0,0,10,0" />
-                                        <TextBlock Text="{Binding}" Foreground="#6D83DD" Margin="0,12,10,0" />
-                                        <!-- Route Information -->
+                    <ListBox ItemsSource="{Binding RouteInfoList}" Margin="0,0,45,0" Width="NaN">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Ellipse Width="10" Height="10" Fill="#7314ED" Margin="0,0,10,0" />
+                                    <TextBlock Text="{Binding}" Foreground="#7314ED" Margin="0,0,10,0" />
+
+                                    <StackPanel>
+
                                     </StackPanel>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </Grid>
             </Grid>
         </Grid>
