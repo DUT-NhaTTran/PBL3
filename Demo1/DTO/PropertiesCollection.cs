@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Demo1.Model;
+using Demo1.View;
 using Demo1.ViewModel;
 
 namespace Demo1.DTO

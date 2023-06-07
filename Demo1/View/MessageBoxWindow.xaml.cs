@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 
-namespace Demo1
+namespace Demo1.View
 {
     public partial class MessageBoxWindow : Window
     {

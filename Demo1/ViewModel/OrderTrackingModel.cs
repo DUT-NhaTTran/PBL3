@@ -1,5 +1,5 @@
 ﻿using Demo1.Model;
-
+using Demo1.View;
 using System;
 
 using System.Collections.Generic;
@@ -221,7 +221,7 @@ namespace Demo1.ViewModel
             string basicStatus = string.Empty;
             bool isNhapKhoDich = false;
             bool isXuatKhoDich = false;
-
+            bool isTraLai = false;
             using (var context = new PBL3_demoEntities())
             {
                 var routes = context.Routes
@@ -256,22 +256,25 @@ namespace Demo1.ViewModel
                     {
                         basicStatus = "Vừa được khởi tạo";
                     }
-                    else if (details.Contains("kho đích") && status)
-                    {
-                        basicStatus = "Bị trả lại";
-                    }
+                    
                     else if (details.Contains("kho đích") && !status)
                     {
                         basicStatus = "Đến kho đích";
-                    }
-                    else if (isXuatKhoDich)
-                    {
-                        basicStatus = "Đang giao hàng";
                     }
                     else if (details.Contains("thất bại") && !status)
                     {
                         basicStatus = "Giao thất bại";
                     }
+                    else if (details.Contains("kho đích") && status)
+                    {
+                        basicStatus = "Bị trả lại";
+                        isTraLai = true;
+                    }
+                    else if (isXuatKhoDich&&isTraLai)
+                    {
+                        basicStatus = "Đang giao hàng";
+                    }
+                   
                     else
                     {
                         basicStatus = "Đang vận chuyển";

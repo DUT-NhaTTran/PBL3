@@ -15,6 +15,7 @@ using System.Windows;
 using System.Windows.Input;
 using static Demo1.ViewModel.SearchParcelModel;
 using System.Windows.Media;
+using Demo1.View;
 
 namespace Demo1.ViewModel
 {
@@ -275,16 +276,7 @@ namespace Demo1.ViewModel
                 RevenueSortAscendingCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = Reverse(ToStringAfterSort(SortedWarehouseToView, "revenue", SelectedMonth, SelectedYear, context)); Change(); });
             }
         }
-        //public void LoadObservationData()
-        //{
-        //    RevenueChartData = new ChartValues<double>(CalcRevenueData(SelectedMonth, SelectedYear));
-        //    TotalParcelChartData = new ChartValues<int>(CalcNumOfParcelsData(SelectedMonth, SelectedYear));
-        //    bool isAllZero = TotalParcelChartData.All(value => value == 0) && RevenueChartData.All(value => value == 0);
 
-
-
-
-        //}
         private void LoadObservationData()
         {
             ObservableCollection<int> totalParcelData = CalcNumOfParcelsData(SelectedMonth, SelectedYear);
@@ -302,7 +294,7 @@ namespace Demo1.ViewModel
                 RevenueChartData = new ChartValues<double>(revenueData);
             }
 
-         
+
         }
 
         private bool IsAllZero(IEnumerable<int> data)
@@ -352,7 +344,7 @@ namespace Demo1.ViewModel
             //chart
             LabelsData = CalcDateTime(SelectedMonth, SelectedYear);
             LoadObservationData();
-         
+
             //RevenueChartData = CalcRevenueData(SelectedMonth, SelectedYear);
             //TotalParcelChartData = CalcNumOfParcelsData(SelectedMonth, SelectedYear);
 

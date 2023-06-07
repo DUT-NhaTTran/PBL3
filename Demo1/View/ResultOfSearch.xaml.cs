@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Demo1
+namespace Demo1.View
 {
     /// <summary>
     /// Interaction logic for ResultOfSearch.xaml

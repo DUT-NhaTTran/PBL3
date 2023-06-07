@@ -750,6 +750,7 @@ using System.Windows;
 using System.Windows.Input;
 using Demo1.Model;
 using Demo1.UserInfo;
+using Demo1.View;
 //old
 namespace Demo1.ViewModel
 {

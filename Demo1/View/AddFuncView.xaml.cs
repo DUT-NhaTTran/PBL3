@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Demo1
+namespace Demo1.View
 {
     /// <summary>
     /// Interaction logic for AddFuncView.xaml
@@ -25,23 +25,5 @@ namespace Demo1
         {
             InitializeComponent();
         }
-
-        //private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    var comboBox = sender as ComboBox;
-        //    var selectedCity = comboBox.SelectedItem as string;
-        //    var viewModel = DataContext as AddFunctionModel;
-        //    viewModel.SCustomerCity = selectedCity;
-        //    viewModel.HandleSelectedSCity();
-        //}
-
-        //private void ComboBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        //{
-        //    var comboBox1 = sender as ComboBox;
-        //    var selectedCity = comboBox1.SelectedItem as string;
-        //    var viewModel = DataContext as AddFunctionModel;
-        //    viewModel.RCustomerCity = selectedCity;
-        //    viewModel.HandleSelectedRCity();
-        //}
     }
 }

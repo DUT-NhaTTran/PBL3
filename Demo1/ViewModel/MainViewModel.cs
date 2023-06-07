@@ -1,4 +1,5 @@
 ﻿using Demo1.UserInfo;
+using Demo1.View;
 using FontAwesome.Sharp;
 using System;
 using System.Collections.Generic;
@@ -102,21 +103,11 @@ namespace Demo1.ViewModel
             private BaseViewModel _currentChildView;
             private string _caption;
             private IconChar _icon;
-            private Visibility _buttonVisibility;
+         
             private string _roleName;
             private string _userName;
 
-            public Visibility ButtonVisibility
-            {
-                get { return _buttonVisibility; }
-                set
-                {
-                    _buttonVisibility = value;
-                    OnPropertyChanged("ButtonVisibility");
-                }
-            }
-
-            
+                    
             public BaseViewModel CurrentChildView
             {
                 get

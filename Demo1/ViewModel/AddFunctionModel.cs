@@ -8,6 +8,8 @@ using System.Drawing.Text;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
+using Demo1.View;
+using System.Text.RegularExpressions;
 
 namespace Demo1.ViewModel
 {
@@ -145,49 +147,49 @@ namespace Demo1.ViewModel
             });
             AddCommand = new RelayCommand<object>((p) =>
             {
-                return checkValid();
+                return checkValid() && SCustomerID != RCustomerID&&SCustomerPhoneNumber!=RCustomerPhoneNumber;
             }, (p) =>
             {
-               
+             
             //int setParcelID;
             SCustomerCity=SelectedSCity;
             RCustomerCity=SelectedRCity;    
-            using (var context = new Model.PBL3_demoEntities())
-            {
-                var sc = context.Customers.FirstOrDefault(x => x.customerID == SCustomerID);
-                if (sc == null)
+                using (var context = new Model.PBL3_demoEntities())
                 {
-                    var newSCustomer = new Customer { customerID = SCustomerID, customerLocation = SCustomerAddress + "," + SCustomerDistrict + "," + SCustomerCity, customerPhoneNumber = SCustomerPhoneNumber, customerName = SCustomerName,joinTime=DateTime.Now};
-                    context.Customers.Add(newSCustomer);
-                }
-                else
-                {
-                    if ((sc.customerLocation != SCustomerAddress + "," + SCustomerDistrict + "," + SCustomerCity) || (sc.customerPhoneNumber != SCustomerPhoneNumber))
+                    var sc = context.Customers.FirstOrDefault(x => x.customerID == SCustomerID);
+                    if (sc == null)
                     {
-                        sc.customerLocation = SCustomerAddress + "," + SCustomerDistrict + "," + SCustomerCity;
-                        sc.customerPhoneNumber = SCustomerPhoneNumber;
+                        var newSCustomer = new Customer { customerID = SCustomerID, customerLocation = SCustomerAddress + "," + SCustomerDistrict + "," + SCustomerCity, customerPhoneNumber = SCustomerPhoneNumber, customerName = SCustomerName,joinTime=DateTime.Now};
+                        context.Customers.Add(newSCustomer);
+                    }
+                    else
+                    {
+                        if ((sc.customerLocation != SCustomerAddress + "," + SCustomerDistrict + "," + SCustomerCity) || (sc.customerPhoneNumber != SCustomerPhoneNumber))
+                        {
+                            sc.customerLocation = SCustomerAddress + "," + SCustomerDistrict + "," + SCustomerCity;
+                            sc.customerPhoneNumber = SCustomerPhoneNumber;
+                        }
+
                     }
 
-                }
-
-                var rc = context.Customers.FirstOrDefault(x => x.customerID == RCustomerID);
-                if (rc == null)
-                {
-                    var newRCustomer = new Customer { customerID = RCustomerID, customerLocation = RCustomerAddress + "," + RCustomerDistrict + "," + RCustomerCity, customerPhoneNumber = RCustomerPhoneNumber, customerName = RCustomerName,joinTime=DateTime.Now};
-                    context.Customers.Add(newRCustomer);
-                }
-                else
-                {
-                    if ((rc.customerLocation != RCustomerAddress + "," + RCustomerDistrict + "," + RCustomerCity) || (rc.customerPhoneNumber != RCustomerPhoneNumber))
+                    var rc = context.Customers.FirstOrDefault(x => x.customerID == RCustomerID);
+                    if (rc == null)
                     {
-                        rc.customerLocation = RCustomerAddress + "," + RCustomerDistrict + "," + RCustomerCity;
-                        rc.customerPhoneNumber = RCustomerPhoneNumber;
+                        var newRCustomer = new Customer { customerID = RCustomerID, customerLocation = RCustomerAddress + "," + RCustomerDistrict + "," + RCustomerCity, customerPhoneNumber = RCustomerPhoneNumber, customerName = RCustomerName,joinTime=DateTime.Now};
+                        context.Customers.Add(newRCustomer);
                     }
+                    else
+                    {
+                        if ((rc.customerLocation != RCustomerAddress + "," + RCustomerDistrict + "," + RCustomerCity) || (rc.customerPhoneNumber != RCustomerPhoneNumber))
+                        {
+                            rc.customerLocation = RCustomerAddress + "," + RCustomerDistrict + "," + RCustomerCity;
+                            rc.customerPhoneNumber = RCustomerPhoneNumber;
+                        }
 
-                }
-                    context.SaveChanges();
+                    }
+                        context.SaveChanges();
                    
-            }
+                }
                  
                 using (var context1 = new Model.PBL3_demoEntities())
                 {
@@ -208,21 +210,19 @@ namespace Demo1.ViewModel
            
             bool checkValid()
             {
-
-                
                 if (string.IsNullOrEmpty(SCustomerName) || string.IsNullOrEmpty(SCustomerID) || string.IsNullOrEmpty(SCustomerAddress) ||
                          string.IsNullOrEmpty(SCustomerPhoneNumber) || string.IsNullOrEmpty(SCustomerDistrict) || string.IsNullOrEmpty(SCustomerCity) ||
-                         string.IsNullOrEmpty(RCustomerName) || string.IsNullOrEmpty(RCustomerID) || string.IsNullOrEmpty(RCustomerAddress) ||string.IsNullOrEmpty(ParcelLength) ||
-                         string.IsNullOrEmpty(RCustomerPhoneNumber) || string.IsNullOrEmpty(RCustomerDistrict) || string.IsNullOrEmpty(RCustomerCity) || string.IsNullOrEmpty(ParcelHeight)||
-                         string.IsNullOrEmpty(ParcelName)|| string.IsNullOrEmpty(ParcelMass) || string.IsNullOrEmpty(ParcelWidth)
+                         string.IsNullOrEmpty(RCustomerName) || string.IsNullOrEmpty(RCustomerID) || string.IsNullOrEmpty(RCustomerAddress) || string.IsNullOrEmpty(ParcelLength) ||
+                         string.IsNullOrEmpty(RCustomerPhoneNumber) || string.IsNullOrEmpty(RCustomerDistrict) || string.IsNullOrEmpty(RCustomerCity) || string.IsNullOrEmpty(ParcelHeight) ||
+                         string.IsNullOrEmpty(ParcelName) || string.IsNullOrEmpty(ParcelMass) || string.IsNullOrEmpty(ParcelWidth)
                          || (isSlow == false && isFast == false))
 
                     isValid = 0;
-                else isValid = 1;
-                
-                
 
-              
+                else isValid = 1;
+
+
+
                 double number, number1, number2, number3, number4;
                 double number5, number6;
                 ////con valid sdt chua lam
@@ -233,7 +233,9 @@ namespace Demo1.ViewModel
                 bool isNumeric4 = double.TryParse(ParcelLength, out number4);
                 bool isNumeric5 = double.TryParse(RCustomerID, out number5);
                 bool isNumeric6 = double.TryParse(SCustomerID, out number6);
-                if (isNumeric&&isNumeric1&&isNumeric2&&isNumeric3&&isNumeric4&&isNumeric5&&isNumeric6)
+                bool isNumeric7 = IsPhoneNumber(SCustomerPhoneNumber);
+                bool isNumeric8 = IsPhoneNumber(RCustomerPhoneNumber);
+                if (isNumeric && isNumeric1 && isNumeric2 && isNumeric3 && isNumeric4 && isNumeric5 && isNumeric6 && isNumeric7 && isNumeric8 && IsID(SCustomerID) && IsID(RCustomerID))
                 {
                     isValid = 1;
                 }
@@ -279,7 +281,7 @@ namespace Demo1.ViewModel
                     context.Invoices.Add(newInvoice);
                     context.SaveChanges();
                 }
-                Invoice invoice = new Invoice();
+                View.Invoice invoice = new View.Invoice();
                 
                 invoice.DataContext = this;
                 invoice.Show();
@@ -289,10 +291,27 @@ namespace Demo1.ViewModel
             AddAndCreateInvoiceCommand.RegisterCommand(CreateInvoiceCommand);
             
         }
+        bool IsPhoneNumber(string inputStr)
+        {
+            string pattern = @"^0\d{9}$"; // Định dạng số điện thoại gồm 10 chữ số và có số 0 ở trước
+
+            if (inputStr?.Length > 0 && Regex.IsMatch(inputStr, pattern))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         double GetShippingFee()
         {
             double res = isCOD ? (TotalCost - Convert.ToDouble(ParcelValue)) : TotalCost;
             return res;
+        }
+        bool IsID(string input)
+        {
+            return input.Length == 12 && input.All(char.IsDigit);
         }
     }
 }

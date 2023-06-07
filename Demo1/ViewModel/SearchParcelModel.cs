@@ -9,6 +9,7 @@ using Demo1.DTO;
 using Demo1.Model;
 
 using Demo1.UserInfo;
+using Demo1.View;
 
 namespace Demo1.ViewModel
 {
@@ -35,6 +36,13 @@ namespace Demo1.ViewModel
                 OnPropertyChanged();
             }
         }
+        private string _SisCOD;
+        public string SisCOD
+        {
+            get => _SisCOD;
+            set { _SisCOD = value; OnPropertyChanged(); }
+        }
+
         public class ParcelInfoInSearch
         {
             public int ID { get; set; }
@@ -44,6 +52,7 @@ namespace Demo1.ViewModel
         }
         public SearchParcelModel()
         {
+          
             ParcelInfoListInSearch = new ObservableCollection<ParcelInfoInSearch>();
             SearchCommand = new RelayCommand<object>((p) => { return true; },
                 (p) => { GetAllParcels(); });
@@ -51,6 +60,27 @@ namespace Demo1.ViewModel
 
             ParcelNameClickCommand = new RelayCommand<object>((p) => { return true; },
     (p) => { OpenResultOfSerchWindow(); });
+        }
+      
+        void GetSisCOD()
+        {
+            int iParcelID = Convert.ToInt32(SearchParcelText);
+            using (var context = new PBL3_demoEntities())
+            {
+                var parcel = context.Parcels.FirstOrDefault(x => x.parcelID == iParcelID);
+                if (parcel != null)
+                {
+                    if (parcel.isCOD.HasValue)
+                    {
+                        bool isCOD = (bool)parcel.isCOD;
+                        SisCOD = isCOD ? "COD" : "Bình thường";
+                    }
+                    else
+                    {
+                        SisCOD = "Không xác định";
+                    }
+                }
+            }
         }
 
         void GetAllParcels()
@@ -80,6 +110,7 @@ namespace Demo1.ViewModel
         // Xử lý sự kiện click chuột vào TextBlock ParcelName
         public void OpenResultOfSerchWindow()
         {
+            GetSisCOD();
             ResultOfSearch ros = new ResultOfSearch();
             SetAllParcelInfo();
             ros.ShowDialog();

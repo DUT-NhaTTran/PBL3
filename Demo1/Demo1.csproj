@@ -237,20 +237,13 @@
     </Compile>
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\AddFunctionModel.cs" />
-    <Compile Include="ViewModel\HashHelper.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\StatisticsView.xaml.cs">
       <DependentUpon>StatisticsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UpdateStatusParcelView.xaml.cs">
-      <DependentUpon>UpdateStatusParcelView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\WarehouseTracking.xaml.cs">
       <DependentUpon>WarehouseTracking.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Window1.xaml.cs">
-      <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
     <Page Include="Styles\ButtonStyles.xaml">
       <SubType>Designer</SubType>
@@ -324,15 +317,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UpdateStatusParcelView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\WarehouseTracking.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Window1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

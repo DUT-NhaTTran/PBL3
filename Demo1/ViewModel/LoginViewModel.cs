@@ -1,5 +1,5 @@
-﻿
-using Demo1.UserInfo;
+﻿using Demo1.UserInfo;
+using Demo1.View;
 using System;
 using System.Linq;
 using System.Security.Cryptography;
@@ -56,28 +56,7 @@ namespace Demo1.ViewModel
 
 
         }
-        //void Login(Window p)
-        //{
-        //    using (var context = new Model.PBL3_demoEntities())
-        //    {
-        //        string hashedPassword = HashPassword(Password);
-        //        var count = context.Accounts.FirstOrDefault(x => x.accountName == UserName && x.accountPassword == hashedPassword);
-        //        if (count != null)
-        //        {
-
-        //            isLogin = true;
-        //            LoginID = count.accountID;
-        //            accessRight = rolePermission(LoginID);
-        //            AccountManager.Instance.SetLoginInfo(count.accountID, count.accountName, count.accountPassword,count.accessRightID);
-        //            p.Close();
-        //        }
-        //        else
-        //        {
-        //            isLogin = false;
-        //            MessageBoxWindow.Show("Sai tài khoản hoặc mật khẩu!");
-        //        }
-        //    }
-        //}
+      
         void Login(Window p)
         {
             UpdatePasswords();
@@ -96,6 +75,7 @@ namespace Demo1.ViewModel
                         LoginID = user.accountID;
                         accessRight = rolePermission(LoginID);
                         AccountManager.Instance.SetLoginInfo(user.accountID, user.accountName, user.accountPassword,user.accessRightID);
+                        //khi dang nhap se co du
                         p.Close();
                     }
                     else

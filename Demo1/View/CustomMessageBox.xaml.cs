@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Windows;
 
-namespace Demo1
+namespace Demo1.View
 {
     public partial class CustomMessageBox : INotifyPropertyChanged
     {

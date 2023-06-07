@@ -21,7 +21,7 @@ using ParcelInfo = Demo1.ViewModel.WarehouseTrackingModel.ParcelInfo;
 
 
 
-namespace Demo1
+namespace Demo1.View
 {
     /// <summary>
     /// Interaction logic for WarehouseTracking.xaml

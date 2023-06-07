@@ -16,7 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static Demo1.ViewModel.OrderTrackingModel;
 
-namespace Demo1
+namespace Demo1.View
 {
     /// <summary>
     /// Interaction logic for AddFuncView.xaml

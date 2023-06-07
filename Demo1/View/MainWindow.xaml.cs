@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 
-namespace Demo1
+namespace Demo1.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

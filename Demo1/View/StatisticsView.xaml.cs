@@ -17,7 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Demo1
+namespace Demo1.View
 {
     /// <summary>
     /// Interaction logic for StatisticsView.xaml

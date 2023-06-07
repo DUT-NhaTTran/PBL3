@@ -1,4 +1,4 @@
-﻿<Window x:Class="Demo1.ResultOfSearch"
+﻿<Window x:Class="Demo1.View.ResultOfSearch"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -14,7 +14,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="300"/>
-                <RowDefinition Height="180"/>
+                <RowDefinition Height="240"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
 
@@ -164,6 +164,7 @@
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Border BorderThickness="0,3,0,0"
@@ -182,8 +183,24 @@
 
                     </Border>
                 </Grid>
-
                 <Grid Grid.Row="1">
+                    <Border BorderThickness="0,3,0,0"
+                            Margin="20,0,20,0">
+                        <TextBlock 
+                                   FontSize="25"
+                                   FontWeight="Medium"
+                                   Foreground="#E6EFF3"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Margin="20,0,0,0">
+                            <Run Text="Trạng thái : "/>
+                            <Run Text="{Binding Details}"/>
+
+                        </TextBlock>
+
+                    </Border>
+                </Grid>
+                <!--<Grid Grid.Row="1">
                     <Border BorderThickness="0,3,0,0"
                             Margin="20,0,20,0">
                         <TextBlock Text="{Binding Details}"
@@ -194,29 +211,56 @@
                                    HorizontalAlignment="Left"
                                    Margin="20,0,0,0"/>
                     </Border>
-                </Grid>
+                </Grid>-->
 
                 <Grid Grid.Row="2">
                     <Border BorderThickness="0,3,0,0"
                             Margin="20,0,20,0">
-                        <TextBlock Text="{Binding CreateTime}"
+                        <TextBlock 
                                    FontSize="25"
                                    FontWeight="Medium"
                                    Foreground="#E6EFF3"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
-                                   Margin="20,0,0,0"/>
+                                   Margin="20,0,0,0">
+                            <Run Text="Thời gian tạo đơn :   "/>
+                            <Run Text="{Binding CreateTime}"/>
+
+                        </TextBlock>
+
+                    </Border>
+                </Grid>
+                <Grid Grid.Row="3">
+                    <Border BorderThickness="0,3,0,0"
+                            Margin="20,0,20,0">
+                        <TextBlock 
+                                   FontSize="25"
+                                   FontWeight="Medium"
+                                   Foreground="#E6EFF3"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   Margin="24,24,0,0">
+                            <Run Text="Phương thức vận chuyển :   "/>
+                            <Run Text="{Binding SisCOD}"/>
+
+                        </TextBlock>
+
                     </Border>
                 </Grid>
             </Grid>
 
             <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="39*"/>
+                    <ColumnDefinition Width="199*"/>
+                    <ColumnDefinition Width="762*"/>
+                </Grid.ColumnDefinitions>
                 <Border Background="#8ED3F4"
                         CornerRadius="20"
-                        Margin="30,155,10,30">
+                        Margin="30,92,10,30" Grid.ColumnSpan="3">
                     <Grid>
-                        
-                        
+
+
 
                         <Grid Grid.Row="1">
                             <Grid>
@@ -227,7 +271,7 @@
 
                                 <Grid Grid.Column="0">
                                     <StackPanel>
-                                        <TextBlock Text="Tổng tiền hàng"
+                                        <TextBlock Text="Giá tri"
                                                 FontSize="25"
                                                 FontWeight="Medium"
                                                 Foreground="#5A4D4C"

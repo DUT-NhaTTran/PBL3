@@ -1,6 +1,8 @@
 ﻿using Demo1.DTO;
 using Demo1.Model;
+using Demo1.View;
 using Demo1.ViewModel;
+using LiveCharts;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -40,6 +42,9 @@ namespace Demo1.ViewModel
             public string WarehouseID { get; set; }
             public string WarehouseName { get; set; }
             public int Capacity { get; set; }
+            public ChartValues<double> ColumnData { get; set; }
+
+
         }
         private ObservableCollection<WarehouseInfo> warehouseInfoList;
         public ObservableCollection<WarehouseInfo> WarehouseInfoList
@@ -90,10 +95,10 @@ namespace Demo1.ViewModel
         {
             ParcelInfoList = new ObservableCollection<ParcelInfo>();
             WarehouseInfoList = new ObservableCollection<WarehouseInfo>();
-            NorthernWarehousesCollectionCommand = new RelayCommand<object>((p) => { return true; }, (p) => GetWarehouseFilterd("Bắc"));
-            CentralWarehousesCollectionCommand = new RelayCommand<object>((p) => { return true; }, (p) => GetWarehouseFilterd("Trung"));
-            SouthernWarehousesCollectionCommand = new RelayCommand<object>((p) => { return true; }, (p) =>GetWarehouseFilterd("Nam"));
-            AllWarehousesCollectionCommand = new RelayCommand<object>((p) => { return true; }, (p) => GetWarehouseFilterd("All"));
+            NorthernWarehousesCollectionCommand = new RelayCommand<object>((p) => { return true; }, (p) => GetWarehouseFiltered("Bắc"));
+            CentralWarehousesCollectionCommand = new RelayCommand<object>((p) => { return true; }, (p) => GetWarehouseFiltered("Trung"));
+            SouthernWarehousesCollectionCommand = new RelayCommand<object>((p) => { return true; }, (p) =>GetWarehouseFiltered("Nam"));
+            AllWarehousesCollectionCommand = new RelayCommand<object>((p) => { return true; }, (p) => GetWarehouseFiltered("All"));
             SearchCommand = new RelayCommand<object>((p) => { return true; },
                 (p) => { GetWarehouseSearched(WarehouseText);});
             All = SetNumberOfWarehouseFiterd("All");
@@ -159,9 +164,9 @@ namespace Demo1.ViewModel
                     {
                         WarehouseID = w.warehouseID,
                         WarehouseName = w.warehouseName,
-                        Capacity = w.capacity
-                    })
-                    .ToList();
+                        Capacity = w.capacity,
+                        ColumnData = new ChartValues<double> {0.8 }
+                    }).ToList();
 
                 if (result.Any())
                 {
@@ -176,33 +181,58 @@ namespace Demo1.ViewModel
                 }
             }
         }
-        public void GetWarehouseFilterd(string str)
+        public ChartValues<double> SetColumnData(string WHID)
+        {
+            ChartValues<double> columnData = new ChartValues<double>();
+
+            using (var context = new PBL3_demoEntities())
+            {
+                var warehouse = context.Warehouses.FirstOrDefault(w => w.warehouseID == WHID);
+                if (warehouse != null)
+                {
+                    int capacity = warehouse.capacity;
+                    var parcels = context.Parcels.Where(p => p.currentWarehouseID == WHID).ToList();
+                    int count = parcels.Count();
+                    double usedCapacity = (double)count / capacity * 100;
+                   
+                    columnData.Add(usedCapacity/100);
+                }
+            }
+
+            return columnData;
+        }
+
+
+        public void GetWarehouseFiltered(string str)
         {
             ObservableCollection<string> warehouseIDs = FindRegionOfWarehouses(str);
 
             using (var context = new Model.PBL3_demoEntities())
             {
-                WarehouseInfoList.Clear(); // Xóa đi các phần tử cũ trong WarehouseInfoList
+                WarehouseInfoList.Clear(); // Clear the old elements in WarehouseInfoList
 
                 foreach (string warehouseID in warehouseIDs)
                 {
                     var query = context.Warehouses
-                        .Where(w => w.warehouseID == warehouseID) // Sử dụng toán tử so sánh bằng để tìm kiếm warehouseID chính xác
+                        .Where(w => w.warehouseID == warehouseID)
                         .Select(w => new WarehouseInfo
                         {
                             WarehouseID = w.warehouseID,
                             WarehouseName = w.warehouseName,
                             Capacity = w.capacity
                         })
-                        .FirstOrDefault(); // Sử dụng FirstOrDefault để chỉ lấy một kết quả đầu tiên (nếu có)
+                        .FirstOrDefault();
 
                     if (query != null)
                     {
+                        query.ColumnData = SetColumnData(warehouseID);
                         WarehouseInfoList.Add(query);
                     }
                 }
             }
         }
+
+
         string GetProvinceFromWarehouseName(string warehouseName)
         {
             string provinceName = warehouseName.Replace("Kho ", "");
