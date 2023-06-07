@@ -494,7 +494,18 @@
                             <TextBlock Text="Thống kê" FontSize="30" Style="{StaticResource menuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
-
+                    <RadioButton Style="{StaticResource menuButton}"
+                                     Tag="{StaticResource color1}"
+                                     IsChecked="True"
+                                     Visibility="Hidden"         
+                                     Command="{Binding ShowStatisticCommand }">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="SquarePollVertical" 
+                                              Height="30" Width="30"
+                                              Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Thống kê" FontSize="30" Style="{StaticResource menuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
 
                 </StackPanel>
             </Border>

@@ -5,338 +5,648 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Demo1.View"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
+             Loaded="UserControl_Loaded"
              DataContext="{StaticResource SM}"
-             d:DesignHeight="700" d:DesignWidth="1000">
+             d:DesignHeight="1150" d:DesignWidth="1000">
     <Border CornerRadius="20"
-            Background="#8A8683">
+            Background="#212529">
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="200"/>
-                <RowDefinition Height="200"/>
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Border Margin="20,20,20,20"
+            <ScrollViewer>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="200"/>
+                        <RowDefinition Height="500"/>
+                        <RowDefinition Height="450"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Border Margin="20,20,20,20"
                         CornerRadius="20"
-                        Background="#1ECFD6" Grid.ColumnSpan="2">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="300"/>
-                            <ColumnDefinition Width="300"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                        Background="#434343" Grid.ColumnSpan="2">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="330"/>
+                                    <ColumnDefinition Width="320"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-                        <Grid Grid.Column="0">
-                            <StackPanel Orientation="Horizontal">
-                                <fa:IconImage Icon="BoxOpen"
+                                <Grid Grid.Column="0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <fa:IconImage Icon="BoxOpen"
                                               Width="40" Height="40"
-                                              Margin="20 20 20 0"
-                                              Foreground="#5A4D4C"
+                                              Margin="20 20 5 0"
+                                              Foreground="#B0B0B2"
                                               VerticalAlignment="Top"/>
-                                <TextBlock Text="Tổng đơn hàng"
-                                           FontSize="40"
+                                        <TextBlock Text="Tổng đơn hàng"
+                                           FontSize="30"
                                            FontFamily="Montserrat"
                                            VerticalAlignment="Top"
                                            HorizontalAlignment="Center"
-                                           Margin="0 10 0 0"
-                                           Width="280" Height="50"
-                                           Foreground="#5A4D4C"/>
-                                <TextBlock Text="{Binding TotalParcel}"
-                                           FontSize="40"
+                                           Margin="20 20 0 0"
+                                           Width="Auto" Height="Auto"
+                                           Foreground="#B0B0B2"/>
+                                        <TextBlock Text="{Binding TotalParcel}"
+                                           FontSize="30"
                                            Width="Auto" Height="Auto"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center"
-                                           Foreground="#5A4D4C"
+                                           Foreground="#B0B0B2"
                                            Margin="-280 20 0 0"/>
-                                <!--<TextBlock Text="so với tháng trước"
+                                        <!--<TextBlock Text="so với tháng trước"
                                            FontSize="20"
                                            Width="Auto" Height="Auto"
                                            VerticalAlignment="Bottom"
                                            HorizontalAlignment="Center"
-                                           Foreground="#5A4D4C"
+                                           Foreground="#B0B0B2"
                                            Margin="-280 0 0 10"/>-->
 
-                                <TextBlock Text="{Binding ComparedParcelFigure}"
-                                           FontSize="20"
+                                        <TextBlock Text="{Binding ComparedParcelFigure}"
+                                           FontSize="15"
                                            Width="Auto" Height="Auto"
                                            VerticalAlignment="Bottom"
                                            HorizontalAlignment="Center"
-                                           Foreground="#5A4D4C"
-                                           Margin="-550 0 0 10"/>
+                                           Foreground="#B0B0B2"
+                                           Margin="-265 0 0 0"/>
 
-                            </StackPanel>
-                        </Grid>
-                        <Grid Grid.Column="1">
-                            <StackPanel Orientation="Vertical">
-                                <fa:IconImage Icon="ChartLine"
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <StackPanel Orientation="Horizontal">
+                                        <fa:IconImage Icon="UserAlt"
                                               Width="40" Height="40"
                                               Margin="20 15 20 0"
-                                              Foreground="#5A4D4C"
+                                              Foreground="#B0B0B2"
                                               VerticalAlignment="Top"
                                               HorizontalAlignment="Left"/>
-                                <TextBlock Text="Khách hàng mới"
+                                        <TextBlock Text="Khách hàng mới"
+                                                   FontSize="30"
+                                                   FontFamily="Montserrat"
+                                                   VerticalAlignment="Top"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="0 20 0 0"
+                                                   Width="Auto" Height="Auto"
+                                                   Foreground="#B0B0B2"/>
+                                        <TextBlock Text="{Binding NewCustomer}"
+                                                   FontSize="30"
+                                                   Width="Auto" Height="Auto"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Foreground="#B0B0B2"
+                                                   Margin="-280 20 0 0"/>
+                                        <!--<TextBlock Text="so với tháng trước"
                                            FontSize="20"
-                                           FontFamily="Montserrat"
-                                           VerticalAlignment="Top"
-                                           HorizontalAlignment="Center"
-                                           Margin="0 -45 50 0"
-                                           Width="Auto" Height="Auto"
-                                           Foreground="#5A4D4C"/>
-                                <TextBlock Text="{Binding NewCustomer}"
-                                           FontSize="40"
                                            Width="Auto" Height="Auto"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center"
-                                           Foreground="#5A4D4C"
-                                           Margin="0 5 0 0"/>
-                                <!--<TextBlock Text="so với tháng trước"
-                                           FontSize="20"
-                                           Width="Auto" Height="Auto"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Center"
-                                           Foreground="#5A4D4C"
+                                           Foreground="#B0B0B2"
                                            Margin="20 5 0 0"/>-->
 
-                                <TextBlock Text="{Binding ComparedNewCustomerFigure}"
-                                           FontSize="20"
-                                           Width="Auto" Height="Auto"
-                                           VerticalAlignment="Top"
-                                           HorizontalAlignment="Left"
-                                           Foreground="#5A4D4C"
-                                           Margin="50 -25 0 0"/>
-                            </StackPanel>
-                        </Grid>
+                                        <TextBlock Text="{Binding ComparedNewCustomerFigure}"
+                                                   FontSize="15"
+                                                   Width="Auto" Height="Auto"
+                                                   VerticalAlignment="Bottom"
+                                                   HorizontalAlignment="Center"
+                                                   Foreground="#B0B0B2"
+                                                   Margin="-250 0 0 0"/>
+                                    </StackPanel>
+                                </Grid>
 
-                        <Grid Grid.Column="2">
-                            <StackPanel Orientation="Vertical">
-                                <fa:IconImage Icon="ChartLine"
+                                <Grid Grid.Column="2">
+                                    <StackPanel Orientation="Horizontal">
+                                        <fa:IconImage Icon="ChartLine"
                                               Width="40" Height="40"
                                               Margin="20 15 20 0"
-                                              Foreground="#5A4D4C"
+                                              Foreground="#B0B0B2"
                                               VerticalAlignment="Top"
                                               HorizontalAlignment="Left"/>
-                                <TextBlock Text="Tổng doanh thu"
-                                           FontSize="40"
-                                           FontFamily="Montserrat"
-                                           VerticalAlignment="Top"
-                                           HorizontalAlignment="Center"
-                                           Margin="0 -45 50 0"
-                                           Width="Auto" Height="Auto"
-                                           Foreground="#5A4D4C"/>
-                                <TextBlock Text="{Binding Revenue}"
-                                           FontSize="40"
-                                           Width="Auto" Height="Auto"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Center"
-                                           Foreground="#5A4D4C"
-                                           Margin="0 5 0 0"/>
-                                <!--<TextBlock Text="so với tháng trước"
+                                        <TextBlock Text="Tổng doanh thu"
+                                                   FontSize="30"
+                                                   FontFamily="Montserrat"
+                                                   VerticalAlignment="Top"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="0 20 0 0"
+                                                   Width="Auto" Height="Auto"
+                                                   Foreground="#B0B0B2"/>
+                                        <TextBlock Text="{Binding Revenue}"
+                                                   FontSize="30"
+                                                   Width="Auto" Height="Auto"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Foreground="#B0B0B2"
+                                                   Margin="-280 20 0 0"/>
+                                        <!--<TextBlock Text="so với tháng trước"
                                            FontSize="20"
                                            Width="Auto" Height="Auto"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center"
-                                           Foreground="#5A4D4C"
+                                           Foreground="#B0B0B2"
                                            Margin="20 5 0 0"/>-->
 
-                                <TextBlock Text="{Binding ComparedRevenueFigure}"
-                                           FontSize="20"
-                                           Width="Auto" Height="Auto"
-                                           VerticalAlignment="Top"
-                                           HorizontalAlignment="Left"
-                                           Foreground="#5A4D4C"
-                                           Margin="50 -25 0 0"/>
-                            </StackPanel>
-                        </Grid>
+                                        <TextBlock Text="{Binding ComparedRevenueFigure}"
+                                                   FontSize="15"
+                                                   Width="Auto" Height="Auto"
+                                                   VerticalAlignment="Bottom"
+                                                   HorizontalAlignment="Center"
+                                                   Foreground="#B0B0B2"
+                                                   Margin="-250 0 0 0"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </Border>
                     </Grid>
-                </Border>
-            </Grid>
-            <Grid Grid.Row="1">
-                <StackPanel Margin="10">
-
-
-                    <Grid>
-                        <StackPanel>
-                            <DatePicker FontSize="24"
-                                        Foreground="Red"
-                                        SelectedDateChanged="DatePicker_SelectedDateChanged"
-                                        SelectedDate="{Binding SelectedDate}"
-                                        SelectedDateFormat="Long"/>
-                            <!--SelectedDate="1/1/2023"-->
-
-
-                        </StackPanel>
-                    </Grid>
-                </StackPanel>
-            </Grid>
-            <Grid Grid.Row="2">
-                <Border CornerRadius="20"
-                        Background="#1ECFD6"
-                        Margin="20">
-                    <Grid>
+                    <Grid Grid.Row="1" Margin="20">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="100"/>
-                            <RowDefinition Height="100"/>
-                            <RowDefinition />
+                            <RowDefinition Height="45"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
-                            <StackPanel Orientation="Horizontal">
-                                <fa:IconImage Icon="Truck"
-                                              Width="50" Height="50"
-                                              Foreground="#5A4D4C"
-                                              Margin="20"/>
-                                <TextBlock Text="Bưu cục Việt Nam"
-                                           FontSize="40"
-                                           Margin="-10 20 0 0"
-                                           Width="auto" Height="auto"
-                                           Foreground="#5A4D4C"/>
-                                <Border CornerRadius="20"
-                                        Background="#8ED3F4"
-                                        Margin="45 20 0 20"
-                                        Width="350">
+                            <DatePicker FontSize="20"
+                                            Foreground="DarkSlateBlue"
+                                            SelectedDateChanged="DatePicker_SelectedDateChanged"
+                                            SelectedDate="{Binding SelectedDate}"
+                                            SelectedDateFormat="Long"/>
+                            <!--SelectedDate="1/1/2023"-->
+                        </Grid>
+
+                        
+
+                        <Grid Grid.Row="2">
+                            <lvc:CartesianChart x:Name="chart" 
+                                                    LegendLocation="Bottom"
+                                                    Visibility="Collapsed"
+                                                    Margin="20 0 20 0">
+                                <lvc:CartesianChart.Series>
+           
+                                    
+                                    <lvc:LineSeries Title="Biểu đồ đường"
+                                                    Foreground="#B0B0B2"
+                                                    Values="{Binding RevenueChartData}"
+                                                  
+                                                     LineSmoothness="0.7"
+                                                     StrokeThickness = "3"
+                                                     Stroke = "Blue"
+                                                     ScalesYAt = "0"/>
+                                   
+
+                                    <lvc:ColumnSeries Title="Biểu đồ cột"
+                                          Foreground="#B0B0B2"
+                                          Values="{Binding TotalParcelChartData}"
+                                          StrokeThickness="0"
+                                          ScalesYAt="1"
+                                          Stroke="Blue"
+                                          Fill="DarkSlateBlue"/>
+
+                                </lvc:CartesianChart.Series>
+
+
+
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis Title="Tháng" Labels="{Binding LabelsData}" MaxWidth="20" FontSize="14" Margin="0,10,0,0">
+                                        <lvc:Axis.Separator>
+                                            <lvc:Separator Stroke="Transparent" Step="10"/>
+                                        </lvc:Axis.Separator>
+                                    </lvc:Axis>
+                                </lvc:CartesianChart.AxisX>
+
+                                <lvc:CartesianChart.AxisY>
+  
+                                    <lvc:Axis Title="Tiền (triệu đồng)"
+                                                  FontSize="14" Position="LeftBottom">
+                                        <lvc:Axis.Separator>
+                                            <lvc:Separator Stroke="Transparent"  />
+                                        </lvc:Axis.Separator>
+                                    </lvc:Axis>
+
+                                    <lvc:Axis Title="Đơn hàng (nghìn đơn)" 
+                                                  FontSize="14" Position="RightTop">
+                                        <lvc:Axis.Separator>
+                                            <lvc:Separator Stroke="Transparent" />
+                                        </lvc:Axis.Separator>
+                                    </lvc:Axis>
+                                </lvc:CartesianChart.AxisY>
+                            </lvc:CartesianChart>
+                           
+
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Border CornerRadius="20"
+                        Background="#434343"
+                        Margin="20">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="100"/>
+                                    <RowDefinition Height="100"/>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
                                     <StackPanel Orientation="Horizontal">
-                                        <fa:IconImage Icon="MagnifyingGlass"
+                                        <fa:IconImage Icon="Truck"
+                                              Width="50" Height="50"
+                                              Foreground="#B0B0B2"
+                                              Margin="20"/>
+                                        <TextBlock Text="Bưu cục Việt Nam"
+                                                   FontSize="40"
+                                                   Margin="-10 20 0 0"
+                                                   Width="auto" Height="auto"
+                                                   Foreground="#B0B0B2"/>
+                                        <Border CornerRadius="20"
+                                                Background="#212325"
+                                                Margin="45 20 0 20"
+                                                Width="350">
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:IconImage Icon="MagnifyingGlass"
                                                       Height="25" Width="25"
                                                       Margin="20 0 20 0"
                                                       Style="{StaticResource menuButtonIcon}"
-                                                      Foreground="#5A4D4C"/>
-                                        <TextBox   materialDesign:HintAssist.Hint="Nhập mã đơn hàng"
-                                                   materialDesign:HintAssist.FloatingScale="0"
-                                                   materialDesign:HintAssist.Foreground="Blue"
-                                                   FontSize="30" 
-                                                   TextChanged="TextBox_TextChanged"
-                                                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                                   Text="{Binding CustomerName}" 
-                                                   BorderThickness="0"
-                                                   Foreground="Black" Width="270" Height="70" />
+                                                      Foreground="#B0B0B2"/>
+                                                <TextBox   materialDesign:HintAssist.Hint="Nhập mã kho hàng"
+                                                           materialDesign:HintAssist.FloatingScale="0"
+                                                           materialDesign:HintAssist.Foreground="Blue"
+                                                           FontSize="30" 
+                                                           TextChanged="TextBox_TextChanged"
+                                                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                           Text="{Binding CustomerName}" 
+                                                           BorderThickness="0"
+                                                           Foreground="#B0B0B2" Width="270" Height="70" />
+                                            </StackPanel>
+                                        </Border>
+                                        <Button Content="Mới" 
+                                                IsDefault="true" 
+                                                Command="{Binding ResetSortCommand}"
+                                                Background="#1E2597" Foreground="#B0B0B2" 
+                                                Margin="20 0 0 0 "
+                                                FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
+                                                Height="44" Width="100"/>
                                     </StackPanel>
-                                </Border>
-                                <Button Content="Mới" 
-                                        IsDefault="true" 
-                                        Command="{Binding ResetSortCommand}"
-                                        Background="#8ED3F4" Foreground="#5A4D4C" 
-                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
-                                        Height="44" Width="100"
-                                        />
-                            </StackPanel>
-                        </Grid>
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="180"/>
-                                <ColumnDefinition Width="180"/>
-                                <ColumnDefinition Width="180"/>
-                                <ColumnDefinition Width="180"/>
-                                <ColumnDefinition Width="180"/>
+                                </Grid>
+                                <Grid Grid.Row="1">
+                                    <Border BorderThickness="0 0 0 1"
+                                            BorderBrush="#212529">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="120"/>
+                                                <ColumnDefinition Width="160"/>
+                                                <ColumnDefinition Width="130"/>
+                                                <ColumnDefinition Width="180"/>
+                                                <ColumnDefinition Width="180"/>
+                                                <ColumnDefinition Width="180"/>
 
-                            </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="0">
-                                <TextBlock Text="STT" FontSize="35"/>
-                            </Grid>
-                            <Grid Grid.Column="1">
-                                <Button Content="Asc" 
-                                        IsDefault="true" 
-                                        Background="#8ED3F4" Foreground="#5A4D4C" 
-                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
-                                        Height="45" Width="150"
-                                        Command="{Binding IDSortAscendingCommand}"
-                                        Margin="0,0,0,55"/>
-                                <Button Content="Des" 
-                                        IsDefault="true" 
-                                        Background="#8ED3F4" Foreground="#5A4D4C" 
-                                        Command="{Binding IDSortCommand}"
-                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
-                                        Height="45" Width="150"
-                                        Margin="0,50,0,5"/>
-                            </Grid>
-                            <Grid Grid.Column="2">
-                                <Button Content="Asc" 
-                                        IsDefault="true" 
-                                        Command="{Binding CapacitySortAscendingCommand}"
-                                        Background="#8ED3F4" Foreground="#5A4D4C" 
-                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
-                                        Height="45" Width="150"
-                                        Margin="0,0,0,55"/>
-                                <Button Content="Des" 
-                                        IsDefault="true" 
-                                        Command="{Binding CapacitySortCommand}"
-                                        Background="#8ED3F4" Foreground="#5A4D4C" 
-                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
-                                        Height="45" Width="150"
-                                        Margin="0,50,0,5"/>
-                            </Grid>
-                            <Grid Grid.Column="3">
-                                <Button Content="Asc" 
-                                        IsDefault="true" 
-                                        Background="#8ED3F4" Foreground="#5A4D4C" 
-                                        Command="{Binding NumberOfParcelSortAscendingCommand}"
-                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
-                                        Height="45" Width="150"
-                                        Margin="0,0,0,55"/>
-                                <Button Content="Des" 
-                                        IsDefault="true" 
-                                        Command="{Binding NumberOfParcelSortCommand}"
-                                        Background="#8ED3F4" Foreground="#5A4D4C" 
-                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
-                                        Height="45" Width="150"
-                                        Margin="0,50,0,5"/>
-                            </Grid>
-                            <Grid Grid.Column="4">
-                                <Button Content="Asc" 
-                                        IsDefault="true" 
-                                        Command="{Binding RevenueSortAscendingCommand}"
-                                        Background="#8ED3F4" Foreground="#5A4D4C" 
-                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
-                                        Height="45" Width="150"
-                                        Margin="0,0,0,55"/>
-                                <Button Content="Des" 
-                                        IsDefault="true" 
-                                        Command="{Binding RevenueSortCommand}"
-                                        Background="#8ED3F4" Foreground="#5A4D4C" 
-                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
-                                        Height="45" Width="150"
-                                        Margin="0,50,0,5"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Grid Grid.Column="0">
+                                                <Border BorderThickness="0 0 1 0"
+                                                
+                                                CornerRadius="20 0 0 0"
+                                                BorderBrush="#212529">
+
+                                                </Border>
+                                                <TextBlock Text="Thứ tự"
+                                                   FontSize="20"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Width="auto" Height="auto"
+                                                   Foreground="#B0B0B2"/>
+                                            </Grid>
+
+                                            <Grid Grid.Column="1">
+                                                <Border BorderThickness="0 0 1 0"
+                                                CornerRadius="20 0 0 0"
+                                                BorderBrush="#212529">
+
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="125"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid Grid.Column="0">
+                                                            <TextBlock Text="Mã bưu cục"
+                                                                       FontSize="20"
+                                                                       VerticalAlignment="Center"
+                                                                       HorizontalAlignment="Center"
+                                                                       Width="auto" Height="auto"
+                                                                       Foreground="#B0B0B2"/>
+                                                        </Grid>
+
+                                                        <Grid Grid.Column="1">
+                                                            <Button IsDefault="true" 
+                                                    BorderBrush="Transparent"
+                                                    Background="Transparent"
+                                                    Width="40" Height="15"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Command="{Binding IDSortAscendingCommand}"
+                                                    Margin="0,-20,10,0">
+                                                                <materialDesign:PackIcon Kind="CaretUp" 
+                                                                     Height="30" Width="30"
+                                                                     Foreground="#B0B0B2"
+                                                                     VerticalAlignment="Center"
+                                                                     HorizontalAlignment="Center"
+                                                                     Margin="0 0 0 0"/>
+                                                            </Button>
+                                                            <Button IsDefault="true" 
+                                                    Background="Transparent"
+                                                    BorderBrush="Transparent"
+                                                    Width="40" Height="15"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Command="{Binding IDSortCommand}"
+                                                    Margin="0,20,10,0" >
+                                                                <materialDesign:PackIcon Kind="CaretDown" 
+                                                                     Height="30" Width="30"
+                                                                     Foreground="#B0B0B2"
+                                                                     VerticalAlignment="Center"
+                                                                     HorizontalAlignment="Center"
+                                                                     Margin="0 0 0 0"/>
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Border>
+
+                                            </Grid>
+
+                                            <Grid Grid.Column="2">
+                                                <Border BorderThickness="0 0 1 0"
+                                                CornerRadius="20 0 0 0"
+                                                BorderBrush="#212529">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="100"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid Grid.Column="0">
+                                                            <TextBlock Text="Sức chứa"
+                                                   FontSize="20"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Width="auto" Height="auto"
+                                                   Foreground="#B0B0B2"/>
+                                                        </Grid>
+
+                                                        <Grid Grid.Column="1">
+                                                            <Button IsDefault="true" 
+                                                    BorderBrush="Transparent"
+                                                    Background="Transparent"
+                                                    Width="40" Height="15"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center"
+                                                    Command="{Binding CapacitySortAscendingCommand}"
+                                                    Margin="0,-20,10,0">
+                                                                <materialDesign:PackIcon Kind="CaretUp" 
+                                                                     Height="30" Width="30"
+                                                                     Foreground="#B0B0B2"
+                                                                     VerticalAlignment="Center"
+                                                                     HorizontalAlignment="Center"
+                                                                     Margin="0 0 0 0"/>
+                                                            </Button>
+                                                            <Button IsDefault="true" 
+                                                    Background="Transparent"
+                                                    BorderBrush="Transparent"
+                                                    Width="40" Height="15"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Command="{Binding CapacitySortCommand}"
+                                                    Margin="0,20,10,0" >
+                                                                <materialDesign:PackIcon Kind="CaretDown" 
+                                                                     Height="30" Width="30"
+                                                                     Foreground="#B0B0B2"
+                                                                     VerticalAlignment="Center"
+                                                                     HorizontalAlignment="Center"
+                                                                     Margin="0 0 0 0"/>
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Border>
+
+                                            </Grid>
+
+                                            <Grid Grid.Column="3">
+                                                <Border BorderThickness="0 0 1 0"
+                                                CornerRadius="20 0 0 0"
+                                                BorderBrush="#212529">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="160"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid Grid.Column="0">
+                                                            <TextBlock Text="Tổng đơn hàng"
+                                                   FontSize="20"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Width="auto" Height="auto"
+                                                   Foreground="#B0B0B2"/>
+                                                        </Grid>
+
+                                                        <Grid Grid.Column="1">
+                                                            <Button IsDefault="true" 
+                                                    BorderBrush="Transparent"
+                                                    Background="Transparent"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Width="40" Height="15"
+                                                    Command="{Binding NumberOfParcelSortAscendingCommand}"
+                                                    Margin="0,-20,10,0">
+                                                                <materialDesign:PackIcon Kind="CaretUp" 
+                                                                     Height="30" Width="30"
+                                                                     Foreground="#B0B0B2"
+                                                                     VerticalAlignment="Center"
+                                                                     HorizontalAlignment="Center"
+                                                                     Margin="0 0 0 0"/>
+                                                            </Button>
+                                                            <Button IsDefault="true" 
+                                                    Background="Transparent"
+                                                    BorderBrush="Transparent"
+                                                    Width="40" Height="15"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Command="{Binding NumberOfParcelSortCommand}"
+                                                    Margin="0,20,10,0" >
+                                                                <materialDesign:PackIcon Kind="CaretDown" 
+                                                                     Height="30" Width="30"
+                                                                     Foreground="#B0B0B2"
+                                                                     VerticalAlignment="Center"
+                                                                     HorizontalAlignment="Center"
+                                                                     Margin="0 0 0 0"/>
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Border>
+                                            </Grid>
+
+                                            <Grid Grid.Column="4">
+                                                <Border BorderThickness="0 0 1 0"
+                                                CornerRadius="20 0 0 0"
+                                                BorderBrush="#212529">
+
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="160"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid Grid.Column="0">
+                                                            <TextBlock Text="Tổng doanh thu"
+                                                   FontSize="20"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Width="auto" Height="auto"
+                                                   Foreground="#B0B0B2"/>
+                                                        </Grid>
+
+                                                        <Grid Grid.Column="1">
+                                                            <Button IsDefault="true" 
+                                                    BorderBrush="Transparent"
+                                                    Background="Transparent"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Width="40" Height="15"
+                                                    Command="{Binding RevenueSortAscendingCommand}"
+                                                    Margin="0,-20,10,0">
+                                                                <materialDesign:PackIcon Kind="CaretUp" 
+                                                                     Height="30" Width="30"
+                                                                     Foreground="#B0B0B2"
+                                                                     VerticalAlignment="Center"
+                                                                     HorizontalAlignment="Center"
+                                                                     Margin="0 0 0 0"/>
+                                                            </Button>
+                                                            <Button IsDefault="true" 
+                                                    Background="Transparent"
+                                                    BorderBrush="Transparent"
+                                                    Width="40" Height="15"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Command="{Binding RevenueSortCommand}"
+                                                    Margin="0,20,10,0" >
+                                                                <materialDesign:PackIcon Kind="CaretDown" 
+                                                                     Height="30" Width="30"
+                                                                     Foreground="#B0B0B2"
+                                                                     VerticalAlignment="Center"
+                                                                     HorizontalAlignment="Center"
+                                                                     Margin="0 0 0 0"/>
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Border>
+                                            </Grid>
+
+                                            <Grid Grid.Column="5">
+
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="160"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <TextBlock Text="Tổng nhân viên"
+                                                   FontSize="20"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Width="auto" Height="auto"
+                                                   Foreground="#B0B0B2"/>
+                                                </Grid>
+
+                                                <Grid Grid.Column="1">
+                                                    <Button IsDefault="true" 
+                                                    BorderBrush="Transparent"
+                                                    Background="Transparent"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Width="40" Height="15"
+                                                    Command="{Binding NumberOfStaffSortAscendingCommand}"
+                                                    Margin="0,-20,10,0">
+                                                        <materialDesign:PackIcon Kind="CaretUp" 
+                                                                     Height="30" Width="30"
+                                                                     Foreground="#B0B0B2"
+                                                                     VerticalAlignment="Center"
+                                                                     HorizontalAlignment="Center"
+                                                                     Margin="0 0 0 0"/>
+                                                    </Button>
+                                                    <Button IsDefault="true" 
+                                                    Background="Transparent"
+                                                    BorderBrush="Transparent"
+                                                    Width="40" Height="15"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Command="{Binding NumberOfStaffSortCommand}"
+                                                    Margin="0,20,10,0" >
+                                                        <materialDesign:PackIcon Kind="CaretDown" 
+                                                                     Height="30" Width="30"
+                                                                     Foreground="#B0B0B2"
+                                                                     VerticalAlignment="Center"
+                                                                     HorizontalAlignment="Center"
+                                                                     Margin="0 0 0 0"/>
+                                                    </Button>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+
+                                <Grid Grid.Row="2">
+                                    <ListView ItemsSource="{Binding warehouseList}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <WrapPanel>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="120"/>
+                                                            <ColumnDefinition Width="160"/>
+                                                            <ColumnDefinition Width="130"/>
+                                                            <ColumnDefinition Width="180"/>
+                                                            <ColumnDefinition Width="180"/>
+                                                            <ColumnDefinition Width="180"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid Grid.Column="0">
+                                                            <TextBlock Text="{Binding STT}" 
+                                                                       Margin="50,0,0,0" Foreground="#B0B0B2"/>
+                                                        </Grid>
+
+                                                        <Grid Grid.Column="1">
+                                                            <TextBlock Grid.Column="1" 
+                                                                       Foreground="#B0B0B2"
+                                                                       Text="{Binding WHID}"
+                                                                       HorizontalAlignment="Center" 
+                                                                       Margin="0,0,0,0" />
+                                                        </Grid>
+
+                                                        <Grid Grid.Column="2">
+                                                            <TextBlock Grid.Column="2" Foreground="#B0B0B2"
+                                                                       Text="{Binding Capacity}"
+                                                                       HorizontalAlignment="Center"
+                                                                       Margin="-15,0,0,0" />
+                                                        </Grid>
+
+                                                        <Grid Grid.Column="3">
+                                                            <TextBlock Grid.Column="3" Foreground="#B0B0B2"
+                                                                       HorizontalAlignment="Center" 
+                                                                       Text="{Binding NumParcels}" Margin="00,0,10,0" />
+                                                        </Grid>
+
+                                                        <Grid Grid.Column="4">
+                                                            <TextBlock Grid.Column="4" Foreground="#B0B0B2"
+                                                                       HorizontalAlignment="Center" 
+                                                                       Text="{Binding Revenue}" Margin="00,0,10,0" />
+                                                        </Grid>
+
+                                                        <Grid Grid.Column="5">
+                                                            <TextBlock Grid.Column="5" Foreground="#B0B0B2"
+                                                                       HorizontalAlignment="Center" 
+                                                                       Text="{Binding NumStaffs}" Margin="00,0,10,0" />
+                                                        </Grid>
+                                                    </Grid>
+                                                </WrapPanel>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </Grid>
                             </Grid>
 
-                            <Grid Grid.Column="5">
-                                <Button Content="Asc" 
-                                        IsDefault="true" 
-                                        Background="#8ED3F4" Foreground="#5A4D4C" 
-                                        Command="{Binding NumberOfStaffSortAscendingCommand}"
-                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
-                                        Height="45" Width="150"
-                                        Margin="0,0,0,55"/>
-                                <Button Content="Des" 
-                                        IsDefault="true" 
-                                        Background="#8ED3F4" Foreground="#5A4D4C" 
-                                        Command="{Binding NumberOfStaffSortCommand}"
-                                        FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
-                                        Height="45" Width="150"
-                                        Margin="0,50,0,5"/>
-                            </Grid>
-                        </Grid>
-                        <Grid Grid.Row="2">
-
-                            <ListView ItemsSource="{Binding warehouseList}">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <WrapPanel>
-                                            <TextBlock Text="{Binding STT}" Margin="0,0,10,0" />
-                                            <TextBlock Grid.Column="1" Text="{Binding WHID}" Margin="10,0,10,0" />
-                                            <TextBlock Grid.Column="2" Text="{Binding Capacity}" Margin="10,0,10,0" />
-                                            <TextBlock Grid.Column="3" Text="{Binding NumParcels}" Margin="10,0,10,0" />
-                                            <TextBlock Grid.Column="4" Text="{Binding Revenue}" Margin="10,0,10,0" />
-                                            <TextBlock Grid.Column="5" Text="{Binding NumStaffs}" Margin="10,0,0,0" />
-                                        </WrapPanel>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                        </Grid>
+                        </Border>
                     </Grid>
-
-                </Border>
-            </Grid>
+                </Grid>
+            </ScrollViewer>
         </Grid>
     </Border>
 </UserControl>

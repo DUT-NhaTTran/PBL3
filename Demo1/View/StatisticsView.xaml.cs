@@ -1,5 +1,6 @@
 ﻿using Demo1.Model;
 using Demo1.ViewModel;
+using LiveCharts;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -27,15 +28,22 @@ namespace Demo1
         {
             InitializeComponent();
         }
+      
 
+     
+       
+        
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
+         
             if (sender is DatePicker datePicker)
             {
                 if (datePicker.SelectedDate.HasValue)
                 {
                     DateTime selectedDate = datePicker.SelectedDate.Value;
+                   
                     ((StatisticModel)DataContext).SelectedDateChangedAction(selectedDate);
+                   
                     using (var context = new PBL3_demoEntities())
                     {
                         if (DataContext is StatisticModel statisticModel)
@@ -50,6 +58,7 @@ namespace Demo1
                 }
             }
         }
+
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var viewModel = (StatisticModel)DataContext;
@@ -62,6 +71,11 @@ namespace Demo1
                 viewModel.LoadAllWHInfoSearched(); // Tải danh sách Parcel mới dựa trên kết quả tìm kiếm
 
             }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            chart.Visibility = Visibility.Visible;
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Demo1.Model;
 using Demo1.ViewModel;
+using LiveCharts.Wpf;
+using LiveCharts;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using static Demo1.ViewModel.SearchParcelModel;
+using System.Windows.Media;
 
 namespace Demo1.ViewModel
 {
@@ -188,9 +191,62 @@ namespace Demo1.ViewModel
                 }
             }
         }
+        //properties cho chart
+        private ChartValues<double> revenueChartData;
+        public ChartValues<double> RevenueChartData
+        {
+            get { return revenueChartData; }
+            set
+            {
+                revenueChartData = value;
+                OnPropertyChanged();
+            }
+        }
+        private ChartValues<int> totalParcelChartData;
+        public ChartValues<int> TotalParcelChartData
+        {
+            get { return totalParcelChartData; }
+            set
+            {
+                totalParcelChartData = value;
+                OnPropertyChanged();
+            }
+        }
+        //private ObservableCollection<double> revenueChartData;
+        //public ObservableCollection<double> RevenueChartData
+        //{
+        //    get { return revenueChartData; }
+        //    set
+        //    {
+        //        revenueChartData = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+        //private ObservableCollection<int> totalParcelChartData;
+        //public ObservableCollection<int> TotalParcelChartData
+        //{
+        //    get { return totalParcelChartData; }
+        //    set
+        //    {
+        //        totalParcelChartData = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+        private ObservableCollection<string> labelsData;
+        public ObservableCollection<string> LabelsData
+        {
+            get { return labelsData; }
+            set
+            {
+                labelsData = value;
+                OnPropertyChanged();
+            }
+        }
         public StatisticModel()
         {
             SelectedDate = DateTime.Now;
+
+            
 
             SortedWarehouseToView = new ObservableCollection<Warehouse>();
             using (var context = new PBL3_demoEntities())
@@ -200,13 +256,7 @@ namespace Demo1.ViewModel
                 {
                     SortedWarehouseToView.Add(w);
                 }
-                //int monthView = 5;
-                //int yearView = 2023;
-
-                //StatisticInfoString = $"Doanh thu : {TotalRevenue(monthView, yearView)}, Tổng đơn : {TotalNumberOfParcel()}, Khách hàng mới : {TotalNumberOfNewCustomer(monthView, yearView)}";
-                //StatisticCompareString = $"So sánh danh thu : {PercentageOfRevenue(monthView, yearView, TotalRevenue(monthView, yearView))} \n" +
-                //                         $"So sánh tổng đơn : {PercentageOfParcel(monthView, yearView, TotalNumberOfParcel(monthView, yearView))} \n" +
-                //                         $"So sánh khách hàng mới : {PercentageOfNewCustomer(monthView, yearView, TotalNumberOfNewCustomer(monthView, yearView))}";
+                
                 SortedWarehouseString = new ObservableCollection<string>();
                 SortedWarehouseString = ToStringAfterSort(SortedWarehouseToView, "none", SelectedMonth, SelectedYear, context);
                 IDSortCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = ToStringAfterSort(SortedWarehouseToView, "ID", SelectedMonth, SelectedYear, context); Change(); });
@@ -225,6 +275,46 @@ namespace Demo1.ViewModel
                 RevenueSortAscendingCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortedWarehouseString = Reverse(ToStringAfterSort(SortedWarehouseToView, "revenue", SelectedMonth, SelectedYear, context)); Change(); });
             }
         }
+        //public void LoadObservationData()
+        //{
+        //    RevenueChartData = new ChartValues<double>(CalcRevenueData(SelectedMonth, SelectedYear));
+        //    TotalParcelChartData = new ChartValues<int>(CalcNumOfParcelsData(SelectedMonth, SelectedYear));
+        //    bool isAllZero = TotalParcelChartData.All(value => value == 0) && RevenueChartData.All(value => value == 0);
+
+
+
+
+        //}
+        private void LoadObservationData()
+        {
+            ObservableCollection<int> totalParcelData = CalcNumOfParcelsData(SelectedMonth, SelectedYear);
+            ObservableCollection<double> revenueData = CalcRevenueData(SelectedMonth, SelectedYear);
+
+            if (IsAllZero(totalParcelData) && IsAllZero(revenueData))
+            {
+                int[] emptyData = Enumerable.Repeat(0, 12).ToArray();
+                TotalParcelChartData = new ChartValues<int>(emptyData);
+                RevenueChartData = new ChartValues<double>(emptyData.Select(x => 0.0));
+            }
+            else
+            {
+                TotalParcelChartData = new ChartValues<int>(totalParcelData);
+                RevenueChartData = new ChartValues<double>(revenueData);
+            }
+
+         
+        }
+
+        private bool IsAllZero(IEnumerable<int> data)
+        {
+            return data.All(x => x == 0);
+        }
+
+        private bool IsAllZero(IEnumerable<double> data)
+        {
+            return data.All(x => x == 0.0);
+        }
+
 
         public void LoadAllWHInfoSearched()
         {
@@ -257,10 +347,16 @@ namespace Demo1.ViewModel
             SelectedYear = selectedDate.Year;
             if(SelectedYear > DateTime.Now.Year || (SelectedYear == DateTime.Now.Year && SelectedMonth > DateTime.Now.Month))
                 MessageBoxWindow.Show("Thời gian hiện tại là tháng " + DateTime.Now.Month + ". Vui lòng lựa chọn lại!");
-               
 
 
-                // Ví dụ: Cập nhật dữ liệu thống kê dựa trên ngày được chọn
+            //chart
+            LabelsData = CalcDateTime(SelectedMonth, SelectedYear);
+            LoadObservationData();
+         
+            //RevenueChartData = CalcRevenueData(SelectedMonth, SelectedYear);
+            //TotalParcelChartData = CalcNumOfParcelsData(SelectedMonth, SelectedYear);
+
+            // Ví dụ: Cập nhật dữ liệu thống kê dựa trên ngày được chọn
             TotalParcel = TotalNumberOfParcel(SelectedMonth, SelectedYear);
             NewCustomer = TotalNumberOfNewCustomer(SelectedMonth, SelectedYear);
             Revenue = TotalRevenue(SelectedMonth, SelectedYear);
@@ -462,8 +558,6 @@ namespace Demo1.ViewModel
 
         public int TotalNumberOfParcel(int month,int year)
         {
-            month = SelectedMonth;
-            year = SelectedYear;
             int numberOfParcel;
             using (var context = new PBL3_demoEntities())
             {
@@ -577,6 +671,80 @@ namespace Demo1.ViewModel
                 return PercentageTextOutput(roundedPercentage);
             }
         }
+        /// các hàm phục vụ cho Chart
+        /// 
+        ObservableCollection<string> CalcDateTime(int month, int year)
+        {
+            ObservableCollection<string> dateTime = new ObservableCollection<string>();
+            for (int i = 0; i < 12; i++)
+            {
+                dateTime.Add(month.ToString() + "/" + year.ToString());
+                if (month == 1)
+                {
+                    year -= 1;
+                    month = 12;
+                }
+                else
+                {
+                    month--;
+                }
+            }
+            //           ObservableCollection<string> reversedDateTime = new ObservableCollection<string>(dateTime.Reverse());
+            return new ObservableCollection<string>(dateTime.Reverse());
+        }
+        ObservableCollection<double> CalcRevenueData(int month, int year)
+        {
+            ObservableCollection<double> revenueData = new ObservableCollection<double>();
+            ObservableCollection<string> dateTime = CalcDateTime(month, year);
+            foreach (string date in dateTime)
+            {
+                int iMonth = month, iYear = year;
+                string[] parts = date.Split('/'); // Phân tách chuỗi thành các phần tử
+                if (parts.Length == 2) // Đảm bảo rằng có đủ 2  phần tử 
+                {
+                    if (int.TryParse(parts[0], out int tMonth))
+                    {
+                        iMonth = tMonth; // Gán số đầu tiên cho rMonth
+                    }
+
+                    if (int.TryParse(parts[1], out int tYear))
+                    {
+                        iYear = tYear; // Gán số thứ hai cho rYear
+                    }
+                    revenueData.Add(TotalRevenue(iMonth, iYear));
+                }
+
+            }
+            return revenueData;
+        }
+
+        ObservableCollection<int> CalcNumOfParcelsData(int month, int year)
+        {
+            ObservableCollection<int> numOfParcelsData = new ObservableCollection<int>();
+            ObservableCollection<string> dateTime = CalcDateTime(month, year);
+            foreach (string date in dateTime)
+            {
+                int iMonth = month;
+                int iYear = year;
+                string[] parts = date.Split('/'); // Phân tách chuỗi thành các phần tử
+                if (parts.Length == 2) // Đảm bảo rằng có đủ 2  phần tử 
+                {
+                    if (int.TryParse(parts[0], out int tMonth))
+                    {
+                        iMonth = tMonth; // Gán số đầu tiên cho rMonth
+                    }
+
+                    if (int.TryParse(parts[1], out int tYear))
+                    {
+                        iYear = tYear; // Gán số thứ hai cho rYear
+                    }
+                    numOfParcelsData.Add(TotalNumberOfParcel(iMonth, iYear));
+                }
+
+            }
+            return numOfParcelsData;
+        }
+
 
     }
 }
