@@ -165,8 +165,8 @@ namespace Demo1.ViewModel
                         WarehouseID = w.warehouseID,
                         WarehouseName = w.warehouseName,
                         Capacity = w.capacity,
-                        ColumnData = new ChartValues<double> {0.8 }
-                    }).ToList();
+                        ColumnData = SetColumnData(w.warehouseID)
+            }).ToList();
 
                 if (result.Any())
                 {

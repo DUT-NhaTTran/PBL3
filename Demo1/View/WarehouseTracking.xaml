@@ -787,9 +787,10 @@
                                                        Foreground="#B0B0B2"/>
                                         </Grid>
                                     </Grid>
-                                    <Grid Grid.Row="1" Margin="0,0,0,-268">
-                                        <ScrollViewer Margin="0,0,0,10">
-                                            <ListBox ItemsSource="{Binding ParcelInfoList}">
+                                    <Grid Grid.Row="1" Margin="0,0,0,-225">
+                                    
+                                        <ListBox ItemsSource="{Binding ParcelInfoList}">
+                                            
                                                 <ListBox.ItemTemplate>
                                                     <DataTemplate>
                                                         <Grid>
@@ -825,8 +826,11 @@
                                                         </Grid>
                                                     </DataTemplate>
                                                 </ListBox.ItemTemplate>
-                                            </ListBox>
-                                        </ScrollViewer>
+                                         
+                                            
+                                        </ListBox>
+
+
                                     </Grid>
                                 </Grid>
                             </StackPanel>

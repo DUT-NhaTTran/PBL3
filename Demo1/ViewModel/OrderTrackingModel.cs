@@ -270,7 +270,7 @@ namespace Demo1.ViewModel
                         basicStatus = "Bị trả lại";
                         isTraLai = true;
                     }
-                    else if (isXuatKhoDich&&isTraLai)
+                    else if (isXuatKhoDich&&!isTraLai)
                     {
                         basicStatus = "Đang giao hàng";
                     }

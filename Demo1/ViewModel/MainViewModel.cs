@@ -107,7 +107,19 @@ namespace Demo1.ViewModel
             private string _roleName;
             private string _userName;
 
-                    
+            private string _WHID;
+            public string WHID
+            {
+                get { return _WHID; }
+                set
+                {
+                    _WHID = value;
+                    OnPropertyChanged();
+
+                }
+            }
+            
+
             public BaseViewModel CurrentChildView
             {
                 get
@@ -174,7 +186,7 @@ namespace Demo1.ViewModel
             }
         public MainViewModel()
         {
-
+          
             LoadedWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 isLoaded = true;
@@ -192,6 +204,7 @@ namespace Demo1.ViewModel
                         string loginID = AccountManager.Instance.GetAccountID();
                         RoleName = AccountManager.Instance.GetRoleName(accessright);
                         UserName = AccountManager.Instance.GetUserName(loginID);
+                        WHID = AccountManager.Instance.GetUserWarehouseID(AccountManager.Instance.GetAccountID());
                         if (accessright == 1) IsRole1AllowedToVisible = true;
                         else if (accessright == 2) IsRole2AllowedToVisible = true;
                         else if (accessright == 3) IsRole3AllowedToVisible = true;

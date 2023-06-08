@@ -64,7 +64,7 @@
                 <StackPanel>
 
                     <!--Logo-->
-                    <StackPanel Orientation="Horizontal"
+                    <WrapPanel Orientation="Horizontal"
                                     Height="35"
                                     Margin="15,25,0,40">
 
@@ -76,7 +76,14 @@
                                        FontWeight="Medium"
                                        VerticalAlignment="Center"
                                        Margin="10,0,0,0"/>
-                    </StackPanel>
+                        <TextBlock Text="{Binding WHID}"
+                                       Foreground="{StaticResource titleColor2}"
+                                       FontSize="20"
+                                       FontFamily="Montserrat"
+                                       FontWeight="Medium"
+                                       VerticalAlignment="Center"
+                                       Margin="10,0,0,0"/>
+                    </WrapPanel>
                     <RadioButton Style="{StaticResource menuButton}"
                                      Tag="{StaticResource color1}"
                                      IsChecked="True"
