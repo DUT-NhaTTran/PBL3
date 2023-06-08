@@ -20,7 +20,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="200"/>
                         <RowDefinition Height="500"/>
-                        <RowDefinition Height="450"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Border Margin="20,20,20,20"
@@ -28,8 +28,8 @@
                         Background="#434343" Grid.ColumnSpan="2">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="330"/>
-                                    <ColumnDefinition Width="320"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
@@ -49,11 +49,11 @@
                                            Width="Auto" Height="Auto"
                                            Foreground="#B0B0B2"/>
                                         <TextBlock Text="{Binding TotalParcel}"
-                                           FontSize="30"
-                                           Width="Auto" Height="Auto"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Center"
-                                           Foreground="#B0B0B2"
+                                                   FontSize="30"
+                                                   Width="Auto" Height="Auto"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Foreground="#B0B0B2"
                                            Margin="-280 20 0 0"/>
                                         <!--<TextBlock Text="so với tháng trước"
                                            FontSize="20"
@@ -69,7 +69,7 @@
                                            VerticalAlignment="Bottom"
                                            HorizontalAlignment="Center"
                                            Foreground="#B0B0B2"
-                                           Margin="-265 0 0 0"/>
+                                           Margin="-265 0 0 20"/>
 
                                     </StackPanel>
                                 </Grid>
@@ -110,7 +110,7 @@
                                                    VerticalAlignment="Bottom"
                                                    HorizontalAlignment="Center"
                                                    Foreground="#B0B0B2"
-                                                   Margin="-250 0 0 0"/>
+                                                   Margin="-250 0 0 20"/>
                                     </StackPanel>
                                 </Grid>
 
@@ -151,7 +151,7 @@
                                                    VerticalAlignment="Bottom"
                                                    HorizontalAlignment="Center"
                                                    Foreground="#B0B0B2"
-                                                   Margin="-250 0 0 0"/>
+                                                   Margin="-250 0 0 20"/>
                                     </StackPanel>
                                 </Grid>
                             </Grid>
@@ -172,7 +172,7 @@
                             <!--SelectedDate="1/1/2023"-->
                         </Grid>
 
-                        
+
 
                         <Grid Grid.Row="2">
                             <lvc:CartesianChart x:Name="chart" 
@@ -180,8 +180,8 @@
                                                     Visibility="Collapsed"
                                                     Margin="20 0 20 0">
                                 <lvc:CartesianChart.Series>
-           
-                                    
+
+
                                     <lvc:LineSeries Title="Biểu đồ đường"
                                                     Foreground="#B0B0B2"
                                                     Values="{Binding RevenueChartData}"
@@ -190,7 +190,7 @@
                                                      StrokeThickness = "3"
                                                      Stroke = "Blue"
                                                      ScalesYAt = "0"/>
-                                   
+
 
                                     <lvc:ColumnSeries Title="Biểu đồ cột"
                                           Foreground="#B0B0B2"
@@ -213,7 +213,7 @@
                                 </lvc:CartesianChart.AxisX>
 
                                 <lvc:CartesianChart.AxisY>
-  
+
                                     <lvc:Axis Title="Tiền (triệu đồng)"
                                                   FontSize="14" Position="LeftBottom">
                                         <lvc:Axis.Separator>
@@ -229,7 +229,7 @@
                                     </lvc:Axis>
                                 </lvc:CartesianChart.AxisY>
                             </lvc:CartesianChart>
-                           
+
 
                         </Grid>
                     </Grid>
@@ -289,12 +289,12 @@
                                             BorderBrush="#212529">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="120"/>
-                                                <ColumnDefinition Width="160"/>
-                                                <ColumnDefinition Width="130"/>
-                                                <ColumnDefinition Width="180"/>
-                                                <ColumnDefinition Width="180"/>
-                                                <ColumnDefinition Width="180"/>
+                                                <ColumnDefinition Width="120*"/>
+                                                <ColumnDefinition Width="160*"/>
+                                                <ColumnDefinition Width="130*"/>
+                                                <ColumnDefinition Width="180*"/>
+                                                <ColumnDefinition Width="180*"/>
+                                                <ColumnDefinition Width="200*"/>
 
                                             </Grid.ColumnDefinitions>
 
@@ -303,14 +303,14 @@
                                                 
                                                 CornerRadius="20 0 0 0"
                                                 BorderBrush="#212529">
-
-                                                </Border>
-                                                <TextBlock Text="Thứ tự"
+                                                    <TextBlock Text="Thứ tự"
                                                    FontSize="20"
                                                    VerticalAlignment="Center"
                                                    HorizontalAlignment="Center"
                                                    Width="auto" Height="auto"
                                                    Foreground="#B0B0B2"/>
+                                                </Border>
+
                                             </Grid>
 
                                             <Grid Grid.Column="1">
@@ -597,44 +597,45 @@
                                                             <ColumnDefinition Width="130"/>
                                                             <ColumnDefinition Width="180"/>
                                                             <ColumnDefinition Width="180"/>
-                                                            <ColumnDefinition Width="180"/>
+                                                            <ColumnDefinition Width="200"/>
                                                         </Grid.ColumnDefinitions>
                                                         <Grid Grid.Column="0">
-                                                            <TextBlock Text="{Binding STT}" 
-                                                                       Margin="50,0,0,0" Foreground="#B0B0B2"/>
+                                                            <Border>
+                                                                <TextBlock Text="{Binding STT}" 
+                                                                       HorizontalAlignment="Center"  Foreground="#B0B0B2"/>
+                                                            </Border>
                                                         </Grid>
 
                                                         <Grid Grid.Column="1">
-                                                            <TextBlock Grid.Column="1" 
-                                                                       Foreground="#B0B0B2"
+                                                            <TextBlock Foreground="#B0B0B2"
                                                                        Text="{Binding WHID}"
                                                                        HorizontalAlignment="Center" 
-                                                                       Margin="0,0,0,0" />
+                                                                       Margin="-15,0,0,0" />
                                                         </Grid>
 
                                                         <Grid Grid.Column="2">
-                                                            <TextBlock Grid.Column="2" Foreground="#B0B0B2"
+                                                            <TextBlock Foreground="#B0B0B2"
                                                                        Text="{Binding Capacity}"
                                                                        HorizontalAlignment="Center"
                                                                        Margin="-15,0,0,0" />
                                                         </Grid>
 
                                                         <Grid Grid.Column="3">
-                                                            <TextBlock Grid.Column="3" Foreground="#B0B0B2"
+                                                            <TextBlock Foreground="#B0B0B2"
                                                                        HorizontalAlignment="Center" 
-                                                                       Text="{Binding NumParcels}" Margin="00,0,10,0" />
+                                                                       Text="{Binding NumParcels}" Margin="0,0,10,0" />
                                                         </Grid>
 
                                                         <Grid Grid.Column="4">
-                                                            <TextBlock Grid.Column="4" Foreground="#B0B0B2"
+                                                            <TextBlock Foreground="#B0B0B2"
                                                                        HorizontalAlignment="Center" 
-                                                                       Text="{Binding Revenue}" Margin="00,0,10,0" />
+                                                                       Text="{Binding Revenue}" Margin="0,0,10,0" />
                                                         </Grid>
 
                                                         <Grid Grid.Column="5">
-                                                            <TextBlock Grid.Column="5" Foreground="#B0B0B2"
+                                                            <TextBlock Foreground="#B0B0B2"
                                                                        HorizontalAlignment="Center" 
-                                                                       Text="{Binding NumStaffs}" Margin="00,0,10,0" />
+                                                                       Text="{Binding NumStaffs}" Margin="0,0,10,0" />
                                                         </Grid>
                                                     </Grid>
                                                 </WrapPanel>

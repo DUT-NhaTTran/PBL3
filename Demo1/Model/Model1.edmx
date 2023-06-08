@@ -83,16 +83,6 @@
           <Property Name="details" Type="nvarchar" MaxLength="200" />
           <Property Name="time" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="ShipFee">
-          <Key>
-            <PropertyRef Name="shippingFeeID" />
-          </Key>
-          <Property Name="shippingFeeID" Type="int" Nullable="false" />
-          <Property Name="shippingMethod" Type="bit" Nullable="false" />
-          <Property Name="totalCost" Type="float" Nullable="false" />
-          <Property Name="locations" Type="float" Nullable="false" />
-          <Property Name="parcelID" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Warehouse">
           <Key>
             <PropertyRef Name="warehouseID" />
@@ -243,18 +233,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ShipFee_Parcel">
-          <End Role="Parcel" Type="Self.Parcel" Multiplicity="1" />
-          <End Role="ShipFee" Type="Self.ShipFee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Parcel">
-              <PropertyRef Name="parcelID" />
-            </Principal>
-            <Dependent Role="ShipFee">
-              <PropertyRef Name="parcelID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_WarehouseManager_Warehouse">
           <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
           <End Role="WarehouseManager" Type="Self.WarehouseManager" Multiplicity="*" />
@@ -287,7 +265,6 @@
           <EntitySet Name="Parcel" EntityType="Self.Parcel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Receptionist" EntityType="Self.Receptionist" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Route" EntityType="Self.Route" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ShipFee" EntityType="Self.ShipFee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WarehouseManager" EntityType="Self.WarehouseManager" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WarehouseStaff" EntityType="Self.WarehouseStaff" Schema="dbo" store:Type="Tables" />
@@ -331,10 +308,6 @@
             <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="Route" EntitySet="Route" />
           </AssociationSet>
-          <AssociationSet Name="FK_ShipFee_Parcel" Association="Self.FK_ShipFee_Parcel">
-            <End Role="Parcel" EntitySet="Parcel" />
-            <End Role="ShipFee" EntitySet="ShipFee" />
-          </AssociationSet>
           <AssociationSet Name="FK_WarehouseManager_Warehouse" Association="Self.FK_WarehouseManager_Warehouse">
             <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="WarehouseManager" EntitySet="WarehouseManager" />
@@ -356,7 +329,6 @@
           <EntitySet Name="Parcels" EntityType="PBL3_demoModel.Parcel" />
           <EntitySet Name="Receptionists" EntityType="PBL3_demoModel.Receptionist" />
           <EntitySet Name="Routes" EntityType="PBL3_demoModel.Route" />
-          <EntitySet Name="ShipFees" EntityType="PBL3_demoModel.ShipFee" />
           <EntitySet Name="Warehouses" EntityType="PBL3_demoModel.Warehouse" />
           <EntitySet Name="WarehouseManagers" EntityType="PBL3_demoModel.WarehouseManager" />
           <EntitySet Name="WarehouseStaffs" EntityType="PBL3_demoModel.WarehouseStaff" />
@@ -387,10 +359,6 @@
           <AssociationSet Name="FK_Route_Parcel" Association="PBL3_demoModel.FK_Route_Parcel">
             <End Role="Parcel" EntitySet="Parcels" />
             <End Role="Route" EntitySet="Routes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ShipFee_Parcel" Association="PBL3_demoModel.FK_ShipFee_Parcel">
-            <End Role="Parcel" EntitySet="Parcels" />
-            <End Role="ShipFee" EntitySet="ShipFees" />
           </AssociationSet>
           <AssociationSet Name="FK_Receptionist_Warehouse1" Association="PBL3_demoModel.FK_Receptionist_Warehouse1">
             <End Role="Warehouse" EntitySet="Warehouses" />
@@ -482,7 +450,6 @@
           <NavigationProperty Name="Customer1" Relationship="PBL3_demoModel.FK_Parcel_Customer1" FromRole="Parcel" ToRole="Customer" />
           <NavigationProperty Name="Invoices" Relationship="PBL3_demoModel.FK_Invoice_Parcel" FromRole="Parcel" ToRole="Invoice" />
           <NavigationProperty Name="Routes" Relationship="PBL3_demoModel.FK_Route_Parcel" FromRole="Parcel" ToRole="Route" />
-          <NavigationProperty Name="ShipFees" Relationship="PBL3_demoModel.FK_ShipFee_Parcel" FromRole="Parcel" ToRole="ShipFee" />
           <NavigationProperty Name="Warehouse" Relationship="PBL3_demoModel.FK_Parcel_Warehouse" FromRole="Parcel" ToRole="Warehouse" />
         </EntityType>
         <EntityType Name="Receptionist">
@@ -507,17 +474,6 @@
           <Property Name="time" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Parcel" Relationship="PBL3_demoModel.FK_Route_Parcel" FromRole="Route" ToRole="Parcel" />
           <NavigationProperty Name="Warehouse" Relationship="PBL3_demoModel.FK_Route_Warehouse" FromRole="Route" ToRole="Warehouse" />
-        </EntityType>
-        <EntityType Name="ShipFee">
-          <Key>
-            <PropertyRef Name="shippingFeeID" />
-          </Key>
-          <Property Name="shippingFeeID" Type="Int32" Nullable="false" />
-          <Property Name="shippingMethod" Type="Boolean" Nullable="false" />
-          <Property Name="totalCost" Type="Double" Nullable="false" />
-          <Property Name="locations" Type="Double" Nullable="false" />
-          <Property Name="parcelID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Parcel" Relationship="PBL3_demoModel.FK_ShipFee_Parcel" FromRole="ShipFee" ToRole="Parcel" />
         </EntityType>
         <EntityType Name="Warehouse">
           <Key>
@@ -637,18 +593,6 @@
               <PropertyRef Name="parcelID" />
             </Principal>
             <Dependent Role="Route">
-              <PropertyRef Name="parcelID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ShipFee_Parcel">
-          <End Type="PBL3_demoModel.Parcel" Role="Parcel" Multiplicity="1" />
-          <End Type="PBL3_demoModel.ShipFee" Role="ShipFee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Parcel">
-              <PropertyRef Name="parcelID" />
-            </Principal>
-            <Dependent Role="ShipFee">
               <PropertyRef Name="parcelID" />
             </Dependent>
           </ReferentialConstraint>
@@ -801,17 +745,6 @@
                 <ScalarProperty Name="relatedWarehouseID" ColumnName="relatedWarehouseID" />
                 <ScalarProperty Name="parcelID" ColumnName="parcelID" />
                 <ScalarProperty Name="routeID" ColumnName="routeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ShipFees">
-            <EntityTypeMapping TypeName="PBL3_demoModel.ShipFee">
-              <MappingFragment StoreEntitySet="ShipFee">
-                <ScalarProperty Name="parcelID" ColumnName="parcelID" />
-                <ScalarProperty Name="locations" ColumnName="locations" />
-                <ScalarProperty Name="totalCost" ColumnName="totalCost" />
-                <ScalarProperty Name="shippingMethod" ColumnName="shippingMethod" />
-                <ScalarProperty Name="shippingFeeID" ColumnName="shippingFeeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -20,7 +20,7 @@
                                 Grid.Row="0"
                                 Orientation="Horizontal"
                                 FlowDirection="RightToLeft"
-                                Background="White"
+                                Background="#212529"
                                 Margin="0,0,5,0"
                                 MouseLeftButtonDown="pnlControlBar_MouseLeftButtonDown">
             <Button x:Name="btnClose"
@@ -44,7 +44,7 @@
             <local1:CustomMessageBox x:Name="messageBox"/>
         </Grid>
 
-        
+
     </Grid>
 </Window>
     

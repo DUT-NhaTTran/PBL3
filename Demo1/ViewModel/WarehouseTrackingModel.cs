@@ -77,7 +77,7 @@ namespace Demo1.ViewModel
             RCustomerPhoneNumber = UserInfo.ParcelInfo.Instance.GetCustomerPhoneNumber(WarehouseText, 2);
             ShippingFee = Convert.ToString(UserInfo.ParcelInfo.Instance.GetParcelTotalCost(WarehouseText));
             Cost = Convert.ToString(Convert.ToDouble(ShippingFee) - Convert.ToDouble(ParcelValue));
-            if (UserInfo.ParcelInfo.Instance.GetShippingMethod(WarehouseText)) ShippingMethod = "Giao hàng nhanh";
+            if (UserInfo.ParcelInfo.Instance.GetShippingMethod(WarehouseText)==1) ShippingMethod = "Giao hàng nhanh";
             else ShippingMethod = "Giao hàng chậm";
             CreateTime = UserInfo.ParcelInfo.Instance.GetCreateTime(WarehouseText);
             Details = UserInfo.ParcelInfo.Instance.GetDetails(WarehouseText);
@@ -151,6 +151,7 @@ namespace Demo1.ViewModel
 
             return count.ToString();
         }
+       
         public void GetWarehouseSearched(string str)
         {
             using (var context = new Model.PBL3_demoEntities())
@@ -158,21 +159,22 @@ namespace Demo1.ViewModel
                 // Xóa kết quả tìm kiếm cũ
                 WarehouseInfoList.Clear();
 
-                var result = context.Warehouses
+                var warehouses = context.Warehouses
                     .Where(w => w.warehouseName.Contains(str) || w.warehouseID.Contains(str))
-                    .Select(w => new WarehouseInfo
-                    {
-                        WarehouseID = w.warehouseID,
-                        WarehouseName = w.warehouseName,
-                        Capacity = w.capacity,
-                        ColumnData = SetColumnData(w.warehouseID)
-            }).ToList();
+                    .ToList();
 
-                if (result.Any())
+                if (warehouses.Any())
                 {
-                    foreach (var i in result)
+                    foreach (var warehouse in warehouses)
                     {
-                        WarehouseInfoList.Add(i);
+                        var warehouseInfo = new WarehouseInfo
+                        {
+                            WarehouseID = warehouse.warehouseID,
+                            WarehouseName = warehouse.warehouseName,
+                            Capacity = warehouse.capacity,
+                            ColumnData = SetColumnData(warehouse.warehouseID)
+                        };
+                        WarehouseInfoList.Add(warehouseInfo);
                     }
                 }
                 else
@@ -181,6 +183,7 @@ namespace Demo1.ViewModel
                 }
             }
         }
+
         public ChartValues<double> SetColumnData(string WHID)
         {
             ChartValues<double> columnData = new ChartValues<double>();

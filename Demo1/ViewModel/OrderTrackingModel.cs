@@ -93,7 +93,7 @@ namespace Demo1.ViewModel
             LoadParcelInfoList();
 
         }
-        private void LoadParcelInfoList()
+        public void LoadParcelInfoList()
         {
             using (var dbContext = new Model.PBL3_demoEntities())
             {

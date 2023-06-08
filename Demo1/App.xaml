@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              
              
-             StartupUri="View/WarehouseTracking.xaml">
+             StartupUri="View/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -15,6 +15,7 @@
                 <ResourceDictionary Source="/Styles/ButtonStyles.xaml"/>
                 <ResourceDictionary Source="/ResourceXAML/MainResource.xaml"/>
                 <ResourceDictionary Source="/Styles/ScrollViewer.xaml"/>
+               
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

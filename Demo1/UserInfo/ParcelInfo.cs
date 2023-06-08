@@ -183,6 +183,17 @@ namespace Demo1.UserInfo
             }
             return res;
         }
+        public double GetParcelShippingFee(string ParcelID)
+        {
+            double res;
+            int iParcelID = Convert.ToInt32(ParcelID);
+            using (var context = new Model.PBL3_demoEntities())
+            {
+                var shippingfee = context.Invoices.FirstOrDefault(x => x.parcelID == iParcelID)?.shippingFee;
+                res = (double)shippingfee;
+            }
+            return res;
+        }
         public string GetDetails(string ParcelID)
         {
             string details = null;
@@ -233,11 +244,16 @@ namespace Demo1.UserInfo
                 }
             }
         }
-        public bool GetShippingMethod(string ParcelID)
+        public int GetShippingMethod(string ParcelID)
         {
+            int isCheck = -1;
             Parcel thisParcel = GetParcelRecord(ParcelID);
-            if (thisParcel != null) return thisParcel.shippingMethod;
-            else return false;
+            if (thisParcel != null)
+            {
+                if (thisParcel.shippingMethod) isCheck = 1;
+                else isCheck = 0;
+            }
+            return isCheck;
         }
         //Nullable datetime
         public DateTime? GetCreateTime(string ParcelID)

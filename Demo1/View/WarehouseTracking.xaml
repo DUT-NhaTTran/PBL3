@@ -1,355 +1,4 @@
-﻿<!--<UserControl x:Class="Demo1.WarehouseTracking"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
-             xmlns:local="clr-namespace:Demo1.View"
-             mc:Ignorable="d" 
-             DataContext="{StaticResource WHTM}"
-             d:DesignHeight="450" d:DesignWidth="1000">
-    <Border CornerRadius="20"
-            Background="#8A8683">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="400"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
-                    <RowDefinition Height="120"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-               
-                <Grid Grid.Row="0">
-                    <Border CornerRadius="20"
-                        Background="#434343"
-                        Margin="15"
-                        Width="300">
-                        <StackPanel Orientation="Horizontal">
-                            <Button Width="63" Height="55" 
-                                    Margin="10 0 0 0"  Background="Transparent"
-                                    Command="{Binding SearchCommand}"
-                                    BorderBrush="Transparent">
-                                <materialDesign:PackIcon Kind="Magnify" Height="40" Width="40" 
-                                                         Foreground="White"
-                                                         VerticalAlignment="Center"
-                                                         HorizontalAlignment="Center"/>
-                            </Button>
-                            <TextBox   materialDesign:HintAssist.Hint="Nhập kho hàng"
-                                       materialDesign:HintAssist.FloatingScale="0"
-                                       materialDesign:HintAssist.Foreground="Blue"
-                                       FontSize="25" BorderThickness="0"
-                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                       Text="{Binding SearchText,Mode=TwoWay}" 
-                                       
-                                       Foreground="#FFFFFF" Width="250" Height="70" />
-                        </StackPanel>
-                    </Border>
-                </Grid>
-
-
-                <Grid Grid.Row="1">
-                    
-
-
-                    <Button Background="#272727"
-                        Margin="12,10,263,0"
-                        Height="40"
-                        Width="125"
-                        Command="{Binding AllWarehousesCollectionCommand}"
-                        VerticalAlignment="Top">
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Background="{TemplateBinding Background}"
-                                     CornerRadius="5">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Tất cả"
-                                           Foreground="#FFFFFF"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Left"
-                                           Margin="10 0 0 0"
-                                           FontSize="20"/>
-                                        <Border Background="#A3A3A3"
-                                            CornerRadius="5"
-                                            Margin="10 5 0 5"
-                                            Width="45"
-                                            Height="Auto">
-                                            <TextBlock Text="{Binding All}"
-                                   Foreground="#FFFFFF"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   Margin="0 0 0 0"
-                                   FontSize="20"/>
-                                        </Border>
-                                    </StackPanel>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-
-                    <Button Background="#272727"
-                        Margin="216,68,30,0"
-                        Height="40"
-                        Command="{Binding NorthernWarehousesCollectionCommand}"
-                        VerticalAlignment="Top">
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Background="{TemplateBinding Background}"
-                                     CornerRadius="5">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Miền Bắc"
-                                           Foreground="#FFFFFF"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Left"
-                                           Margin="10 0 0 0"
-                                           FontSize="20"/>
-                                        <Border Background="#A3A3A3"
-                                            CornerRadius="5"
-                                            Margin="10 5 0 5"
-                                            Width="45"
-                                            Height="Auto">
-                                            <TextBlock Text="{Binding North}"
-                                   Foreground="#FFFFFF"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   Margin="0 0 0 0"
-                                   FontSize="20"/>
-                                        </Border>
-                                    </StackPanel>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-                    <Button Background="#272727"
-                        Margin="168,10,65,0"
-                        Height="40"
-                        Command="{Binding SouthernWarehousesCollectionCommand}"
-                        VerticalAlignment="Top">
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Background="{TemplateBinding Background}"
-                                     CornerRadius="5">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Miền Nam"
-                                           Foreground="#FFFFFF"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Left"
-                                           Margin="10 0 0 0"
-                                           FontSize="20"/>
-                                        <Border Background="#A3A3A3"
-                                            CornerRadius="5"
-                                            Margin="10 5 0 5"
-                                            Width="45"
-                                            Height="Auto">
-                                            <TextBlock Text="{Binding South}"
-                                   Foreground="#FFFFFF"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   Margin="0 0 0 0"
-                                   FontSize="20"/>
-                                        </Border>
-                                    </StackPanel>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-
-
-
-                    
-                    <Button Background="#272727"
-                        Margin="12,70,215,0"
-                        Height="40"
-                        Command="{Binding CentralWarehousesCollectionCommand}"
-                        VerticalAlignment="Top">
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Background="{TemplateBinding Background}"
-                                     CornerRadius="5">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Miền Trung"
-                                           Foreground="#FFFFFF"
-                                           Margin="10 5 0 5"
-                                           FontSize="20"/>
-                                        <Border Background="#A3A3A3"
-                                            CornerRadius="5"
-                                            Margin="10 5 0 5"
-                                            Width="45"
-                                            Height="Auto">
-                                            <TextBlock Text="{Binding Center}"
-                                   Foreground="#FFFFFF"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   Margin="0 0 0 0"
-                                   FontSize="20"/>
-                                        </Border>
-                                    </StackPanel>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-
-
-                </Grid>
-
-
-                
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="7*"/>
-                        <ColumnDefinition Width="43*"/>
-                    </Grid.ColumnDefinitions>
-                    <ListBox ItemsSource="{Binding WarehouseInfoList}"
-                             Grid.ColumnSpan="2"
-                             MouseDoubleClick="ListBox_MouseDoubleClick">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding WarehouseName}" />
-                                    <TextBlock Text="{Binding WarehouseID}" />
-                                    <TextBlock Text="{Binding Capacity}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </Grid>
-            </Grid>
-
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="80"/>
-                    <RowDefinition Height="*"/>
-                   
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0"
-                      Margin="0 20 0 0">
-
-                    <TextBox   FontSize="20" BorderThickness="0"
-                              
-                               Text="{Binding WarehouseName}" 
-                               IsEnabled="False"
-                               Margin="5,0,0,0"
-                               FontWeight="Bold"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Left"
-                               HorizontalContentAlignment="Center"
-                               Foreground="LightGoldenrodYellow" Width="270" Height="70" />
-
-
-                    <TextBox   
-                               FontSize="20" BorderThickness="0"
-                               IsEnabled="False"
-                               Text="{Binding WarehouseID}"
-                               Margin="0 0 40 0"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Right"
-                               HorizontalContentAlignment="Center"
-                               Foreground="YellowGreen" Width="150" Height="70" />
-
-                </Grid>
-
-                <Grid Grid.Row="1">
-                    <TabControl x:Name="tabControl"
-                                
-
-                                Width="600"
-                                materialDesign:ColorZoneAssist.Background="Transparent"
-                                materialDesign:ColorZoneAssist.Foreground="{DynamicResource PrimaryHueMidBrush}"
-                                materialDesign:ColorZoneAssist.Mode="Custom"
-                                VerticalContentAlignment="Center"
-                                Style="{StaticResource MaterialDesignFilledTabControl}">
-                        
-                        <TabItem Header="Thông tin chi tiết của kho hàng">
-                            <StackPanel>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="400"/>
-                                        <ColumnDefinition Width="2*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="50"></RowDefinition>
-                                        <RowDefinition Height="*"></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0" Grid.ColumnSpan="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="400"/>
-                                            <ColumnDefinition Width="100"/>
-                                            <ColumnDefinition Width="100"/>
-
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid Grid.Column="0">
-                                            <TextBlock Text="Địa chỉ"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"
-                                               TextWrapping="Wrap"
-                                               Foreground="{DynamicResource PrimaryHueMidBrush}"/>
-                                        </Grid>
-                                        <Grid Grid.Column="1">
-                                            <TextBlock Text="Sức chứa"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"
-                                               TextWrapping="Wrap"
-                                               Foreground="{DynamicResource PrimaryHueMidBrush}"/>
-                                        </Grid>
-                                        <Grid Grid.Column="2">
-                                            <TextBlock Text="Dung lượng"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"
-                                               TextWrapping="Wrap"
-                                               Foreground="{DynamicResource PrimaryHueMidBrush}"/>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid Grid.Row="1">
-                                       
-                                        <Grid Grid.ColumnSpan="2">
-                                            <TextBlock Text="{Binding WHContained}"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center"
-                                                TextWrapping="Wrap"
-                                                Foreground="{DynamicResource PrimaryHueMidBrush}"/>
-                                        </Grid>
-                                    </Grid>
-
-
-
-                                </Grid>
-                            </StackPanel>
-                        </TabItem>
-
-                        <TabItem Header="Thông tin các đơn hàng trong kho">
-                            <StackPanel>
-                                <Grid>
-
-                                    <ListBox ItemsSource="{Binding ParcelInfoList}">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel>
-                                                    <TextBlock Text="{Binding ID}" />
-                                                    <TextBlock Text="{Binding ParcelName}" />
-                                                    <TextBlock Text="{Binding Mass }" />
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
-                                </Grid>
-                            </StackPanel>
-                        </TabItem>
-                    </TabControl>
-                </Grid>
-
-                
-            </Grid>
-        </Grid>
-    </Border>
-</UserControl>-->
-<UserControl x:Class="Demo1.View.WarehouseTracking"
+﻿<UserControl x:Class="Demo1.View.WarehouseTracking"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -360,13 +9,13 @@
              xmlns:local="clr-namespace:Demo1.View"
              mc:Ignorable="d" 
              DataContext="{StaticResource WHTM}"
-             d:DesignHeight="700" d:DesignWidth="1000">
+             d:DesignHeight="1150" d:DesignWidth="1000">
     <Border CornerRadius="20"
             Background="#434343">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="480"/>
-                <ColumnDefinition Width="520"/>
+                <ColumnDefinition Width="500"/>
+                <ColumnDefinition Width="500*"/>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
@@ -381,7 +30,7 @@
                     <Border CornerRadius="20"
                             Background="#212325"
                             Margin="15"
-                            Width="300">
+                            Width="350">
                         <StackPanel Orientation="Horizontal">
                             <Button Width="63" Height="55" 
                                     Margin="10 0 0 0"  Background="Transparent"
@@ -408,7 +57,7 @@
                 <Grid Grid.Row="1">
                     <!--Tất cả-->
                     <Button Background="#272727"
-                            Margin="12,10,338,0"
+                            Margin="12,10,305,0"
                             Height="40"
                             Command="{Binding AllWarehousesCollectionCommand}"
                             VerticalAlignment="Top">
@@ -418,22 +67,22 @@
                                      CornerRadius="5">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Tất cả"
-                                           Foreground="#FFFFFF"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Left"
-                                           Margin="10 0 0 0"
-                                           FontSize="20"/>
+                                                   Foreground="#FFFFFF"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="28 0 0 0"
+                                                   FontSize="20"/>
                                         <Border Background="#A3A3A3"
-                                            CornerRadius="5"
-                                            Margin="10 5 0 5"
-                                            Width="45"
-                                            Height="Auto">
+                                                CornerRadius="5"
+                                                Margin="43 5 0 5"
+                                                Width="45"
+                                                Height="Auto">
                                             <TextBlock Text="{Binding All}"
-                                   Foreground="#FFFFFF"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   Margin="0 0 0 0"
-                                   FontSize="20"/>
+                                                        Foreground="#FFFFFF"
+                                                        VerticalAlignment="Center"
+                                                        HorizontalAlignment="Center"
+                                                        Margin="0 0 0 0"
+                                                        FontSize="20"/>
                                         </Border>
                                     </StackPanel>
                                 </Border>
@@ -442,7 +91,7 @@
                     </Button>
                     <!--Miền bắc-->
                     <Button Background="#272727"
-                            Margin="240,70,80,0"
+                            Margin="240,70,85,0"
                             Height="40"
                             Command="{Binding NorthernWarehousesCollectionCommand}"
                             VerticalAlignment="Top">
@@ -452,22 +101,22 @@
                                      CornerRadius="5">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Miền Bắc"
-                                           Foreground="#FFFFFF"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Left"
-                                           Margin="10 0 0 0"
-                                           FontSize="20"/>
+                                                   Foreground="#FFFFFF"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Left"
+                                                   Margin="10 0 0 0"
+                                                   FontSize="20"/>
                                         <Border Background="#A3A3A3"
-                                            CornerRadius="5"
-                                            Margin="10 5 0 5"
-                                            Width="45"
-                                            Height="Auto">
+                                                CornerRadius="5"
+                                                Margin="21 5 0 5"
+                                                Width="45"
+                                                Height="Auto">
                                             <TextBlock Text="{Binding North}"
-                                   Foreground="#FFFFFF"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   Margin="0 0 0 0"
-                                   FontSize="20"/>
+                                                    Foreground="#FFFFFF"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center"
+                                                    Margin="0 0 0 0"
+                                                    FontSize="20"/>
                                         </Border>
                                     </StackPanel>
                                 </Border>
@@ -476,7 +125,7 @@
                     </Button>
                     <!--Miền nam-->
                     <Button Background="#272727"
-                        Margin="240,10,69,0"
+                        Margin="240,10,85,0"
                         Height="40"
                         Command="{Binding SouthernWarehousesCollectionCommand}"
                         VerticalAlignment="Top">
@@ -510,7 +159,7 @@
                     </Button>
                     <!--Miền trung-->
                     <Button Background="#272727"
-                            Margin="12,70,291,0"
+                            Margin="12,70,305,0"
                             Height="40"
                             Command="{Binding CentralWarehousesCollectionCommand}"
                             VerticalAlignment="Top">
@@ -521,7 +170,7 @@
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Miền Trung"
                                                    Foreground="#FFFFFF"
-                                                   Margin="10 5 0 5"
+                                                   Margin="11.25 5 0 5"
                                                    FontSize="20"/>
                                         <Border Background="#A3A3A3"
                                                 CornerRadius="5"
@@ -556,7 +205,7 @@
 
                                     <Border CornerRadius="10"
                                             Background="#303030"
-                                            Width="220" Height="200"
+                                            Width="230" Height="200"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center" 
                                             Margin="0 0 0 0">
@@ -575,7 +224,7 @@
                                                                Foreground="#FFFFFF"/>
 
                                                     <TextBlock Text="{Binding WarehouseID}"
-                                                               Margin="10 18 0 0"
+                                                               Margin="20 18 0 0"
                                                                FontSize="10"
                                                                VerticalAlignment="Top" HorizontalAlignment="Center"
                                                                Foreground="#E8DF04"/>
@@ -659,7 +308,7 @@
                 </Grid>
 
                 <Grid Grid.Row="1">
-                    <TabControl Width="500"
+                    <TabControl Width="Auto"
                                 materialDesign:ColorZoneAssist.Background="Transparent"
                                 materialDesign:ColorZoneAssist.Foreground="#496DFE"
                                 materialDesign:ColorZoneAssist.Mode="Custom"
@@ -674,11 +323,11 @@
                                         <RowDefinition Height="*"></RowDefinition>
                                     </Grid.RowDefinitions>
 
-                                    <Grid Grid.Row="0" Grid.ColumnSpan="2">
+                                    <Grid Grid.Row="0">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="200"/>
-                                            <ColumnDefinition Width="150"/>
-                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition Width="200*"/>
+                                            <ColumnDefinition Width="150*"/>
+                                            <ColumnDefinition Width="150*"/>
                                         </Grid.ColumnDefinitions>
 
                                         <Grid Grid.Column="0">
@@ -706,13 +355,14 @@
                                                        Foreground="#B0B0B2"/>
                                         </Grid>
                                     </Grid>
+
                                     <Grid Grid.Row="1" Margin="0,0,0,-268" Grid.ColumnSpan="2">
                                         <ScrollViewer Margin="0,0,0,10">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="200"/>
-                                                    <ColumnDefinition Width="150"/>
-                                                    <ColumnDefinition Width="150"/>
+                                                    <ColumnDefinition Width="200*"/>
+                                                    <ColumnDefinition Width="150*"/>
+                                                    <ColumnDefinition Width="150*"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Grid Grid.Column="0">
                                                     <TextBlock Text="{Binding WHAddress}"
@@ -747,93 +397,83 @@
 
                         <TabItem Header="Thông tin các đơn hàng trong kho"
                                  FontSize="15">
-                            <StackPanel>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="65"></RowDefinition>
-                                        <RowDefinition Height="*"></RowDefinition>
-                                    </Grid.RowDefinitions>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="65"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                </Grid.RowDefinitions>
 
-                                    <Grid Grid.Row="0" Grid.ColumnSpan="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="150"/>
-                                            <ColumnDefinition Width="170"/>
-                                            <ColumnDefinition Width="180"/>
-                                        </Grid.ColumnDefinitions>
+                                <Grid Grid.Row="0" Grid.ColumnSpan="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150*"/>
+                                        <ColumnDefinition Width="170*"/>
+                                        <ColumnDefinition Width="200*"/>
+                                    </Grid.ColumnDefinitions>
 
-                                        <Grid Grid.Column="0">
-                                            <TextBlock Text="Mã đơn hàng"
+                                    <Grid Grid.Column="0">
+                                        <TextBlock Text="Mã đơn hàng"
                                                        VerticalAlignment="Center"
                                                        HorizontalAlignment="Center"
                                                        TextWrapping="Wrap"
                                                        FontSize="20"
                                                        Foreground="#B0B0B2"/>
-                                        </Grid>
-                                        <Grid Grid.Column="1">
-                                            <TextBlock Text="Tên đơn hàng"
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <TextBlock Text="Tên đơn hàng"
                                                        VerticalAlignment="Center"
                                                        HorizontalAlignment="Center"
                                                        TextWrapping="Wrap"
                                                        FontSize="20"
                                                        Foreground="#B0B0B2"/>
-                                        </Grid>
-                                        <Grid Grid.Column="2">
-                                            <TextBlock Text="Khối lượng"
+                                    </Grid>
+                                    <Grid Grid.Column="2">
+                                        <TextBlock Text="Khối lượng"
                                                       
                                                        VerticalAlignment="Center"
                                                        HorizontalAlignment="Center"
                                                        TextWrapping="Wrap"
                                                        FontSize="20"
                                                        Foreground="#B0B0B2"/>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid Grid.Row="1" Margin="0,0,0,-225">
-                                    
-                                        <ListBox ItemsSource="{Binding ParcelInfoList}">
-                                            
-                                                <ListBox.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <Grid>
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="150"/>
-                                                                <ColumnDefinition Width="170"/>
-                                                                <ColumnDefinition Width="180"/>
-                                                            </Grid.ColumnDefinitions>
-                                                            <Grid Grid.Column="0">
-                                                                <TextBlock Text="{Binding ID}"
-                                                                           VerticalAlignment="Center"
-                                                                           HorizontalAlignment="Center"
-                                                                           FontSize="15"
-                                                                           TextWrapping="Wrap"
-                                                                           Foreground="#B0B0B2"/>
-                                                            </Grid>
-                                                            <Grid Grid.Column="1">
-                                                                <TextBlock Text="{Binding ParcelName}"
-                                                                           VerticalAlignment="Center"
-                                                                           HorizontalAlignment="Center"
-                                                                           FontSize="15"
-                                                                           TextWrapping="Wrap"
-                                                                           Foreground="#B0B0B2"/>
-                                                            </Grid>
-                                                            <Grid Grid.Column="2">
-                                                                <TextBlock  Text="{Binding Mass}"
-                                                                            VerticalAlignment="Center"
-                                                                            HorizontalAlignment="Center"
-                                                                            TextWrapping="Wrap"
-                                                                            FontSize="15"
-                                                                            Foreground="#B0B0B2"/>
-                                                            </Grid>
-                                                        </Grid>
-                                                    </DataTemplate>
-                                                </ListBox.ItemTemplate>
-                                         
-                                            
-                                        </ListBox>
-
-
                                     </Grid>
                                 </Grid>
-                            </StackPanel>
+
+                                <Grid Grid.Row="1" Margin="0,0,0,0">
+                                    <ListBox ItemsSource="{Binding ParcelInfoList}">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="150"/>
+                                                        <ColumnDefinition Width="170"/>
+                                                        <ColumnDefinition Width="200"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid Grid.Column="0" >
+                                                        <TextBlock Text="{Binding ID}"
+                                                                   FontSize="15"
+                                                                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                                   TextWrapping="Wrap"
+                                                                   Foreground="#B0B0B2"/>
+                                                    </Grid>
+                                                    <Grid Grid.Column="1" >
+                                                        <TextBlock Text="{Binding ParcelName}"
+                                                                   FontSize="15"
+                                                                   VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                                   TextWrapping="Wrap"
+                                                                   Foreground="#B0B0B2"/>
+                                                    </Grid>
+                                                    <Grid Grid.Column="2" >
+                                                        <TextBlock  Text="{Binding Mass}"
+                                                                    TextWrapping="Wrap"
+                                                                    FontSize="15"
+                                                                    VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                                    Foreground="#B0B0B2"/>
+                                                    </Grid>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </Grid>
+                            </Grid>
                         </TabItem>
                     </TabControl>
                 </Grid>

@@ -182,9 +182,6 @@
     <Compile Include="Model\Route.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\ShipFee.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Warehouse.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

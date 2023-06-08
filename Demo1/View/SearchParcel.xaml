@@ -10,7 +10,7 @@
              d:DesignHeight="643" Width="960">
 
     <Border CornerRadius="20"
-            Background="Black">
+            Background="#434343">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
@@ -26,23 +26,22 @@
 
                 <Grid Grid.Column="0">
                     <Border CornerRadius="20"
-                        Background="#8ED3F4"
-                        Margin="15"
-                        Width="400">
+                            Background="#212325"
+                            Margin="15"
+                            Width="400">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="MagnifyingGlass"
-                                      Height="40" Width="40"
-                                      Style="{StaticResource menuButtonIcon}"
-                                      Foreground="#5A4D4C"/>
+                                          Height="40" Width="40"
+                                          Style="{StaticResource menuButtonIcon}"
+                                          Foreground="#B0B0B2"/>
                             <TextBox   materialDesign:HintAssist.Hint="Nhập mã đơn hàng"
-                                   materialDesign:HintAssist.FloatingScale="0"
-                                   materialDesign:HintAssist.Foreground="Blue"
-                                   FontSize="30" 
-                                   Text="{Binding SearchParcelText}" 
-                                   TextChanged="TextBox_TextChanged"
-                                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                   
-                                   Foreground="#5A4D4C" Width="400" Height="70" />
+                                       materialDesign:HintAssist.FloatingScale="0"
+                                       materialDesign:HintAssist.Foreground="Blue"
+                                       FontSize="30" 
+                                       Text="{Binding SearchParcelText}" 
+                                       TextChanged="TextBox_TextChanged"
+                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                       Foreground="#B0B0B2" Width="280" Height="70" />
                         </StackPanel>
                     </Border>
                 </Grid>
@@ -73,7 +72,8 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="200"/>
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <!--ten don hang-->
                         <Grid Grid.Column="0" >
@@ -84,12 +84,12 @@
                             <!--<Grid Grid.Row="0">-->
                             <Border BorderThickness="0,0,3,0"
                                         CornerRadius="20,0,0,0"
-                                        Background="#8ED3F4">
+                                        Background="#212325">
                                 <TextBlock Text="Mã đơn hàng"
                                            FontSize="25"
                                            
                                            VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Foreground="#5A4D4C"/>
+                                           Foreground="#B0B0B2"/>
                             </Border>
                             <!--</Grid>-->
 
@@ -115,56 +115,41 @@
                         </Grid>
 
                         <Grid Grid.Column="1" >
-                            <!--<Grid.RowDefinitions>
-                                <RowDefinition Height="100"/>
-                                <RowDefinition />
-                            </Grid.RowDefinitions>-->
-                            <!--<Grid Grid.Row="0">-->
                             <Border BorderThickness="0,0,3,0"
                                         CornerRadius="0,0,0,0"
-                                        Background="#8ED3F4">
+                                        Background="#212325">
                                 <TextBlock Text="Tên đơn hàng"
                                            FontSize="25"
                                            VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Foreground="#5A4D4C"/>
+                                           Foreground="#B0B0B2"/>
                             </Border>
-                            <!--</Grid>-->
-
-                            <!--<Border Background="#8ED3F4"
-                                        BorderThickness= "0,3,3,0"
-                                        CornerRadius="0,0,0,0">
-
-                                    <Grid>
-                                        <TextBlock Text ="{Binding ParcelType}"
-                                                   FontSize="21"
-                                                   HorizontalAlignment="Center"
-                                               Foreground="Black"></TextBlock>
-                                    </Grid>
-                                </Border>-->
-                            <Border BorderThickness="0,0,3,0"
-                                        CornerRadius="0,0,0,0"
-                                        Background="#8ED3F4" Margin="200,0,-200,0">
-                                <TextBlock Text="Loại đơn hàng"
-                                           FontSize="25"
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Foreground="#5A4D4C"/>
-                            </Border>
-
                         </Grid>
 
                         <Grid Grid.Column="2">
+                            <Border BorderThickness="0,0,3,0"
+                                        CornerRadius="0,0,0,0"
+                                        Background="#212325">
+                                <TextBlock Text="Loại đơn hàng"
+                                           FontSize="25"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Foreground="#B0B0B2"/>
+                            </Border>
+                        </Grid>
+
+                        <Grid Grid.Column="3">
                             <!--<Grid.RowDefinitions>
                                 <RowDefinition Height="100"/>
                                 <RowDefinition />
                             </Grid.RowDefinitions>-->
                             <!--<Grid Grid.Row="0">-->
                             <Border BorderThickness="0,0,3,0"
-                                        CornerRadius="0,20,0,0"
-                                        Background="#8ED3F4" Margin="200,0,8,0">
+                                    CornerRadius="0,20,0,0"
+                                    Margin="0 0 -3 0"
+                                    Background="#212325">
                                 <TextBlock Text="Giá trị"
                                            FontSize="25"
                                            VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Foreground="#5A4D4C"/>
+                                           Foreground="#B0B0B2"/>
                             </Border>
                             <!--</Grid>-->
 
@@ -192,66 +177,74 @@
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="499*"/>
                     </Grid.RowDefinitions>-->
+                    <Border CornerRadius="0 0 20 20"
+                            Background="#212325"
+                            Margin="0 3 0 20">
+                        <ListBox ItemsSource="{Binding ParcelInfoListInSearch}"
+                             Background="#212325"
+                             Margin="0,3,0,20">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <WrapPanel>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="200"/>
+                                                <ColumnDefinition Width="200"/>
+                                                <ColumnDefinition Width="200"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
 
-                    <ListBox ItemsSource="{Binding ParcelInfoListInSearch}" Margin="-9,3,0,0"
-                                 >
+                                            <Grid Grid.Column="0">
+                                                <TextBlock x:Name="IDTextBlock"
+                                                           Text="{Binding ID,Mode=TwoWay}"  FontSize="20"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           TextAlignment="Center"
+                                                           PreviewMouseDown="IDTextBlock_PreviewMouseDown"
+                                                           Width="180" Height="50"
+                                                           Margin="-10,0,0,0"
+                                                           Foreground="#B0B0B2"/>
+                                            </Grid>
 
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <WrapPanel>
-                                    <TextBlock     x:Name="IDTextBlock"
-                                                   Text="{Binding ID,Mode=TwoWay}"  FontSize="25"
-                                                   Background="#8ED3F4"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   TextAlignment="Center"
-                                                   PreviewMouseDown="IDTextBlock_PreviewMouseDown"
-                                                   Width="199" Height="50"
-                                                   Margin="0,0,3,0"
-                                                   Foreground="Black"
-                                                                  />
-                                    <TextBlock FontSize="15"
-                                                                  
-                                                   Text="{Binding ParcelName}"
-                                                   Background="#8ED3F4"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   TextAlignment="Center"
-                                                   Width="196" Height="50"
-                                                   Margin="0,0,3,0"
-                                                   Foreground="Black"/>
-                                    <TextBlock FontSize="15"
-                                                                  
-                                                       Text="{Binding ParcelType}"
-                                                       Background="#8ED3F4"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       TextAlignment="Center"
-                                                       Width="197" Height="50"
-                                                       Margin="0,0,3,0"
-                                                       Foreground="Black"/>
-                                    <TextBlock Text="{Binding ParcelValue }" 
-                                                   FontSize="30"
-                                                   Background="#8ED3F4"
-                                                   HorizontalAlignment="Center"
-                                                   TextAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Width="288" Height="50"
-                                                   Margin="0,0,3,0"
-                                                   Foreground="Black"/>
-                                </WrapPanel >
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
+                                            <Grid Grid.Column="1">
+                                                <TextBlock FontSize="20"
+                                                           Text="{Binding ParcelName}"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           TextAlignment="Center"
+                                                           Width="180" Height="50"
+                                                           Margin="-10,0,0,0"
+                                                           Foreground="#B0B0B2"/>
+                                            </Grid>
 
+                                            <Grid Grid.Column="2">
+                                                <TextBlock FontSize="20"
+                                                           Text="{Binding ParcelType}"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           TextAlignment="Center"
+                                                           Width="180" Height="50"
+                                                           Margin="-5,0,0,0"
+                                                           Foreground="#B0B0B2"/>
+                                            </Grid>
 
-
-
-                    </ListBox>
-
-
-
+                                            <Grid Grid.Column="3">
+                                                <TextBlock Text="{Binding ParcelValue }" 
+                                                           FontSize="20"
+                                                           HorizontalAlignment="Center"
+                                                           TextAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           Width="260" Height="50"
+                                                           Margin="15,0,0,0"
+                                                           Foreground="#B0B0B2"/>
+                                            </Grid>
+                                        </Grid>
+                                    </WrapPanel >
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
                 </Grid>
-                <!--</StackPanel>-->
             </Grid>
         </Grid>
     </Border>

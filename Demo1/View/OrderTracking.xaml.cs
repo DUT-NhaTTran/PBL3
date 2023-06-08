@@ -41,5 +41,12 @@ namespace Demo1.View
                 viewModel.ParcelTrackingCommand.Execute(null);
             }
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            var viewModel = (OrderTrackingModel)DataContext;
+            viewModel.ParcelInfoList.Clear();
+            viewModel.LoadParcelInfoList();
+        }
     }
 }

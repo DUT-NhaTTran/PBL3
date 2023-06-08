@@ -78,16 +78,6 @@
     <Property Name="details" Type="nvarchar" MaxLength="200" />
     <Property Name="time" Type="datetime" Nullable="false" />
   </EntityType>
-  <EntityType Name="ShipFee">
-    <Key>
-      <PropertyRef Name="shippingFeeID" />
-    </Key>
-    <Property Name="shippingFeeID" Type="int" Nullable="false" />
-    <Property Name="shippingMethod" Type="bit" Nullable="false" />
-    <Property Name="totalCost" Type="float" Nullable="false" />
-    <Property Name="locations" Type="float" Nullable="false" />
-    <Property Name="parcelID" Type="int" Nullable="false" />
-  </EntityType>
   <EntityType Name="Warehouse">
     <Key>
       <PropertyRef Name="warehouseID" />
@@ -238,18 +228,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ShipFee_Parcel">
-    <End Role="Parcel" Type="Self.Parcel" Multiplicity="1" />
-    <End Role="ShipFee" Type="Self.ShipFee" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Parcel">
-        <PropertyRef Name="parcelID" />
-      </Principal>
-      <Dependent Role="ShipFee">
-        <PropertyRef Name="parcelID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_WarehouseManager_Warehouse">
     <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
     <End Role="WarehouseManager" Type="Self.WarehouseManager" Multiplicity="*" />
@@ -282,7 +260,6 @@
     <EntitySet Name="Parcel" EntityType="Self.Parcel" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Receptionist" EntityType="Self.Receptionist" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Route" EntityType="Self.Route" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="ShipFee" EntityType="Self.ShipFee" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WarehouseManager" EntityType="Self.WarehouseManager" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WarehouseStaff" EntityType="Self.WarehouseStaff" Schema="dbo" store:Type="Tables" />
@@ -325,10 +302,6 @@
     <AssociationSet Name="FK_Route_Warehouse" Association="Self.FK_Route_Warehouse">
       <End Role="Warehouse" EntitySet="Warehouse" />
       <End Role="Route" EntitySet="Route" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ShipFee_Parcel" Association="Self.FK_ShipFee_Parcel">
-      <End Role="Parcel" EntitySet="Parcel" />
-      <End Role="ShipFee" EntitySet="ShipFee" />
     </AssociationSet>
     <AssociationSet Name="FK_WarehouseManager_Warehouse" Association="Self.FK_WarehouseManager_Warehouse">
       <End Role="Warehouse" EntitySet="Warehouse" />

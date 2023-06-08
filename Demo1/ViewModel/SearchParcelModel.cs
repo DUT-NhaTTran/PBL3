@@ -150,7 +150,7 @@ namespace Demo1.ViewModel
             //    ParcelInfoListInSearch.Clear();
             //}
         }
-        
+      
         void SetAllParcelInfo()
         {
             
@@ -160,11 +160,10 @@ namespace Demo1.ViewModel
             RCustomerAddress = ParcelInfo.Instance.GetCustomerAddress(SearchParcelText, 2);
             SCustomerPhoneNumber=ParcelInfo.Instance.GetCustomerPhoneNumber(SearchParcelText,1);
             RCustomerPhoneNumber = ParcelInfo.Instance.GetCustomerPhoneNumber(SearchParcelText, 2);
-            ShippingFee = Convert.ToString(ParcelInfo.Instance.GetParcelTotalCost(SearchParcelText));
+            Cost = Convert.ToString(ParcelInfo.Instance.GetParcelTotalCost(SearchParcelText));
             ParcelValue=Convert.ToString(ParcelInfo.Instance.GetParcelValue(SearchParcelText));
-            Cost = (isCOD) ? Convert.ToString(Convert.ToDouble(ShippingFee) - Convert.ToDouble(ParcelValue)) : ShippingFee;
-           
-            if (ParcelInfo.Instance.GetShippingMethod(SearchParcelText)) ShippingMethod = "Giao hàng nhanh";
+            ShippingFee=Convert.ToString(ParcelInfo.Instance.GetParcelShippingFee(SearchParcelText));   
+            if (ParcelInfo.Instance.GetShippingMethod(SearchParcelText)==1) ShippingMethod = "Giao hàng nhanh";
             else ShippingMethod = "Giao hàng chậm";
             CreateTime=ParcelInfo.Instance.GetCreateTime(SearchParcelText);
             Details=ParcelInfo.Instance.GetDetails(SearchParcelText);

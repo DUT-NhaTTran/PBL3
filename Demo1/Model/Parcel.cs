@@ -19,7 +19,7 @@ namespace Demo1.Model
         {
             this.Invoices = new HashSet<Invoice>();
             this.Routes = new HashSet<Route>();
-            this.ShipFees = new HashSet<ShipFee>();
+           
         }
     
         public int parcelID { get; set; }
@@ -43,8 +43,7 @@ namespace Demo1.Model
         public virtual ICollection<Invoice> Invoices { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Route> Routes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ShipFee> ShipFees { get; set; }
+       
         public virtual Warehouse Warehouse { get; set; }
     }
 }

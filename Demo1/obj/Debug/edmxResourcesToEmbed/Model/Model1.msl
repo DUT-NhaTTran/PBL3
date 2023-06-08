@@ -86,17 +86,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ShipFees">
-      <EntityTypeMapping TypeName="PBL3_demoModel.ShipFee">
-        <MappingFragment StoreEntitySet="ShipFee">
-          <ScalarProperty Name="parcelID" ColumnName="parcelID" />
-          <ScalarProperty Name="locations" ColumnName="locations" />
-          <ScalarProperty Name="totalCost" ColumnName="totalCost" />
-          <ScalarProperty Name="shippingMethod" ColumnName="shippingMethod" />
-          <ScalarProperty Name="shippingFeeID" ColumnName="shippingFeeID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Warehouses">
       <EntityTypeMapping TypeName="PBL3_demoModel.Warehouse">
         <MappingFragment StoreEntitySet="Warehouse">

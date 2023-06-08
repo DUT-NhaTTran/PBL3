@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="0*"/>
                 <ColumnDefinition Width="0*"/>
             </Grid.ColumnDefinitions>
-            <ScrollViewer Grid.ColumnSpan="2" Margin="0,-33,10,-526">
+            <ScrollViewer Grid.ColumnSpan="2" Margin="0,-33,0,-527">
                 <Grid>
                     <!--Main Section-->
                     <Grid>
@@ -76,18 +76,16 @@
 
                         <Grid Grid.Row="0">
                             <Border CornerRadius="20"
-                                Background="#212325"
-                                Width="400"
-                                Margin="20,10,30,10">
-                                <StackPanel>
-                                    <TextBlock Text="Thông tin người gửi"
-                                               FontSize="35" FontWeight="Bold"
-                                               Margin="10"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"
-                                               Style="{StaticResource MaterialDesignTextBlock}"
-                                               Foreground="#B0B0B2"/>
-                                </StackPanel>
+                                    Background="#212325"
+                                    Width="400"
+                                    Margin="20,5,30,5">
+                                <TextBlock Text="Thông tin người gửi"
+                                           FontSize="35" FontWeight="Bold"
+                                           Margin="0"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Style="{StaticResource MaterialDesignTextBlock}"
+                                           Foreground="#B0B0B2"/>
                             </Border>
                         </Grid>
 
@@ -185,7 +183,7 @@
                             <Grid Grid.Column="0">
                                 <Border CornerRadius="20"
                                     Background="#212325"
-                                    Margin="20,10,30,10">
+                                    Margin="20,0,30,0">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBox  materialDesign:HintAssist.Hint="Quận/Huyện"
                                                   materialDesign:HintAssist.Foreground="Blue"
@@ -203,17 +201,28 @@
                             <Grid Grid.Column="1">
                                 <Border CornerRadius="20"
                                     Background="#212325"
-                                    Margin="20,10,10,10">
+                                    Margin="20,0,10,0">
                                     <StackPanel Orientation="Horizontal" Margin="50,0,0,0">
-                                      
+                                        <!--<TextBox Name="SCustomerCity"
+                                              materialDesign:HintAssist.Hint="Tỉnh/Thành phố"
+                                              materialDesign:HintAssist.Foreground="Blue"
+                                              materialDesign:HintAssist.FloatingScale="0"
+                                              FontSize="30" BorderThickness="0"
+                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                                              Text="{Binding SCustomerCity,Mode=TwoWay}"  
+                                              VerticalAlignment="Center"
+                                              Foreground="#5A4D4C" Width="400"
+                                              Height="70" Margin="40,0,0,0"/>-->
                                         <ComboBox ItemsSource="{Binding Cities}"
-                                                  SelectedItem="{Binding SelectedSCity, Mode=TwoWay}"
-                                                 
+                                                  SelectedItem="{Binding SelectedSCity, Mode=TwoWay}"                                                 
                                                   FontSize="30" BorderThickness="0"
                                                   Text="{Binding SCustomerCity, Mode=TwoWay}"
-                                                  Foreground="#5A4D4C" Width="400"
+                                                  Foreground="#B0B0B2" Width="300"
                                                   Height="50"
-                                                  />
+                                                  materialDesign:HintAssist.Hint="Thành phố"/>
+
+
+
                                     </StackPanel>
                                 </Border>
                             </Grid>
@@ -221,18 +230,16 @@
 
                         <Grid Grid.Row="6">
                             <Border CornerRadius="20"
-                                Background="#212325"
-                                Width="400"
-                                Margin="20,10,30,10">
-                                <StackPanel>
-                                    <TextBlock Text="Thông tin người nhận"
-                                               FontSize="35" FontWeight="Bold"
-                                               Margin="10"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"
-                                               Style="{StaticResource MaterialDesignTextBlock}"
-                                               Foreground="#B0B0B2"/>
-                                </StackPanel>
+                                    Background="#212325"
+                                    Width="400"
+                                    Margin="20,5,30,5">
+                                <TextBlock Text="Thông tin người nhận"
+                                           FontSize="35" FontWeight="Bold"
+                                           Margin="0"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Style="{StaticResource MaterialDesignTextBlock}"
+                                           Foreground="#B0B0B2"/>
                             </Border>
                         </Grid>
 
@@ -327,7 +334,7 @@
                             <Grid Grid.Column="0">
                                 <Border CornerRadius="20"
                                         Background="#212325"
-                                        Margin="20,10,30,10">
+                                        Margin="20,0,30,0">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBox  materialDesign:HintAssist.Hint="Quận/Huyện"
                                                   materialDesign:HintAssist.Foreground="Blue"
@@ -345,16 +352,27 @@
                             <Grid Grid.Column="1">
                                 <Border CornerRadius="20"
                                     Background="#212325"
-                                    Margin="20,10,10,10">
+                                    Margin="20,0,10,0">
                                     <StackPanel Orientation="Horizontal" Margin="50,0,0,0">
-                                       
+                                        <!--<TextBox Name="SCustomerCity"
+                                              materialDesign:HintAssist.Hint="Tỉnh/Thành phố"
+                                              materialDesign:HintAssist.Foreground="Blue"
+                                              materialDesign:HintAssist.FloatingScale="0"
+                                              FontSize="30" BorderThickness="0"
+                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                                              Text="{Binding SCustomerCity,Mode=TwoWay}"  
+                                              VerticalAlignment="Center"
+                                              Foreground="#B0B0B2" Width="400"
+                                              Height="70" Margin="40,0,0,0"/>-->
                                         <ComboBox ItemsSource="{Binding Cities}"
-                                                  SelectedItem="{Binding SelectedRCity, Mode=TwoWay}"                                       
+                                                  SelectedItem="{Binding SelectedRCity, Mode=TwoWay}"
+                                                  
+                                                  
                                                   FontSize="30" BorderThickness="0"
                                                   Text="{Binding RCustomerCity, Mode=TwoWay}"
-                                                  Foreground="#5A4D4C" Width="400"
+                                                  Foreground="#B0B0B2" Width="300"
                                                   Height="50"
-                                                  />
+                                                  materialDesign:HintAssist.Hint="Thành phố"/>
                                     </StackPanel>
                                 </Border>
                             </Grid>

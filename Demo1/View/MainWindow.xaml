@@ -23,7 +23,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Window.Resources>
-
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
         <DataTemplate DataType="{x:Type viewModel:AddFunctionModel}">
             <local1:AddFuncView/>
         </DataTemplate>
@@ -50,6 +50,8 @@
             Background="#212529">
 
         <Grid>
+            
+            
             <Grid.ColumnDefinitions>
                 <!--Navigation menu-->
                 <ColumnDefinition Width="250"/>
@@ -57,10 +59,11 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <!--Navigation Menu-->
+           
             <Border CornerRadius="10,0,0,10"
                         Grid.Column="0"
                         Background="#434343">
-
+                    
                 <StackPanel>
 
                     <!--Logo-->
