@@ -8,21 +8,21 @@
         mc:Ignorable="d"
         xmlns:viewModel="clr-namespace:Demo1.ViewModel"
         DataContext="{StaticResource SearchPM}"
-        Title="ResultOfSearch" Height="900" Width="1000">
-    <Border CornerRadius="20"
+        Title="ResultOfSearch" Height="800" Width="1000">
+    <Border CornerRadius="0"
             Background="#434343">
         <ScrollViewer Margin="0,0,0,0">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="300"/>
+                    <RowDefinition Height="330"/>
                     <RowDefinition Height="240"/>
-                    <RowDefinition Height="300"/>
+                    <RowDefinition Height="220"/>
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="80"/>
-                        <RowDefinition Height="220"/>
+                        <RowDefinition Height="250"/>
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0">
@@ -66,44 +66,41 @@
                                 Margin="20,20,0,0">
                                 <StackPanel>
                                     <TextBlock Text="Từ: "
-                                   FontSize="40"
-                                   FontWeight="Bold"
-                                   Foreground="#B0B0B2"
-                                   VerticalAlignment="Top"
-                                   HorizontalAlignment="Left"
-                                   Margin="20,10,0,0"/>
-                                    <TextBlock
-                                       FontSize="25"
-                                       FontWeight="Medium"
-                                       Foreground="#B0B0B2"
-                                       VerticalAlignment="Top"
-                                       HorizontalAlignment="Left"
-                                       Margin="20,0,0,0">
-                                    <Run Text="Họ Tên :"/>
-                                    <Run Text="{Binding SCustomerName}"/>
-
+                                           FontSize="40"
+                                           FontWeight="Bold"
+                                           Foreground="#B0B0B2"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           Margin="20,10,0,0"/>
+                                    <TextBlock FontSize="25"
+                                               FontWeight="Medium"
+                                               Foreground="#B0B0B2"
+                                               VerticalAlignment="Top"
+                                               HorizontalAlignment="Left"
+                                               TextWrapping="Wrap"
+                                               Margin="20,0,0,0">
+                                            <Run Text="Họ Tên :"/>
+                                            <Run Text="{Binding SCustomerName}"/>
                                     </TextBlock>
-                                    <TextBlock
-                                       FontSize="25"
-                                       FontWeight="Medium"
-                                       Foreground="#B0B0B2"
-                                       VerticalAlignment="Top"
-                                       HorizontalAlignment="Left"
-                                       Margin="20,0,0,0">
-                                    <Run Text="Địa chỉ :"/>
-                                    <Run Text="{Binding SCustomerAddress}"/>
-
+                                    <TextBlock FontSize="25"
+                                               FontWeight="Medium"
+                                               Foreground="#B0B0B2"
+                                               VerticalAlignment="Top"
+                                               HorizontalAlignment="Left"
+                                               TextWrapping="Wrap"
+                                               Margin="20,0,0,0">
+                                        <Run Text="Địa chỉ :"/>
+                                        <Run Text="{Binding SCustomerAddress}"/>
                                     </TextBlock>
-                                    <TextBlock
-                                       FontSize="25"
-                                       FontWeight="Medium"
-                                       Foreground="#B0B0B2"
-                                       VerticalAlignment="Top"
-                                       HorizontalAlignment="Left"
-                                       Margin="20,30,0,0">
-                                    <Run Text="SĐT :"/>
-                                    <Run Text="{Binding SCustomerPhoneNumber}"/>
 
+                                    <TextBlock FontSize="25"
+                                               Text="SĐT: "
+                                               FontWeight="Medium"
+                                               Foreground="#B0B0B2"
+                                               VerticalAlignment="Top"
+                                               HorizontalAlignment="Left"
+                                               Margin="20,30,0,0">
+                                        <Run Text="{Binding SCustomerPhoneNumber}"/>
                                     </TextBlock>
                                 </StackPanel>
                             </Border>
@@ -114,44 +111,41 @@
                                 Margin="20,20,20,0">
                                 <StackPanel>
                                     <TextBlock Text="Đến: "
-                                   FontSize="40"
-                                   FontWeight="Bold"
-                                   Foreground="#B0B0B2"
-                                   VerticalAlignment="Top"
-                                   HorizontalAlignment="Left"
-                                   Margin="20,10,0,0"/>
-                                    <TextBlock
-                                       FontSize="25"
-                                       FontWeight="Medium"
-                                       Foreground="#B0B0B2"
-                                       VerticalAlignment="Top"
-                                       HorizontalAlignment="Left"
-                                       Margin="20,0,0,0">
-                                    <Run Text="Họ Tên :"/>
-                                    <Run Text="{Binding RCustomerName}"/>
-
+                                               FontSize="40"
+                                               FontWeight="Bold"
+                                               Foreground="#B0B0B2"
+                                               VerticalAlignment="Top"
+                                               HorizontalAlignment="Left"
+                                               Margin="20,10,0,0"/>
+                                    <TextBlock TextWrapping="Wrap"
+                                               FontSize="25"
+                                               FontWeight="Medium"
+                                               Foreground="#B0B0B2"
+                                               VerticalAlignment="Top"
+                                               HorizontalAlignment="Left"
+                                               Margin="20,0,0,0">
+                                        <Run Text="Họ Tên :"/>
+                                        <Run Text="{Binding RCustomerName}"/>
                                     </TextBlock>
-                                    <TextBlock
-                                       FontSize="25"
-                                       FontWeight="Medium"
-                                       Foreground="#B0B0B2"
-                                       VerticalAlignment="Top"
-                                       HorizontalAlignment="Left"
-                                       Margin="20,0,0,0">
-                                    <Run Text="Địa chỉ :"/>
-                                    <Run Text="{Binding RCustomerAddress}"/>
 
+                                    <TextBlock TextWrapping="Wrap"
+                                               FontSize="25"
+                                               FontWeight="Medium"
+                                               Foreground="#B0B0B2"
+                                               VerticalAlignment="Top"
+                                               HorizontalAlignment="Left"
+                                               Margin="20,0,0,0">
+                                        <Run Text="Địa chỉ :"/>
+                                        <Run Text="{Binding RCustomerAddress}"/>
                                     </TextBlock>
-                                    <TextBlock
-                                       FontSize="25"
-                                       FontWeight="Medium"
-                                       Foreground="#B0B0B2"
-                                       VerticalAlignment="Top"
-                                       HorizontalAlignment="Left"
-                                       Margin="20,30,0,0">
-                                    <Run Text="SĐT :"/>
-                                    <Run Text="{Binding RCustomerPhoneNumber}"/>
-
+                                    <TextBlock FontSize="25"
+                                               FontWeight="Medium"
+                                               Foreground="#B0B0B2"
+                                               VerticalAlignment="Top"
+                                               HorizontalAlignment="Left"
+                                               Margin="20,30,0,0">
+                                        <Run Text="SĐT :"/>
+                                        <Run Text="{Binding RCustomerPhoneNumber}"/>
                                     </TextBlock>
                                 </StackPanel>
                             </Border>
@@ -170,19 +164,19 @@
                         <Border BorderThickness="0,3,0,0"
                             Margin="20,0,20,0">
                             <TextBlock 
-                                   FontSize="25"
-                                   FontWeight="Medium"
-                                   Foreground="#B0B0B2"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Left"
-                                   Margin="20,0,0,0">
-                            <Run Text="Hình thức vận chuyển :   "/>
-                            <Run Text="{Binding ShippingMethod}"/>
-
+                                       FontSize="25"
+                                       FontWeight="Medium"
+                                       Foreground="#B0B0B2"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       Margin="20,0,0,0">
+                            <Run Text="Hình thức vận chuyển :"/>
+                            <Run Text="{Binding ShippingMethod}"
+                                 TextBlock.TextAlignment="Center"/>
                             </TextBlock>
-
                         </Border>
                     </Grid>
+
                     <Grid Grid.Row="1">
                         <Border BorderThickness="0,3,0,0"
                             Margin="20,0,20,0">
@@ -195,9 +189,7 @@
                                    Margin="20,0,0,0">
                             <Run Text="Trạng thái : "/>
                             <Run Text="{Binding Details}"/>
-
                             </TextBlock>
-
                         </Border>
                     </Grid>
                     <!--<Grid Grid.Row="1">
@@ -225,9 +217,7 @@
                                    Margin="20,0,0,0">
                             <Run Text="Thời gian tạo đơn :   "/>
                             <Run Text="{Binding CreateTime}"/>
-
                             </TextBlock>
-
                         </Border>
                     </Grid>
                     <Grid Grid.Row="3">
@@ -251,8 +241,8 @@
 
                 <Grid Grid.Row="2">
                     <Border Background="#212325"
-                        CornerRadius="20"
-                        Margin="30,30,30,30">
+                            CornerRadius="20"
+                            Margin="20,10,20,20">
                         <Grid>
                             <Grid Grid.Row="1">
                                 <Grid>
@@ -269,21 +259,21 @@
                                                 Foreground="#B0B0B2"
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Left"
-                                                Margin="40,20,0,0"/>
+                                                Margin="40,30,0,0"/>
                                             <TextBlock Text="Phí vận chuyển"
                                                 FontSize="25"
                                                 FontWeight="Medium"
                                                 Foreground="#B0B0B2"
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Left"
-                                                Margin="40,20,0,0"/>
+                                                Margin="40,5,0,0"/>
                                             <TextBlock Text="Thành tiền"
                                                 FontSize="25"
                                                 FontWeight="Medium"
                                                 Foreground="#B0B0B2"
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Left"
-                                                Margin="40,20,0,0"/>
+                                                Margin="40,5,0,0"/>
                                         </StackPanel>
                                     </Grid>
                                     <Grid Grid.Column="1">
@@ -291,24 +281,24 @@
                                             <TextBlock Text="{Binding ParcelValue}"
                                                 FontSize="25"
                                                 FontWeight="Medium"
-                                                Foreground="#5A4D4C"
+                                                Foreground="#B0B0B2"
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Left"
-                                                Margin="40,20,0,0"/>
+                                                Margin="40,30,0,0"/>
                                             <TextBlock Text="{Binding ShippingFee}"
                                                 FontSize="25"
                                                 FontWeight="Medium"
-                                                Foreground="#5A4D4C"
+                                                Foreground="#B0B0B2"
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Left"
-                                                Margin="40,20,0,0"/>
+                                                Margin="40,5,0,0"/>
                                             <TextBlock Text="{Binding Cost}"
                                                 FontSize="25"
                                                 FontWeight="Medium"
-                                                Foreground="#5A4D4C"
+                                                Foreground="#B0B0B2"
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Left"
-                                                Margin="40,20,0,0"/>
+                                                Margin="40,5,0,0"/>
                                         </StackPanel>
                                     </Grid>
                                 </Grid>

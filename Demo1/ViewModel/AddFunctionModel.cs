@@ -16,21 +16,14 @@ namespace Demo1.ViewModel
 
     public partial class AddFunctionModel:PropertiesCollection
     {
+        private AddManager _AddManager;
         public ICommand AddCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
         public CompositeCommand AddAndCreateInvoiceCommand { get; set; }
 
         public ICommand CreateInvoiceCommand { get; set; }
         int isValid = 0;
-        void CreateInvoice()
-        {
-            if (isSlow) ShippingMethod = "Chuyển phát chậm";
-            else ShippingMethod = "Chuyển phát nhanh";
-            if (isSpec) Type = "Hàng dễ vỡ/ đồ điện tử";
-            else Type = "";
-
-
-        }
+       
         // đơn vị là kg
         double MassFee(double mass)
         {
@@ -75,7 +68,7 @@ namespace Demo1.ViewModel
             }
             return volumeFee;
         }
-        double shippingFeeFunc()
+        double ShippingFeeFunc()
         {
         
             double posDiffValue;
@@ -106,7 +99,8 @@ namespace Demo1.ViewModel
         
         public AddFunctionModel()
         {
-          
+            _AddManager = new AddManager();
+
             string accountID = AccountManager.Instance.GetAccountID();
             WarehouseID = AccountManager.Instance.GetUserWarehouseID(accountID);
             Cities = DictionaryData.GetCities();
@@ -150,61 +144,15 @@ namespace Demo1.ViewModel
                 return checkValid() && SCustomerID != RCustomerID&&SCustomerPhoneNumber!=RCustomerPhoneNumber;
             }, (p) =>
             {
-             
-            //int setParcelID;
-            SCustomerCity=SelectedSCity;
-            RCustomerCity=SelectedRCity;    
-                using (var context = new Model.PBL3_demoEntities())
-                {
-                    var sc = context.Customers.FirstOrDefault(x => x.customerID == SCustomerID);
-                    if (sc == null)
-                    {
-                        var newSCustomer = new Customer { customerID = SCustomerID, customerLocation = SCustomerAddress + "," + SCustomerDistrict + "," + SCustomerCity, customerPhoneNumber = SCustomerPhoneNumber, customerName = SCustomerName,joinTime=DateTime.Now};
-                        context.Customers.Add(newSCustomer);
-                    }
-                    else
-                    {
-                        if ((sc.customerLocation != SCustomerAddress + "," + SCustomerDistrict + "," + SCustomerCity) || (sc.customerPhoneNumber != SCustomerPhoneNumber))
-                        {
-                            sc.customerLocation = SCustomerAddress + "," + SCustomerDistrict + "," + SCustomerCity;
-                            sc.customerPhoneNumber = SCustomerPhoneNumber;
-                        }
-
-                    }
-
-                    var rc = context.Customers.FirstOrDefault(x => x.customerID == RCustomerID);
-                    if (rc == null)
-                    {
-                        var newRCustomer = new Customer { customerID = RCustomerID, customerLocation = RCustomerAddress + "," + RCustomerDistrict + "," + RCustomerCity, customerPhoneNumber = RCustomerPhoneNumber, customerName = RCustomerName,joinTime=DateTime.Now};
-                        context.Customers.Add(newRCustomer);
-                    }
-                    else
-                    {
-                        if ((rc.customerLocation != RCustomerAddress + "," + RCustomerDistrict + "," + RCustomerCity) || (rc.customerPhoneNumber != RCustomerPhoneNumber))
-                        {
-                            rc.customerLocation = RCustomerAddress + "," + RCustomerDistrict + "," + RCustomerCity;
-                            rc.customerPhoneNumber = RCustomerPhoneNumber;
-                        }
-
-                    }
-                        context.SaveChanges();
-                   
-                }
-                 
-                using (var context1 = new Model.PBL3_demoEntities())
-                {
-                    var lastRow = context1.Parcels.OrderByDescending(x => x.parcelID).FirstOrDefault();
-                    ParcelID = Convert.ToString(Convert.ToInt32(lastRow.parcelID)+ 1);
-                    var newParcel = new Parcel { parcelID = Convert.ToInt32(ParcelID), parcelName = ParcelName, parcelMass = Convert.ToDouble(ParcelMass), parcelSize = ParcelLength + " x "+ParcelWidth+" x "+ParcelHeight, parcelValue = Convert.ToDouble(ParcelValue), type = isSpec, RCustomerID = RCustomerID, SCustomerID = SCustomerID, shippingMethod = isFast, isCOD = isCOD,createTime=DateTime.Now,currentWarehouseID=WarehouseID};
-                    context1.Parcels.Add(newParcel);
-                    context1.SaveChanges();
-                }
-                using (var context2 = new Model.PBL3_demoEntities())
-                {
-                    var newRoute = new Route {parcelID= Convert.ToInt32(ParcelID),relatedWarehouseID=WarehouseID,time=DateTime.Now,details="Đơn hàng đã được khởi tạo"};
-                    context2.Routes.Add(newRoute);
-                    context2.SaveChanges();
-                }
+               
+                //int setParcelID;
+                SCustomerCity =SelectedSCity;
+                RCustomerCity = SelectedRCity;
+                AddOrUpdateCustomer(SCustomerID, SCustomerName, SCustomerAddress + "," + SCustomerDistrict + "," + SCustomerCity, SCustomerPhoneNumber);
+                AddOrUpdateCustomer(RCustomerID, RCustomerName, RCustomerAddress + "," + RCustomerDistrict + "," + RCustomerCity, RCustomerPhoneNumber);
+                ParcelID = _AddManager.GetParcelID();
+                AddNewParcel(ParcelName,Convert.ToDouble(ParcelMass), ParcelLength + " x " + ParcelWidth + " x " + ParcelHeight, Convert.ToDouble(ParcelValue), isSpec, RCustomerID, SCustomerID, isFast, isCOD, WarehouseID);
+                AddNewRoute(Convert.ToInt32(ParcelID), WarehouseID);
             });
 
            
@@ -220,8 +168,6 @@ namespace Demo1.ViewModel
                     isValid = 0;
 
                 else isValid = 1;
-
-
 
                 double number, number1, number2, number3, number4;
                 double number5, number6;
@@ -251,38 +197,11 @@ namespace Demo1.ViewModel
            
             CreateInvoiceCommand = new RelayCommand<object>((x) => { return true; }, (x) =>
             {
-                CreateInvoice();
-                TotalCost = shippingFeeFunc();
-                int lastInvoiceID;
-                using (var context = new PBL3_demoEntities())
-                {
-                    var maxInvoiceID = context.Invoices.Max(i => i.invoiceID);
-                    lastInvoiceID = maxInvoiceID;
-                }
-                string account = AccountManager.Instance.GetAccountID();
-                string startWHID = AccountManager.Instance.GetUserWarehouseID(account);
-                using (var context = new Model.PBL3_demoEntities())
-                {
-
-                    // Tạo một đối tượng Invoice mới
-                    var newInvoice = new Model.Invoice
-                    {
-                        invoiceID = lastInvoiceID + 1,
-                        parcelID = Convert.ToInt32(ParcelID),
-                        customerID = SCustomerID,
-                        cost = Convert.ToDouble(TotalCost),
-                        outputTime = DateTime.Now,
-
-                        shippingFee = GetShippingFee(),
-                        startWarehouseID = startWHID
-                    };
-
-                    // Thêm đối tượng Invoice mới vào ngữ cảnh và lưu các thay đổi
-                    context.Invoices.Add(newInvoice);
-                    context.SaveChanges();
-                }
+                CreateNewInvoice();
                 View.Invoice invoice = new View.Invoice();
-                
+                ShippingMethod = (isFast) ? "Giao hàng nhanh " : "Giao hàng chậm";
+                Type = (isSpec) ? "Hàng dễ vỡ/ đồ điện tử" : "Bình thường";
+                TotalCost = ShippingFeeFunc();
                 invoice.DataContext = this;
                 invoice.Show();
             });
@@ -290,6 +209,25 @@ namespace Demo1.ViewModel
             AddAndCreateInvoiceCommand.RegisterCommand(AddCommand);
             AddAndCreateInvoiceCommand.RegisterCommand(CreateInvoiceCommand);
             
+        }
+        public void AddOrUpdateCustomer(string customerID, string customerName, string customerLocation, string customerPhoneNumber)
+        {
+            _AddManager.AddOrUpdateCustomer(customerID, customerName, customerLocation, customerPhoneNumber);
+        }
+
+        public void AddNewParcel(string parcelName, double parcelMass, string parcelSize, double parcelValue, bool isSpec, string RCustomerID, string SCustomerID, bool isFast, bool isCOD, string WarehouseID)
+        {
+            _AddManager.AddNewParcel(parcelName, parcelMass, parcelSize, parcelValue, isSpec, RCustomerID, SCustomerID, isFast, isCOD, WarehouseID);
+        }
+
+        public void AddNewRoute(int parcelID, string relatedWarehouseID)
+        {
+            _AddManager.AddNewRoute(parcelID, relatedWarehouseID);
+        }
+        public void CreateNewInvoice()
+        {
+
+            _AddManager.CreateInvoice(ParcelID, SCustomerID, ShippingFeeFunc(), WarehouseID,GetShippingFee());
         }
         bool IsPhoneNumber(string inputStr)
         {
@@ -306,7 +244,7 @@ namespace Demo1.ViewModel
         }
         double GetShippingFee()
         {
-            double res = isCOD ? (TotalCost - Convert.ToDouble(ParcelValue)) : TotalCost;
+            double res = isCOD ? (ShippingFeeFunc() - Convert.ToDouble(ParcelValue)) : ShippingFeeFunc();
             return res;
         }
         bool IsID(string input)

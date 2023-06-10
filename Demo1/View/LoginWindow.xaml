@@ -145,13 +145,10 @@
                         </PasswordBox>
 
 
-                        <CheckBox Margin="0 40 0 20" FontSize="15">
-                            <TextBlock>
-                            <Run Foreground="#b6b6b6">Quên mật khẩu</Run>
-                            </TextBlock>
-                        </CheckBox>
 
-                        <StackPanel Orientation="Vertical">
+
+                        <StackPanel Orientation="Vertical"
+                                    Margin="50">
                             <Button Content="Đăng Nhập" 
                                     IsDefault="true"
                                     Background="#001C44" Foreground="#ffffff" FontSize="18" materialDesign:ButtonAssist.CornerRadius="22" Height="45" Width="150" 

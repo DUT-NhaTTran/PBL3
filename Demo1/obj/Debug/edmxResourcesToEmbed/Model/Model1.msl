@@ -96,18 +96,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="WarehouseManagers">
-      <EntityTypeMapping TypeName="PBL3_demoModel.WarehouseManager">
-        <MappingFragment StoreEntitySet="WarehouseManager">
-          <ScalarProperty Name="numberOfEmployee" ColumnName="numberOfEmployee" />
-          <ScalarProperty Name="warehouseID" ColumnName="warehouseID" />
-          <ScalarProperty Name="warehouseManagerPhoneNumber" ColumnName="warehouseManagerPhoneNumber" />
-          <ScalarProperty Name="warehouseManagerLocation" ColumnName="warehouseManagerLocation" />
-          <ScalarProperty Name="warehouseManagerName" ColumnName="warehouseManagerName" />
-          <ScalarProperty Name="warehouseManagerID" ColumnName="warehouseManagerID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="WarehouseStaffs">
       <EntityTypeMapping TypeName="PBL3_demoModel.WarehouseStaff">
         <MappingFragment StoreEntitySet="WarehouseStaff">
@@ -116,6 +104,17 @@
           <ScalarProperty Name="warehouseStaffLocation" ColumnName="warehouseStaffLocation" />
           <ScalarProperty Name="warehouseStaffName" ColumnName="warehouseStaffName" />
           <ScalarProperty Name="warehouseStaffID" ColumnName="warehouseStaffID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WarehouseManagers">
+      <EntityTypeMapping TypeName="PBL3_demoModel.WarehouseManager">
+        <MappingFragment StoreEntitySet="WarehouseManager">
+          <ScalarProperty Name="warehouseID" ColumnName="warehouseID" />
+          <ScalarProperty Name="warehouseManagerPhoneNumber" ColumnName="warehouseManagerPhoneNumber" />
+          <ScalarProperty Name="warehouseManagerLocation" ColumnName="warehouseManagerLocation" />
+          <ScalarProperty Name="warehouseManagerName" ColumnName="warehouseManagerName" />
+          <ScalarProperty Name="warehouseManagerID" ColumnName="warehouseManagerID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

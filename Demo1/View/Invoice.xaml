@@ -52,19 +52,16 @@
                         <Border Background="#62D6F5"
                             BorderThickness="0,0,0,3">
                             <StackPanel>
-                                <TextBlock   
-                                       FontSize="20" 
-                                      
-                                       Text="Mã bưu điện"
-                                      
-                                       Foreground="#0A003A" Width="120" Height="54"/>
-                                <TextBlock   
-                                       FontSize="20" 
-                                      
-                                       Text="{Binding WarehouseID}"
-                                      
-                                       Foreground="#0A003A" Width="120" Height="54"/>
-
+                                <TextBlock FontSize="20" 
+                                           Text="Mã bưu điện"
+                                           Margin="0 20 0 0"
+                                           Foreground="#0A003A" Width="120" Height="54"/>
+                                <TextBlock FontSize="20" 
+                                           Text="{Binding WarehouseID}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           TextAlignment="Center"
+                                           Foreground="#0A003A" Width="120" Height="54"/>
                             </StackPanel>
                         </Border>
                     </Grid>
@@ -119,15 +116,18 @@
                             BorderThickness="0,0,0,3">
                             <StackPanel Orientation="Vertical">
                                 <TextBlock   Text="Thông tin dịch vụ"
-                                       FontSize="22" 
-                                       FontWeight="Bold"
-                                       Foreground="#0A003A" Width="250" Height="50"/>
+                                             FontSize="22" 
+                                             Margin="10 0 0 0"
+                                             FontWeight="Bold"
+                                             Foreground="#0A003A" Width="200" Height="50"/>
                                 <TextBlock
                                        
                                        FontSize="22" 
                                        
                                        Text="{Binding ShippingMethod}"
-                                       
+                                       VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           TextAlignment="Center"
                                        Margin="0,0,0,0"
                                        Foreground="#0A003A" Width="250" Height="50"/>
                             </StackPanel>
@@ -145,26 +145,18 @@
                         <Border BorderThickness="0,0,3,3"
                         Background="#62D6F5">
                             <StackPanel Orientation="Vertical">
-                                <TextBlock  
-                                       FontSize="25" 
-                                       FontWeight="Bold"
-                                       
-                                       Text="Thông tin người nhận"
-                                      
-                                       Margin="-270,0,0,-10"
-                                       Foreground="#0A003A" Width="300" Height="50"/>
-                                <TextBlock 
-                                       FontSize="22" 
-                                       
-                                       Text="{Binding RCustomerName}"                                      
-                                       Margin="-165,0,0,-10"
-                                       Foreground="#0A003A" Width="400" Height="50"/>
-                                <TextBlock 
-                                       FontSize="22" 
-                                      
-                                       
-                                       Margin="30,0,0,0"
-                                       Foreground="#0A003A" Width="600" Height="50">
+                                <TextBlock FontSize="25" 
+                                           FontWeight="Bold"
+                                           Text="Thông tin người nhận"
+                                           Margin="-270,0,0,-10"
+                                           Foreground="#0A003A" Width="300" Height="50"/>
+                                <TextBlock FontSize="22" 
+                                           Text="{Binding RCustomerName}"                                      
+                                           Margin="-165,0,0,-10"
+                                           Foreground="#0A003A" Width="400" Height="50"/>
+                                <TextBlock FontSize="22" 
+                                           Margin="30,0,0,0"
+                                           Foreground="#0A003A" Width="600" Height="50">
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat="Địa chỉ : {0},{1},{2}">
                                             <Binding Path="RCustomerAddress"/>
@@ -173,13 +165,10 @@
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
-                                <TextBlock   
-                                       FontSize="22" 
-                                       
-                                       Text="{Binding RCustomerPhoneNumber}"
-                                      
-                                       Margin="-165,0,0,0"
-                                       Foreground="#0A003A" Width="400" Height="50"/>
+                                <TextBlock FontSize="22" 
+                                           Text="{Binding RCustomerPhoneNumber}"
+                                           Margin="-165,0,0,0"
+                                           Foreground="#0A003A" Width="400" Height="50"/>
                             </StackPanel>
                         </Border>
                     </Grid>
@@ -189,20 +178,17 @@
                             BorderThickness="0,0,0,3">
                             <StackPanel Orientation="Vertical">
                                 <TextBlock   Text="Dịch vụ cộng thêm"
-                                       FontSize="22" 
-                                       FontWeight="Bold"
-                                      
-                                       
-                                      
-                                       Margin="0,0,0,0"
-                                       Foreground="#0A003A" Width="250" Height="50"/>
-                                <TextBlock   
-                                       FontSize="22" 
-                                       
-                                       Text="{Binding Type}"
-                                       
-                                       Margin="0,0,0,0"
-                                       Foreground="#0A003A" Width="250" Height="50"/>
+                                             FontSize="22" 
+                                             FontWeight="Bold"
+                                             Margin="0,0,0,0"
+                                             Foreground="#0A003A" Width="200" Height="50"/>
+                                <TextBlock FontSize="22" 
+                                           Text="{Binding Type}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           TextAlignment="Center"
+                                           Margin="0,0,0,0"
+                                           Foreground="#0A003A" Width="250" Height="50"/>
                             </StackPanel>
                         </Border>
                     </Grid>
@@ -218,13 +204,19 @@
                         Background="#62D6F5">
                             <StackPanel Orientation="Vertical">
                                 <TextBlock Text="Mã đơn hàng"  
-                                       FontSize="25" 
-                                       FontWeight="Bold"
-                                       Foreground="#0A003A" Width="300" Height="50"/>
+                                           FontSize="25" 
+                                           FontWeight="Bold"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           TextAlignment="Center"
+                                           Foreground="#0A003A" Width="300" Height="50"/>
                                 <TextBlock Text="{Binding ParcelID}"
-                                       FontSize="25" 
-                                       FontWeight="Bold"
-                                       Foreground="#0A003A" Width="300" Height="50"/>
+                                           FontSize="25" 
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           TextAlignment="Center"
+                                           FontWeight="Bold"
+                                           Foreground="#0A003A" Width="300" Height="50"/>
                             </StackPanel>
                         </Border>
                     </Grid>
@@ -233,20 +225,22 @@
                         <Border Background="#62D6F5"
                             BorderThickness="0,0,0,3">
                             <StackPanel Orientation="Vertical">
-                                <TextBlock    Text="Tổng chi phí"
-                                       FontSize="22" 
-                                       FontWeight="Bold"
-                                       
-                                       Margin="0,0,0,0"
-                                       Foreground="#0A003A" Width="250" Height="50"/>
-                                <TextBlock   
-                                       FontSize="22" 
-                                       
-                                       Text="{Binding TotalCost}"
-                                      
-                                       Margin="0,0,0,0"
-                                       Foreground="#0A003A" Width="250" Height="50"/>
-
+                                <TextBlock Text="Tổng chi phí"
+                                           FontSize="22" 
+                                           FontWeight="Bold"
+                                           TextAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,0,0,0"
+                                           Foreground="#0A003A" Width="200" 
+                                           Height="50"/>
+                                <TextBlock FontSize="22" 
+                                           Text="{Binding TotalCost}"
+                                           Margin="0,0,0,0"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           TextAlignment="Center"
+                                           Foreground="#0A003A" Width="200" Height="50"/>
                             </StackPanel>
                         </Border>
                     </Grid>

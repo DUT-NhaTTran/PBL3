@@ -28,14 +28,8 @@ namespace Demo1.View
         {
             InitializeComponent();
         }
-      
-
-     
-       
-        
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-         
             if (sender is DatePicker datePicker)
             {
                 if (datePicker.SelectedDate.HasValue)

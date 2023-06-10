@@ -9,4 +9,6 @@
     <viewmodel:OrderTrackingModel x:Key="OrderTM"></viewmodel:OrderTrackingModel>
     <viewmodel:WarehouseTrackingModel x:Key="WHTM"></viewmodel:WarehouseTrackingModel>
     <viewmodel:StatisticModel x:Key="SM"></viewmodel:StatisticModel>
+    <viewmodel:ManageEmployeesModel x:Key="MEM"></viewmodel:ManageEmployeesModel>
+    <viewmodel:UpdateUserInfoViewModel x:Key="UUI"></viewmodel:UpdateUserInfoViewModel>
 </ResourceDictionary>

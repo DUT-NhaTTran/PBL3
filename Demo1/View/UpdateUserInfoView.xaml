@@ -1,0 +1,218 @@
+﻿<UserControl x:Class="Demo1.View.UpdateUserInfoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Demo1.View"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             Loaded="UserControl_Loaded"
+             DataContext="{StaticResource UUI}"
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="950">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Left Section-->
+        <Border Background="#212325" Padding="30" CornerRadius="25 0 0 25">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Cập nhật thông tin"
+                           FontSize="25"
+                           FontWeight="Bold"
+                           HorizontalAlignment="Center"
+                           Margin="0 80 0 0"
+                           Foreground="#6E94DE"/>
+                <Border CornerRadius="100" Background="#434343"
+                        Height="150" Width="150"
+                        Margin="0 150 0 150">
+                    <Grid>
+                        <Ellipse Width="140" Height="140" StrokeThickness="4" >
+                            <Ellipse.Stroke>
+                                <LinearGradientBrush>
+                                    <GradientStop Color="#E27C53" Offset="0.15" />
+                                    <GradientStop Color="#DCA530" Offset="0.2" />
+                                    <GradientStop Color="#8BB356" Offset="0.3" />
+                                    <GradientStop Color="#3BB799" Offset="0.4" />
+                                    <GradientStop Color="#67CBEE" Offset="0.5" />
+                                    <GradientStop Color="#3699DB" Offset="0.6" />
+                                    <GradientStop Color="#9264AA" Offset="0.8" />
+                                    <GradientStop Color="#6E94DE" Offset="0.9" />
+                                </LinearGradientBrush>
+                            </Ellipse.Stroke>
+                        </Ellipse>
+
+                        <fa:IconImage Icon="UserAlt"
+                                      Width="100" Height="100"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Center"
+                                      Foreground="#8BB356"/>
+                    </Grid>
+                </Border>
+                <TextBlock Text="{Binding RoleName}"
+                           FontSize="25"
+                           FontWeight="Bold"
+                           HorizontalAlignment="Center"
+                           Margin="0 0 0 100"
+                           Foreground="#6E94DE"/>
+            </StackPanel>
+        </Border>
+
+        <!--Input Section-->
+        <Border Grid.Column="1" Padding="20"  Background="#434343" CornerRadius="0 25 25 0">
+            <Grid HorizontalAlignment="Center" Margin="0 0 25 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="120"/>
+                    <RowDefinition Height="120"/>
+                    <RowDefinition Height="110"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Border CornerRadius="20"
+                                Background="#212325"
+                                Margin="0 15 0 15">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="AddressCard" 
+                                              Style="{StaticResource menuButtonIcon}"
+                                              Height="40" Width="40"
+                                              Foreground="#7314ED"/>
+                            <TextBlock materialDesign:HintAssist.Hint="Mã tài khoản"
+                                       materialDesign:HintAssist.FloatingScale="0"
+                                       materialDesign:HintAssist.Foreground="Blue"
+                                       FontSize="25" 
+                                       Margin ="0 10 0 0"
+                                       Text="{Binding RoleID,Mode=TwoWay}" 
+                                       Foreground="#B0B0B2" 
+                                       Width="480" Height="50"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Border CornerRadius="20"
+                                Background="#212325"
+                                Margin="0,15,0,15" >
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="588">
+                            <fa:IconImage Icon="UserPen"
+                                          Height="40" Width="40"
+                                          Style="{StaticResource menuButtonIcon}"
+                                          Foreground="#7314ED"/>
+                            <TextBox   materialDesign:HintAssist.Hint="Cập nhật tên người dùng"
+                                       materialDesign:HintAssist.FloatingScale="0"
+                                       materialDesign:HintAssist.Foreground="Blue"
+                                       FontSize="25" 
+                                       BorderThickness="0 0 0 0"
+                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                       Text="{Binding UserName, Mode=TwoWay}" 
+                                       Foreground="#B0B0B2" 
+                                       Width="480" Height="50"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="350"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+                            <Border CornerRadius="20"
+                                    Background="#212325"
+                                    Margin="0 15 0 15">
+                                <TextBlock FontSize="25"
+                                           materialDesign:HintAssist.Hint="Địa điểm" 
+                                           Text="{Binding WarehouseID,Mode=TwoWay}" 
+                                           Foreground="#B0B0B2" Width="300" 
+                                           Margin="0 10 0 0"
+                                           TextAlignment="Center"
+                                           Height="50"/>
+                            </Border>
+                        </Grid>
+
+                        <Grid Grid.Column="1">
+                            <Border CornerRadius="20"
+                                    Background="#212325"
+                                    Margin="10 15 0 15">
+                                <ComboBox x:Name="Locationcbb"
+                                          ItemsSource="{Binding Cities}"
+                                          SelectedItem="{Binding UserLocation, Mode=TwoWay}"
+                                          FontSize="25" BorderThickness="0"
+                                          VerticalAlignment="Center"
+                                          HorizontalContentAlignment="Center"
+                                          HorizontalAlignment="Center"
+                                          VerticalContentAlignment="Center"
+                                          Text="{Binding UserLocation, Mode=TwoWay}"
+                                          Foreground="#B0B0B2" Width="200"
+                                          Margin="0 0 0 5"
+                                          Height="50"
+                                          materialDesign:HintAssist.Hint="Địa điểm"/>
+
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="350"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <Grid Grid.Column="1">
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="3">
+                    <Border CornerRadius="20"
+                                Background="#212325"
+                                Margin="0,10,0,10">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Phone" 
+                                              Style="{StaticResource menuButtonIcon}"
+                                              Height="40" Width="40"
+                                              Foreground="#7314ED"/>
+                            <TextBox   materialDesign:HintAssist.Hint="Cập nhật số điện thoại "
+                                           materialDesign:HintAssist.Foreground="Blue"
+                                           materialDesign:HintAssist.FloatingScale="0"
+                                           FontSize="25" BorderThickness="0"
+                                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                           Text="{Binding UserPhoneNumber, Mode=TwoWay}"
+                                           Foreground="#B0B0B2" Width="480" Height="70"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+
+
+                <Grid Grid.Row="4">
+                    <Border CornerRadius="20"
+                                    Background="Transparent"
+                                    Margin="0,0,0,0">
+
+                        <StackPanel Background="Transparent" Orientation="Horizontal">
+                            <Button Content="Làm mới" 
+                                        IsDefault="true"
+                                        Margin="100 0 0 0"
+                                        Background="#001C44" Foreground="#ffffff" FontSize="18" materialDesign:ButtonAssist.CornerRadius="22" Height="45" Width="150" 
+                                        Command="{Binding RefreshCommand}"
+                                        CommandParameter="{Binding ElementName=loginWindow}"/>
+                            <Button Content="Xác nhận" 
+                                        IsDefault="true"
+                                        Margin="100 0 0 0"
+                                        Background="#001C44" Foreground="#ffffff" FontSize="18" materialDesign:ButtonAssist.CornerRadius="22" Height="45" Width="150" 
+                                        Command="{Binding AcceptCommand}"
+                                        CommandParameter="{Binding ElementName=loginWindow}"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\ASUS\Source\Repos\PBL3_Test2\Demo1\Model\Model1.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\DELL\Downloads\Pokemon\PBL3_SemiFinal\PBL3_SemiFinal\Demo1\Model\Model1.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

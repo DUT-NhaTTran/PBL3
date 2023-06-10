@@ -96,7 +96,6 @@
     <Property Name="warehouseManagerLocation" Type="nvarchar" MaxLength="200" Nullable="false" />
     <Property Name="warehouseManagerPhoneNumber" Type="nvarchar" MaxLength="200" Nullable="false" />
     <Property Name="warehouseID" Type="nvarchar" MaxLength="200" Nullable="false" />
-    <Property Name="numberOfEmployee" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="WarehouseStaff">
     <Key>

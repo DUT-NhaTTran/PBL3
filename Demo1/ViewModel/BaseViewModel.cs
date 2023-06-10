@@ -9,17 +9,17 @@ using System.Windows.Input;
 
 namespace Demo1.ViewModel
 {
-        public class BaseViewModel : INotifyPropertyChanged
-        {
-                public event PropertyChangedEventHandler PropertyChanged;
+    public class BaseViewModel : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
 
-                protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-                {
-                    PropertyChangedEventHandler handler = PropertyChanged;
-                    if (handler != null)
-                        handler(this, new PropertyChangedEventArgs(propertyName));
-                }
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
+}
 
     class RelayCommand<T> : ICommand
     {

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Demo1"
-             
+
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
                 TextElement.FontWeight="Regular"
                 TextElement.FontSize="10"
@@ -13,55 +13,37 @@
                 FontFamily="{DynamicResource MaterialDesignFont}"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="220" d:DesignWidth="500">
+             d:DesignHeight="400" d:DesignWidth="600">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="197*"/>
-            <ColumnDefinition Width="295*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <materialDesign:Card x:Name="cardHeader" Grid.Row="0" Padding="10" Margin="0"   Background="#434343" Foreground="#B0B0B2" Visibility="Visible" Grid.ColumnSpan="2">
+        <materialDesign:Card x:Name="cardHeader" Grid.Row="0" 
+                             Padding="9,10,10,10" Margin="0"   
+                             Background="#2A3457" Foreground="#B0B0B2"
+                             Visibility="Visible" >
             <StackPanel>
-                <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignTitleTextBlock}" FontSize="20" >Thông báo</TextBlock>
+                <TextBlock  HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                            FontSize="20" 
+                            Text=" Thông báo"
+                            Foreground="#888C46"/>
             </StackPanel>
         </materialDesign:Card>
-        <StackPanel  HorizontalAlignment="Right" Margin="0,5,5,0"  VerticalAlignment="Top" Grid.Column="1">
 
-        </StackPanel>
-        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+        <Grid Grid.Row="1">
             <Grid Margin="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBox Text="{Binding Message}" 
-                             Foreground="#B0B0B2"
-                             HorizontalAlignment="Center" IsReadOnly="True" 
-                             Grid.Row="0" Margin="5"  
-                             TextWrapping="Wrap"
-                             FontSize="18" />
-
-
-                </Grid>
-                <Grid Grid.Row="1" Margin="0,20,0,5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                </Grid>
+                <TextBox Text="{Binding Message}" 
+                         Foreground="#16235A"
+                         BorderBrush="#434343"
+                         VerticalAlignment="Center"
+                         HorizontalContentAlignment="Center"
+                         HorizontalAlignment="Center" IsReadOnly="True" 
+                         Width="350"
+                         TextWrapping="Wrap"
+                         FontSize="18" Grid.Column="1" />
             </Grid>
         </Grid>
     </Grid>

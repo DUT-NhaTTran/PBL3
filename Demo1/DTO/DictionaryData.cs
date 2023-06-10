@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Demo1.Model;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -55,7 +56,7 @@ namespace Demo1.DTO
             dictionary.Add("Quảng Ngãi", 4);
             dictionary.Add("Bình Định", 4);
             dictionary.Add("Phú Yên", 4);
-            dictionary.Add("Khánh Hòa", 4);
+            dictionary.Add("Khánh Hoà", 4);
 
             // vùng 5
             dictionary.Add("Kom Tum", 5);
@@ -107,11 +108,21 @@ namespace Demo1.DTO
 
             return cities;
         }
+        public static ObservableCollection<string> GetWHIDs()
+        {
+            ObservableCollection<string> whids = new ObservableCollection<string>();
+            using (var context = new PBL3_demoEntities())
+            {
+                var res = context.Warehouses.Select(w => w.warehouseID).ToList();
+                whids = new ObservableCollection<string>(res);
+            }
+            return whids;
+        }
         public static Dictionary<string, string> ProvinceRegions = new Dictionary<string, string>
         {
                 // Các tỉnh thành tương ứng ở miền Bắc
                 {"Hà Giang","Bắc"},
-                {"Bắc Cạn","Bắc"},
+                {"Bắc Kạn","Bắc"},
                 {"Cao Bằng","Bắc"},
                 {"Tuyên Quang","Bắc"},
                 {"Lạng Sơn","Bắc"},

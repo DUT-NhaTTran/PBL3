@@ -23,13 +23,7 @@ namespace Demo1.UserInfo
 
 
         // Các role của hệ thống.
-        public enum Role
-        {
-            Receptionist,
-            WarehouseStaff,
-            WarehouseManager
-        }
-
+       
         // Các thông tin của một người dùng.
         
         private AccountManager() 
@@ -98,6 +92,76 @@ namespace Demo1.UserInfo
             }
             
         }
+        public string GetUserLocation(string accountID)
+        {
+            using (var context = new PBL3_demoEntities())
+            {
+                if (accessRight == 1)
+                {
+                    var check = context.Receptionists.FirstOrDefault(x => x.receptionistID == accountID);
+                    if (check != null)
+                    {
+                        username = check.receptionistLocation;
+                    }
+
+                }
+                if (accessRight == 2)
+                {
+                    var check = context.WarehouseStaffs.FirstOrDefault(x => x.warehouseStaffID == accountID);
+                    if (check != null)
+                    {
+                        username = check.warehouseStaffLocation;
+                    }
+
+                }
+                if (accessRight == 3)
+                {
+                    var check = context.WarehouseManagers.FirstOrDefault(x => x.warehouseManagerID == accountID);
+                    if (check != null)
+                    {
+                        username = check.warehouseManagerLocation;
+                    }
+
+                }
+                return username;
+            }
+
+        }
+        public string GetUserPhoneNumber(string accountID)
+        {
+            using (var context = new PBL3_demoEntities())
+            {
+                if (accessRight == 1)
+                {
+                    var check = context.Receptionists.FirstOrDefault(x => x.receptionistID == accountID);
+                    if (check != null)
+                    {
+                        username = check.receptionistPhoneNumber;
+                    }
+
+                }
+                if (accessRight == 2)
+                {
+                    var check = context.WarehouseStaffs.FirstOrDefault(x => x.warehouseStaffID == accountID);
+                    if (check != null)
+                    {
+                        username = check.warehouseStaffPhoneNumber;
+                    }
+
+                }
+                if (accessRight == 3)
+                {
+                    var check = context.WarehouseManagers.FirstOrDefault(x => x.warehouseManagerID == accountID);
+                    if (check != null)
+                    {
+                        username = check.warehouseManagerPhoneNumber;
+                    }
+
+                }
+                return username;
+            }
+
+        }
         public string GetUserWarehouseID(string accountID)
         {
             using (var context = new PBL3_demoEntities())
@@ -136,6 +200,35 @@ namespace Demo1.UserInfo
             else if (accessRight == 3) rolename = "Quản lý kho";
             return rolename;
         }
-        
+      
+        public Receptionist GetReceptionist(string receptionistId)
+        {
+            using (var context = new PBL3_demoEntities())
+            {
+                Receptionist reception = context.Receptionists.FirstOrDefault(r => r.receptionistID == receptionistId);
+
+                return reception;
+            }
+        }
+        public WarehouseStaff GetWHS(string id)
+        {
+            using (var context = new PBL3_demoEntities())
+            {
+                WarehouseStaff whs = context.WarehouseStaffs.FirstOrDefault(r => r.warehouseStaffID == id);
+
+                return whs;
+            }
+        }
+        public WarehouseManager GetWHM(string id)
+        {
+            using (var context = new PBL3_demoEntities())
+            {
+                WarehouseManager whm = context.WarehouseManagers.FirstOrDefault(r => r.warehouseManagerID == id);
+
+                return whm;
+            }
+        }
+
+
     }
 }

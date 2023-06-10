@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 //lam cai de phong to thu nho giong window
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
+using Demo1.ViewModel;
 
 namespace Demo1.View
 {
@@ -64,5 +65,16 @@ namespace Demo1.View
             this.WindowState = WindowState.Minimized;
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var viewModel = (MainViewModel)DataContext;
+
+            if (viewModel != null)
+            {
+                
+                viewModel.UpdateUserName();
+
+            }
+        }
     }
 }

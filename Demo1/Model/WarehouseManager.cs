@@ -19,7 +19,6 @@ namespace Demo1.Model
         public string warehouseManagerLocation { get; set; }
         public string warehouseManagerPhoneNumber { get; set; }
         public string warehouseID { get; set; }
-        public int numberOfEmployee { get; set; }
     
         public virtual Warehouse Warehouse { get; set; }
     }

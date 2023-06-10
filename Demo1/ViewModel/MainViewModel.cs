@@ -1,9 +1,11 @@
-﻿using Demo1.UserInfo;
+﻿using Demo1.DTO;
+using Demo1.UserInfo;
 using Demo1.View;
 using FontAwesome.Sharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -99,6 +101,8 @@ namespace Demo1.ViewModel
             public ICommand ShowOrderTrackingCommand { get; set; }
             public ICommand ShowWarehouseTrackingCommand { get; set; }
             public ICommand ShowStatisticCommand { get; set; }
+            public ICommand ShowManageEmployeesCommand { get; set; }
+            public ICommand ShowUpdateUserInfoCommand { get; set; }
             public ICommand ButtonCommand { get; set; }
             private BaseViewModel _currentChildView;
             private string _caption;
@@ -186,7 +190,7 @@ namespace Demo1.ViewModel
             }
         public MainViewModel()
         {
-          
+
             LoadedWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 isLoaded = true;
@@ -196,29 +200,30 @@ namespace Demo1.ViewModel
                 LoginWindow loginWindow = new LoginWindow();
                 loginWindow.ShowDialog();
                 if (loginWindow.DataContext == null)
-                return;
-                    var LoginVM = loginWindow.DataContext as LoginViewModel;
-                    if (LoginVM.isLogin)
-                    {
-                        int accessright = AccountManager.Instance.GetAccessRight();
-                        string loginID = AccountManager.Instance.GetAccountID();
-                        RoleName = AccountManager.Instance.GetRoleName(accessright);
-                        UserName = AccountManager.Instance.GetUserName(loginID);
-                        WHID = AccountManager.Instance.GetUserWarehouseID(AccountManager.Instance.GetAccountID());
-                        if (accessright == 1) IsRole1AllowedToVisible = true;
-                        else if (accessright == 2) IsRole2AllowedToVisible = true;
-                        else if (accessright == 3) IsRole3AllowedToVisible = true;
+                    return;
+                var LoginVM = loginWindow.DataContext as LoginViewModel;
+                if (LoginVM.isLogin)
+                {
+                    int accessright = AccountManager.Instance.GetAccessRight();
+                    string loginID = AccountManager.Instance.GetAccountID();
+                    RoleName = AccountManager.Instance.GetRoleName(accessright);
+                    UserName = AccountManager.Instance.GetUserName(loginID);
+                    WHID = AccountManager.Instance.GetUserWarehouseID(AccountManager.Instance.GetAccountID());
+                    if (accessright == 1) IsRole1AllowedToVisible = true;
+                    else if (accessright == 2) IsRole2AllowedToVisible = true;
+                    else if (accessright == 3) IsRole3AllowedToVisible = true;
 
                     if (IsRole2Or3AllowedToVisible) Role23 = true;
                     if (IsRole1Or2AllowedToVisible) Role12 = true;
-                        p.Show();
-                 
-                    }
-                    else
-                    {
-                        p.Close();
-                    }
+                    p.Show();
+
+                }
+                else
+                {
+                    p.Close();
+                }
             });
+
             //default view
 
             ShowAddWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -231,33 +236,55 @@ namespace Demo1.ViewModel
             {
                 CurrentChildView = new SearchParcelModel();
                 Caption = "Tra cứu đơn";
-                Icon = IconChar.UserGroup;
+                Icon = IconChar.MagnifyingGlass;
             });
-            
+
             ShowUpdateParcelCommand = new RelayCommand<object>((o) => { return true; }, (o) =>
             {
                 CurrentChildView = new UpdateParcelModel();
                 Caption = "Cập nhật đơn hàng";
-                Icon = IconChar.UserGroup;
+                Icon = IconChar.ArrowUpFromBracket;
             });
             ShowOrderTrackingCommand = new RelayCommand<object>((i) => { return true; }, (i) =>
             {
                 CurrentChildView = new OrderTrackingModel();
                 Caption = "Theo dõi đơn hàng";
-                Icon = IconChar.UserGroup;
+                Icon = IconChar.BoxesPacking;
             });
             ShowWarehouseTrackingCommand = new RelayCommand<object>((i) => { return true; }, (e) =>
             {
                 CurrentChildView = new WarehouseTrackingModel();
                 Caption = "Theo dõi kho hàng";
-                Icon = IconChar.UserGroup;
+                Icon = IconChar.Warehouse;
             });
             ShowStatisticCommand = new RelayCommand<object>((i) => { return true; }, (e) =>
             {
                 CurrentChildView = new StatisticModel();
                 Caption = "Thống kê";
-                Icon = IconChar.UserGroup;
+                Icon = IconChar.SquarePollVertical;
             });
+            ShowManageEmployeesCommand = new RelayCommand<object>((i) => { return true; }, (e) =>
+            {
+                CurrentChildView = new ManageEmployeesModel();
+                Caption = "Tạo mới tài khoản nhân viên";
+                Icon = IconChar.Plus;
+            });
+            ShowUpdateUserInfoCommand = new RelayCommand<object>((i) => { return true; }, (e) =>
+            {
+                CurrentChildView = new UpdateUserInfoViewModel();
+                Caption = "Cập nhật thông tin cá nhân";
+                Icon = IconChar.Wrench;
+            });
+
         }
+        public void UpdateUserName()
+        {
+            UpdateUserInfoViewModel uuivm= new UpdateUserInfoViewModel();
+            
+            UserName =uuivm.UserName;
+        }   // Đăng ký phương thức xử lý sự kiện UserNameChanged
+           
+       
+
     }
 }

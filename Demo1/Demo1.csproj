@@ -146,6 +146,15 @@
     <Compile Include="DTO\DictionaryData.cs" />
     <Compile Include="DTO\PropertiesCollection.cs" />
     <Compile Include="DTO\SearchResultDTO.cs" />
+    <Compile Include="Helper\AddEmployeeManager.cs" />
+    <Compile Include="Helper\AddManager.cs" />
+    <Compile Include="Helper\HashHelper.cs" />
+    <Compile Include="Helper\OrderTrackingManager.cs" />
+    <Compile Include="Helper\SearchManager.cs" />
+    <Compile Include="Helper\StatisticsManager.cs" />
+    <Compile Include="Helper\UpdateParcelManager.cs" />
+    <Compile Include="Helper\UpdateUserInfoManager.cs" />
+    <Compile Include="Helper\WarehouseTrackingManager.cs" />
     <Compile Include="Model\AccessRight.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -196,10 +205,12 @@
     <Compile Include="UserInfo\ParcelInfo.cs" />
     <Compile Include="UserInfo\WarehouseData.cs" />
     <Compile Include="Validation\Validation.cs" />
+    <Compile Include="ViewModel\ManageEmployeesModel.cs" />
     <Compile Include="ViewModel\OrderTrackingModel.cs" />
     <Compile Include="ViewModel\SearchParcelModel.cs" />
     <Compile Include="ViewModel\StatisticModel.cs" />
     <Compile Include="ViewModel\UpdateParcelModel.cs" />
+    <Compile Include="ViewModel\UpdateUserInfoViewModel.cs" />
     <Compile Include="ViewModel\WarehouseTrackingModel.cs" />
     <Compile Include="View\AddFuncView.xaml.cs">
       <DependentUpon>AddFuncView.xaml</DependentUpon>
@@ -214,6 +225,9 @@
     <Compile Include="View\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ManageEmployeesView.xaml.cs">
+      <DependentUpon>ManageEmployeesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MessageBoxWindow.xaml.cs">
       <DependentUpon>MessageBoxWindow.xaml</DependentUpon>
     </Compile>
@@ -226,9 +240,6 @@
     <Compile Include="View\ResultOfUpdateStatusParcel.xaml.cs">
       <DependentUpon>ResultOfUpdateStatusParcel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\RouteParcel.xaml.cs">
-      <DependentUpon>RouteParcel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\SearchParcel.xaml.cs">
       <DependentUpon>SearchParcel.xaml</DependentUpon>
     </Compile>
@@ -238,6 +249,9 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\StatisticsView.xaml.cs">
       <DependentUpon>StatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UpdateUserInfoView.xaml.cs">
+      <DependentUpon>UpdateUserInfoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\WarehouseTracking.xaml.cs">
       <DependentUpon>WarehouseTracking.xaml</DependentUpon>
@@ -278,6 +292,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\ManageEmployeesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MessageBoxWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -294,10 +312,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\RouteParcel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\SearchParcel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -311,6 +325,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\StatisticsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UpdateUserInfoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

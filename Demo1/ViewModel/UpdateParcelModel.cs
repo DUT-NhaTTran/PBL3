@@ -208,7 +208,6 @@ namespace Demo1.ViewModel
         }
 
 
-
         public ICommand ShowParcelInfoCommand { get; set; }
 
         public ICommand ExportfromWareHouseCommand { get; set; }
@@ -221,7 +220,6 @@ namespace Demo1.ViewModel
         public ICommand FailDeliveryCommand { get; set; }
         public UpdateParcelModel()
         {
-
             DateTime = DateTime.Now;
             string accountID = AccountManager.Instance.GetAccountID();
             WarehouseID = AccountManager.Instance.GetUserWarehouseID(accountID);
@@ -256,36 +254,25 @@ namespace Demo1.ViewModel
         //tim tinh trang cuoi cung cua don hang phuc vu cho ham GetParcelInfo
         public string LastStatus()
         {
+            UpdateParcelManager UPM = new UpdateParcelManager();
             int parcelID = ValidateParcelID(false);
-            using (var Context = new PBL3_demoEntities())
+
+            // if thisParcel hasnt Exist in dtb -> Function return false -> condition will be true -> return
+            if (!ParcelInfo.Instance.IsParcelExist(parcelID))
             {
-                // if thisParcel hasnt Exist in dtb -> Function return false -> condition will be true -> return
-                if (!ParcelInfo.Instance.IsParcelExist(parcelID))
-                {
-                    return "";
-                }
-                //TH mới tạo đơn chưa nhập vào kho
-                var checkifparcelexist = Context.Routes.FirstOrDefault(p => p.parcelID == parcelID);
-                if (checkifparcelexist != null)
-                {
-                    int maxId = Context.Routes
-                   .Where(x => x.parcelID == parcelID)
-                   .Max(x => x.routeID);
-
-                    // Sử dụng giá trị maxId ở đây
-                    var lastRoute = Context.Routes
-                        .FirstOrDefault(x => x.routeID == maxId);
-                    if (lastRoute != null)
-                    {
-                        lastStatus = lastRoute.details.ToString();
-                    }
-                }
-                else
-                {
-                    lastStatus = "Đơn hàng vừa được nhập vào kho";
-                }
-
+                return "";
             }
+            //TH mới tạo đơn chưa nhập vào kho
+            var checkifparcelexist = UPM.GetRouteFromParcelID(parcelID);
+            if (checkifparcelexist == null)
+            {
+                return "";
+            }
+            else
+            {
+                lastStatus = UPM.GetLastStatus(checkifparcelexist, parcelID);
+            }
+
             return lastStatus;
         }
         public void GetParcelInfo()
@@ -313,18 +300,15 @@ namespace Demo1.ViewModel
         // check if the warehouseID of this parcelID is equal with the warehouseID of this account
         int CheckIDParcel(string _parcelID)
         {
+            UpdateParcelManager UPM = new UpdateParcelManager();
             int parcelID = ValidateParcelID(false);
             if (parcelID != 0)
             {
                 string thisWarehouseID = WarehouseID;
                 int check;
-                using (var context = new PBL3_demoEntities())
-                {
-                    var warehouseIDOfParcel =
-                          context.Parcels.Where(x => x.parcelID == parcelID).Select(x => x.currentWarehouseID)
-                            .FirstOrDefault();
-                    check = (thisWarehouseID == warehouseIDOfParcel) ? 1 : 0;
-                }
+
+                var warehouseIDOfParcel = UPM.GetWarehouseIDFromParcelID(parcelID);
+                check = (thisWarehouseID == warehouseIDOfParcel) ? 1 : 0;
                 return check;
             }
             return -1;
@@ -335,6 +319,7 @@ namespace Demo1.ViewModel
 
         void ExportFromWarehouse()
         {
+            UpdateParcelManager UPM = new UpdateParcelManager();
             // if the currentWH or Parcel  == thisWH (a.k.a == 1) so that the Parcel in this WH where the account belongs to -> you can export
             if (CheckIDParcel(ParcelID) == 1)
             {
@@ -344,32 +329,21 @@ namespace Demo1.ViewModel
                 {
                     return;
                 }
-                using (var context = new PBL3_demoEntities())
-                {
-                    var thisParcel = context.Parcels.Where(x => x.parcelID == parcelID).FirstOrDefault();
-                    if (thisParcel.currentWarehouseID != null)
-                    {
-                        thisParcel.currentWarehouseID = null;
-                    }
 
-                    string thisWarehouseID = WarehouseID;
-                    string thisWarehouseName = context.Warehouses.Where(x => x.warehouseID == thisWarehouseID)
-                        .Select(x => x.warehouseName).FirstOrDefault();
-                    string details = "Xuất đơn hàng ra khỏi " + thisWarehouseName;
-                    var newRoute = new Route
-                    {
-                        parcelID = parcelID,
-                        relatedWarehouseID = thisWarehouseID,
-                        details = details,
-                        time = DateTime.Now,
-                    };
-                    context.Routes.Add(newRoute);
-                    context.SaveChanges();
-                    // if isFinalWarehouse --> after you exportFromwarehouse you cant ImportIntoWarehouse in any warehouse
-                    // --> call function checkfinalwarehouse, if it's true -> Parcel.isFinalWarehouse = true
-                    CheckFinalWarehouse();
-                    MessageBoxWindow.Show("Xuất thành công đơn hàng " + ParcelID + " ra khỏi " + thisWarehouseName);
+                var thisParcel = UserInfo.ParcelInfo.Instance.GetParcelRecordInt(parcelID);
+                if (thisParcel.currentWarehouseID != null)
+                {
+                    UPM.SetNullForExport(parcelID);
                 }
+
+                string thisWarehouseID = WarehouseID;
+                string thisWarehouseName = UPM.GetWarehouseNameFromWHID(thisWarehouseID);
+                UPM.AddExportToRoute(parcelID, thisWarehouseID, thisWarehouseName);
+                // if isFinalWarehouse --> after you exportFromwarehouse you cant ImportIntoWarehouse in any warehouse
+                // --> call function checkfinalwarehouse, if it's true -> Parcel.isFinalWarehouse = true
+                CheckFinalWarehouse();
+                MessageBoxWindow.Show("Xuất thành công đơn hàng " + ParcelID + " ra khỏi " + thisWarehouseName);
+
             }
             else
             {
@@ -487,6 +461,7 @@ namespace Demo1.ViewModel
 
         ObservableCollection<string> ParcelRoute()
         {
+            UpdateParcelManager UPM = new UpdateParcelManager();
             RouteCollection = new ObservableCollection<string>();
             int parcelID = ValidateParcelID(false);
             // if thisParcel hasnt Exist in dtb -> Function return false -> condition will be true -> return
@@ -495,30 +470,27 @@ namespace Demo1.ViewModel
                 return RouteCollection;
             }
             ObservableCollection<string> parcelRoutes = new ObservableCollection<string>();
-            using (var context = new PBL3_demoEntities())
-            {
-                var parcelRoute = context.Routes.Where(x => x.parcelID == parcelID);
-                if (parcelRoute.Any())
-                {
-                    foreach (var route in parcelRoute)
-                    {
-                        string tempRoute = route.details + " vào lúc " + route.time.ToString("dd/MM/yyyy HH:mm:ss") +
-                                           "\n";
-                        parcelRoutes.Add(tempRoute);
-                    }
 
-                    var checkWarehouseNull = context.Parcels.Where(x => x.parcelID == parcelID)
-                        .Select(x => x.currentWarehouseID).FirstOrDefault() == null;
-                    // if you after Delivery your Parcel Success , 
-                    if (checkWarehouseNull && CanExcuteFinalRouteCommand() && (ParcelInfo.Instance.GetParcelRecordInt(parcelID).parcelStatus != false))
-                    {
-                        parcelRoutes.Add("Đang vận chuyển " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + "\n");
-                    }
-                }
-                else
+            var parcelRoute = UPM.GetRoutesFromParcelID(parcelID);
+            if (parcelRoute.Any())
+            {
+                foreach (var route in parcelRoute)
                 {
-                    parcelRoutes.Add("Đơn hàng này chưa có lộ trình");
+                    string tempRoute = route.details + " vào lúc " + route.time.ToString("dd/MM/yyyy HH:mm:ss") +
+                                        "\n";
+                    parcelRoutes.Add(tempRoute);
                 }
+
+                var checkWarehouseNull = UPM.GetWarehouseIDFromParcelID(parcelID) == null;
+                // if you after Delivery your Parcel Success , 
+                if (checkWarehouseNull && CanExcuteFinalRouteCommand() && (ParcelInfo.Instance.GetParcelRecordInt(parcelID).parcelStatus != false))
+                {
+                    parcelRoutes.Add("Đang vận chuyển " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + "\n");
+                }
+            }
+            else
+            {
+                parcelRoutes.Add("Đơn hàng này chưa có lộ trình");
             }
 
             return parcelRoutes;
@@ -530,40 +502,37 @@ namespace Demo1.ViewModel
 
         bool CheckFinalWarehouse()
         {
+            UpdateParcelManager UPM = new UpdateParcelManager();
             bool finalWarehouseCheck = true;
             int parcelID = ValidateParcelID(false);
-            using (var context = new PBL3_demoEntities())
-            {
-                var thisParcel = context.Parcels.Where(x => x.parcelID == parcelID).FirstOrDefault();
-                // more important , if this.currentWarehouse == null , so it is in delivery -> it absolutely not in the final werehouse
-                // get the city of the ReceiverCustomer of the Parcel
 
-                if (thisParcel != null)
+            var thisParcel = UserInfo.ParcelInfo.Instance.GetParcelRecordInt(parcelID);
+            // more important , if this.currentWarehouse == null , so it is in delivery -> it absolutely not in the final werehouse
+            // get the city of the ReceiverCustomer of the Parcel
+
+            if (thisParcel != null)
+            {
+                if (thisParcel.currentWarehouseID != null)
                 {
-                    if (thisParcel.currentWarehouseID != null)
-                    {
-                        // it is not null , so it is in wareHouse -> so check is fall
-                        //IsFinalWarehouse = false;
-                        finalWarehouseCheck = false;
-                    }
-                    else
-                    {
-                        string thisReceiverCustomerILocation = context.Customers
-                            .Where(x => x.customerID == thisParcel.RCustomerID).Select(x => x.customerLocation)
-                            .FirstOrDefault();
-                        string[] parts = thisReceiverCustomerILocation.Split(',');
-                        string thisReceiverCustomerCity = parts[parts.Length - 1];
-                        // get the city of this wareHouse
-                        string thisWarehouseID = WarehouseID;
-                        string thisWarehouseName = context.Warehouses.Where(x => x.warehouseID == thisWarehouseID)
-                            .Select(x => x.warehouseName).FirstOrDefault();
-                        string thisCityofWarehouse = thisWarehouseName.Replace("Kho ", "");
-                        // compare 
-                        finalWarehouseCheck = (thisCityofWarehouse == thisReceiverCustomerCity);
-                        //IsFinalWarehouse = finalWarehouseCheck;
-                    }
+                    // it is not null , so it is in wareHouse -> so check is fall
+                    //IsFinalWarehouse = false;
+                    finalWarehouseCheck = false;
+                }
+                else
+                {
+                    string thisReceiverCustomerILocation = UPM.GetRLocationFromParcelID(thisParcel, parcelID);
+                    string[] parts = thisReceiverCustomerILocation.Split(',');
+                    string thisReceiverCustomerCity = parts[parts.Length - 1];
+                    // get the city of this wareHouse
+                    string thisWarehouseID = WarehouseID;
+                    string thisWarehouseName = UPM.GetWarehouseNameFromWHID(thisWarehouseID);
+                    string thisCityofWarehouse = thisWarehouseName.Replace("Kho ", "");
+                    // compare 
+                    finalWarehouseCheck = (thisCityofWarehouse == thisReceiverCustomerCity);
+                    //IsFinalWarehouse = finalWarehouseCheck;
                 }
             }
+
             //return IsFinalWarehouse;
             return finalWarehouseCheck;
         }
@@ -572,58 +541,35 @@ namespace Demo1.ViewModel
         {
             int parcelID = ValidateParcelID(false);
             if (parcelID == 0) return;
-            using (var context = new PBL3_demoEntities())
+
+            UpdateParcelManager UPM = new UpdateParcelManager();
+            var thisParcel = UserInfo.ParcelInfo.Instance.GetParcelRecordInt(parcelID);
+            string thisWarehouseID = WarehouseID;
+            // thisParcel.currentWarehouse == null  and thisParcel.isFinalWarehouse == true because after it go to the finalWarehouse(thisParcel.isFinalWarehouse == true) and Export (thisParcel.currentWarehouse == null)
+            if (thisParcel.isFinalWarehouse == true && thisParcel.currentWarehouseID == null)
             {
-                var thisParcel = context.Parcels.Where(x => x.parcelID == parcelID).FirstOrDefault();
-                string thisWarehouseID = WarehouseID;
-                // thisParcel.currentWarehouse == null  and thisParcel.isFinalWarehouse == true because after it go to the finalWarehouse(thisParcel.isFinalWarehouse == true) and Export (thisParcel.currentWarehouse == null)
-                if (thisParcel.isFinalWarehouse == true && thisParcel.currentWarehouseID == null)
-                {
-                    string details = "Đơn hàng đã được giao thành công";
-                    var newRoute = new Route
-                    {
-                        parcelID = parcelID,
-                        relatedWarehouseID = thisWarehouseID,
-                        details = details,
-                        time = DateTime.Now,
-                    };
-                    // after you delivery the parcel , it's no longer in the finalWarehouse
-                    thisParcel.isFinalWarehouse = false;
-                    // and update ParcelStatus = false (a.k.a deliver successfully)
-                    thisParcel.parcelStatus = false;
-                    context.Routes.Add(newRoute);
-                    context.SaveChanges();
-                }
+                UPM.AddSuccessToRoute(parcelID, thisWarehouseID);
             }
+
             GetParcelInfo();
         }
 
 
         void AddFailDeliveryIntoRoutes()
         {
+            UpdateParcelManager UPM = new UpdateParcelManager();
             int parcelID = ValidateParcelID(false);
             if (parcelID == 0) return;
-            using (var context = new PBL3_demoEntities())
+
+
+            var thisParcel = UserInfo.ParcelInfo.Instance.GetParcelRecordInt(parcelID);
+            string thisWarehouseID = WarehouseID;
+            // thisParcel.currentWarehouse == null  and thisParcel.isFinalWarehouse == true because after it go to the finalWarehouse(thisParcel.isFinalWarehouse == true) and Export (thisParcel.currentWarehouse == null)
+            if (thisParcel.isFinalWarehouse == true && thisParcel.currentWarehouseID == null)
             {
-                var thisParcel = context.Parcels.Where(x => x.parcelID == parcelID).FirstOrDefault();
-                string thisWarehouseID = WarehouseID;
-                // thisParcel.currentWarehouse == null  and thisParcel.isFinalWarehouse == true because after it go to the finalWarehouse(thisParcel.isFinalWarehouse == true) and Export (thisParcel.currentWarehouse == null)
-                if (thisParcel.isFinalWarehouse == true && thisParcel.currentWarehouseID == null)
-                {
-                    string details = "Đơn hàng đã được giao thất bại";
-                    var newRoute = new Route
-                    {
-                        parcelID = parcelID,
-                        relatedWarehouseID = thisWarehouseID,
-                        details = details,
-                        time = DateTime.Now,
-                    };
-                    // after you delivery the parcel , it's no longer in the finalWarehouse
-                    thisParcel.isFinalWarehouse = false;
-                    context.Routes.Add(newRoute);
-                    context.SaveChanges();
-                }
+                UPM.AddFailToRoute(parcelID, thisWarehouseID);
             }
+
             GetParcelInfo();
         }
         bool CanExcuteFinalRouteCommand()
@@ -694,37 +640,26 @@ namespace Demo1.ViewModel
         // check if you have delivery fail three times 
         bool isThreeTimeDeliveryFail()
         {
-
+            UpdateParcelManager UPM = new UpdateParcelManager();
             int parcelID = ValidateParcelID(false);
-            using (var context = new PBL3_demoEntities())
+
+            var thisParcel = UserInfo.ParcelInfo.Instance.GetParcelRecordInt(parcelID);
+            var TimesOfDeliveryFail = UPM.CountFailDeliveryOfThisParcel(parcelID);
+
+            if (thisParcel != null && thisParcel.parcelStatus == true)
             {
-                var thisParcel = context.Parcels.FirstOrDefault(x => x.parcelID == parcelID);
-                var TimesOfDeliveryFail = context.Routes.Count(x => x.parcelID == parcelID && x.details.Contains("thất bại"));
-
-                if (thisParcel != null && thisParcel.parcelStatus == true)
-                {
-                    return true;
-                }
-
-                if (TimesOfDeliveryFail != 3)
-                {
-                    return false;
-                }
-
-                thisParcel.parcelStatus = true;
-                string details = "Đơn hàng bị trả lại";
-                var newRoute = new Route
-                {
-                    parcelID = parcelID,
-                    relatedWarehouseID = WarehouseID,
-                    details = details,
-                    time = DateTime.Now,
-                };
-                context.Routes.Add(newRoute);
-                context.SaveChanges();
-                GetParcelInfo();
                 return true;
             }
+
+            if (TimesOfDeliveryFail != 3)
+            {
+                return false;
+            }
+
+            UPM.AddReturnedOrderToRoute(parcelID, WarehouseID);
+            GetParcelInfo();
+            return true;
+
         }
 
     }

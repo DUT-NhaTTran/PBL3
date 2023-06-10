@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\ASUS\Source\Repos\PBL3_Test2\Demo1\obj\Debug\
+C:\Users\hoang\Downloads\PBL3_SemiFinal\Demo1\obj\Debug\
 Demo1
 none
 false
 DEBUG;TRACE
-C:\Users\ASUS\Source\Repos\PBL3_Test2\Demo1\App.xaml
-17-1868023715
+C:\Users\hoang\Downloads\PBL3_SemiFinal\Demo1\App.xaml
+18-872906334
 2739969757
-48-1289947818
-41481027728
-Styles\ButtonStyles.xaml;View\AddFuncView.xaml;View\CustomMessageBox.xaml;View\Invoice.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;ResourceXAML\MainResource.xaml;View\MessageBoxWindow.xaml;View\OrderTracking.xaml;View\ResultOfSearch.xaml;View\ResultOfUpdateStatusParcel.xaml;View\RouteParcel.xaml;View\SearchParcel.xaml;Styles\ScrollViewer.xaml;Styles\UIColors.xaml;View\StatisticsView.xaml;View\WarehouseTracking.xaml;
+60-390269758
+41-1399631216
+Styles\ButtonStyles.xaml;View\AddFuncView.xaml;View\CustomMessageBox.xaml;View\Invoice.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;ResourceXAML\MainResource.xaml;View\ManageEmployeesView.xaml;View\MessageBoxWindow.xaml;View\OrderTracking.xaml;View\ResultOfSearch.xaml;View\ResultOfUpdateStatusParcel.xaml;View\SearchParcel.xaml;Styles\ScrollViewer.xaml;Styles\UIColors.xaml;View\StatisticsView.xaml;View\UpdateUserInfoView.xaml;View\WarehouseTracking.xaml;
 
 False
 

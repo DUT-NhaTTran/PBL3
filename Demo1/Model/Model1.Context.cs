@@ -33,7 +33,7 @@ namespace Demo1.Model
         public virtual DbSet<Receptionist> Receptionists { get; set; }
         public virtual DbSet<Route> Routes { get; set; }
         public virtual DbSet<Warehouse> Warehouses { get; set; }
-        public virtual DbSet<WarehouseManager> WarehouseManagers { get; set; }
         public virtual DbSet<WarehouseStaff> WarehouseStaffs { get; set; }
+        public virtual DbSet<WarehouseManager> WarehouseManagers { get; set; }
     }
 }

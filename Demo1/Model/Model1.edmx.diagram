@@ -13,7 +13,6 @@
         <EntityTypeShape EntityType="PBL3_demoModel.Receptionist" Width="1.5" PointX="3" PointY="14.75" />
         <EntityTypeShape EntityType="PBL3_demoModel.Route" Width="1.5" PointX="6" PointY="7.625" />
         <EntityTypeShape EntityType="PBL3_demoModel.Warehouse" Width="1.5" PointX="9.5" PointY="10.75" />
-        <EntityTypeShape EntityType="PBL3_demoModel.WarehouseManager" Width="1.5" PointX="3" PointY="17.625" />
         <EntityTypeShape EntityType="PBL3_demoModel.WarehouseStaff" Width="1.5" PointX="3" PointY="11.75" />
         <AssociationConnector Association="PBL3_demoModel.FK_Account_AccessRight" />
         <AssociationConnector Association="PBL3_demoModel.FK_Invoice_Customer" />
@@ -24,9 +23,10 @@
         <AssociationConnector Association="PBL3_demoModel.FK_Route_Parcel" />
         <AssociationConnector Association="PBL3_demoModel.FK_Receptionist_Warehouse1" />
         <AssociationConnector Association="PBL3_demoModel.FK_Route_Warehouse" />
-        <AssociationConnector Association="PBL3_demoModel.FK_WarehouseManager_Warehouse" />
         <AssociationConnector Association="PBL3_demoModel.FK_WarehouseStaff_Warehouse" />
         <AssociationConnector Association="PBL3_demoModel.FK_Parcel_Warehouse" />
+        <EntityTypeShape EntityType="PBL3_demoModel.WarehouseManager" Width="1.5" PointX="11.75" PointY="11.125" />
+        <AssociationConnector Association="PBL3_demoModel.FK_WarehouseManager_Warehouse" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

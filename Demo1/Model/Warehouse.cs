@@ -17,12 +17,12 @@ namespace Demo1.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Warehouse()
         {
-            this.Parcels = new HashSet<Parcel>();
+            this.Invoices = new HashSet<Invoice>();
             this.Receptionists = new HashSet<Receptionist>();
             this.Routes = new HashSet<Route>();
-            this.WarehouseManagers = new HashSet<WarehouseManager>();
             this.WarehouseStaffs = new HashSet<WarehouseStaff>();
-            this.Invoices = new HashSet<Invoice>();
+            this.Parcels = new HashSet<Parcel>();
+            this.WarehouseManagers = new HashSet<WarehouseManager>();
         }
     
         public string warehouseID { get; set; }
@@ -31,16 +31,16 @@ namespace Demo1.Model
         public int capacity { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Parcel> Parcels { get; set; }
+        public virtual ICollection<Invoice> Invoices { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Receptionist> Receptionists { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Route> Routes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<WarehouseManager> WarehouseManagers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WarehouseStaff> WarehouseStaffs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Invoice> Invoices { get; set; }
+        public virtual ICollection<Parcel> Parcels { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WarehouseManager> WarehouseManagers { get; set; }
     }
 }

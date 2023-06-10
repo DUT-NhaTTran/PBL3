@@ -7,7 +7,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              DataContext="{StaticResource SearchPM}"
-             d:DesignHeight="643" Width="960">
+             d:DesignHeight="650" Width="960">
 
     <Border CornerRadius="20"
             Background="#434343">
@@ -49,7 +49,7 @@
                 <Grid Grid.Column="1">
                     <Button Content="Tất cả đơn hàng" 
                             IsDefault="true" 
-                            Background="#8ED3F4" Foreground="#5A4D4C" 
+                            Background="#1E2597" Foreground="#B0B0B2"
                             FontSize="20" materialDesign:ButtonAssist.CornerRadius="22" 
                             Height="45"
                             Command="{Binding SearchCommand}"

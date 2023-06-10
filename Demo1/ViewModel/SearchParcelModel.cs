@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using Demo1.DTO;
+
 using Demo1.Model;
 
 using Demo1.UserInfo;
@@ -15,7 +17,7 @@ namespace Demo1.ViewModel
 {
     public class SearchParcelModel : PropertiesCollection
     {
-
+       
         private string _SearchParcelText;
         public string SearchParcelText
         {
@@ -65,49 +67,19 @@ namespace Demo1.ViewModel
         void GetSisCOD()
         {
             int iParcelID = Convert.ToInt32(SearchParcelText);
-            using (var context = new PBL3_demoEntities())
-            {
-                var parcel = context.Parcels.FirstOrDefault(x => x.parcelID == iParcelID);
-                if (parcel != null)
-                {
-                    if (parcel.isCOD.HasValue)
-                    {
-                        bool isCOD = (bool)parcel.isCOD;
-                        SisCOD = isCOD ? "COD" : "Bình thường";
-                    }
-                    else
-                    {
-                        SisCOD = "Không xác định";
-                    }
-                }
-            }
+            SearchManager SM = new SearchManager();
+            SisCOD = SM.GetSisCOD(iParcelID);
+
         }
 
         void GetAllParcels()
         {
-            using (var context = new PBL3_demoEntities())
-            {
-                ParcelInfoListInSearch.Clear();
-                var parcels = context.Parcels.ToList();
-                //ParcelInfoListInSearch = new ObservableCollection<ParcelInfoInSearch>();
-
-
-                foreach (var parcel in parcels)
-                {
-                    var parcelInfo = new ParcelInfoInSearch
-                    {
-                        ID = parcel.parcelID,
-                        ParcelName = parcel.parcelName,
-                        ParcelType = ((bool)parcel.type) ? "Hàng dễ vỡ" : "Hàng bình thường",
-                        ParcelValue = (double)parcel.parcelValue
-                    };
-
-                    ParcelInfoListInSearch.Add(parcelInfo);
-                }
-            }
+            
+            SearchManager SM = new SearchManager();
+            ParcelInfoListInSearch = SM.GetAllParcels();
         }
 
-        // Xử lý sự kiện click chuột vào TextBlock ParcelName
+
         public void OpenResultOfSerchWindow()
         {
             GetSisCOD();
@@ -119,38 +91,17 @@ namespace Demo1.ViewModel
         
         public void LoadAllParcelSearched()
         {
-            //int parcelID;
-            //if (int.TryParse(SearchParcelText, out parcelID))
-            //{
-                using (var dbContext = new Model.PBL3_demoEntities())
-                {
-                    var query = dbContext.Parcels
-                        .Where(x => x.parcelID.ToString().Contains(SearchParcelText) || x.parcelName.Contains(SearchParcelText))
-                        .Select(y => new ParcelInfoInSearch
-                        {
-                            ID = y.parcelID,
-                            ParcelName = y.parcelName,
-                            ParcelType = (bool)y.type ? "Hàng dễ vỡ/điện tử" : "Bình thường",
-                            ParcelValue = (double)y.parcelValue
-                        }); ;
+            SearchManager SM = new SearchManager();
+            List<ParcelInfoInSearch> queryResult = SM.LoadAllParcelSearched(SearchParcelText);
 
-                    List<ParcelInfoInSearch> queryResult = query.ToList();
+            ParcelInfoListInSearch.Clear(); // Xóa tất cả các phần tử trong danh sách hiện có
 
-                    ParcelInfoListInSearch.Clear(); // Xóa tất cả các phần tử trong danh sách hiện có
+            foreach (ParcelInfoInSearch item in queryResult)
+            {
+                ParcelInfoListInSearch.Add(item);
+            }
 
-                    foreach (ParcelInfoInSearch item in queryResult)
-                    {
-                      
-                        ParcelInfoListInSearch.Add(item);
-                    }
-                }
-            //}
-            //else
-            //{
-            //    ParcelInfoListInSearch.Clear();
-            //}
         }
-      
         void SetAllParcelInfo()
         {
             
@@ -166,8 +117,16 @@ namespace Demo1.ViewModel
             if (ParcelInfo.Instance.GetShippingMethod(SearchParcelText)==1) ShippingMethod = "Giao hàng nhanh";
             else ShippingMethod = "Giao hàng chậm";
             CreateTime=ParcelInfo.Instance.GetCreateTime(SearchParcelText);
-            Details=ParcelInfo.Instance.GetDetails(SearchParcelText);
-           
+            var thisParcel = ParcelInfo.Instance.GetParcelRecord(SearchParcelText);
+            if (thisParcel.parcelStatus == false || thisParcel.parcelStatus == null)
+            {
+                Details = ParcelInfo.Instance.GetDetails(SearchParcelText);
+            }
+
+            else
+            {
+                Details = "Đơn hàng bị trả lại";
+            }
         }
         
     }

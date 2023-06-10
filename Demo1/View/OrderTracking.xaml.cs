@@ -46,7 +46,8 @@ namespace Demo1.View
         {
             var viewModel = (OrderTrackingModel)DataContext;
             viewModel.ParcelInfoList.Clear();
-            viewModel.LoadParcelInfoList();
+            int parcelid = Convert.ToInt32(viewModel.ParcelID);
+            viewModel.LoadParcelInfoList(parcelid);
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Demo1.ViewModel
       
         void Login(Window p)
         {
-            UpdatePasswords();
+            
             using (var context = new Model.PBL3_demoEntities())
             {
                 // Lấy thông tin người dùng từ cơ sở dữ liệu
@@ -73,7 +73,7 @@ namespace Demo1.ViewModel
                         // Mật khẩu hợp lệ, thực hiện các thao tác tiếp theo
                         isLogin = true;
                         LoginID = user.accountID;
-                        accessRight = rolePermission(LoginID);
+                        accessRight = RolePermission(LoginID);
                         AccountManager.Instance.SetLoginInfo(user.accountID, user.accountName, user.accountPassword,user.accessRightID);
                         //khi dang nhap se co du
                         p.Close();
@@ -91,26 +91,19 @@ namespace Demo1.ViewModel
                     isLogin = false;
                     MessageBoxWindow.Show("Không tồn tại tài khoản!");
                 }
+                HashHelper.UpdatePasswords();
             }
         }
         // Hàm băm mật khẩu với salt
-        string HashPassword(string password, string salt)
-        {
-            using (var sha256 = SHA256.Create())
-            {
-                string saltedPassword = password + salt; // Kết hợp mật khẩu và salt
-                byte[] hashedBytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(saltedPassword));
-                return Convert.ToBase64String(hashedBytes);
-            }
-        }
+       
 
         // Hàm xác minh mật khẩu
         bool VerifyPassword(string password, string hashedPassword, string salt)
         {
-            string hashedInput = HashPassword(password, salt); // Băm mật khẩu nhập vào với salt
+            string hashedInput = HashHelper.HashPassword(password, salt); // Băm mật khẩu nhập vào với salt
             return hashedPassword == hashedInput; // So sánh chuỗi băm
         }
-        int rolePermission(string loginID)
+        int RolePermission(string loginID)
         {
             char firstChar = loginID.Substring(0, 1)[0];
             if (firstChar == 'R') return 1;
@@ -118,36 +111,45 @@ namespace Demo1.ViewModel
             else if (firstChar == 'M') return 3;
             return -1;
         }
-        string GenerateSalt()
-        {
-            byte[] saltBytes = new byte[16]; // Độ dài salt có thể thay đổi
-            using (var rng = new RNGCryptoServiceProvider())
-            {
-                rng.GetBytes(saltBytes);
-            }
-            return Convert.ToBase64String(saltBytes);
-        }
-        void UpdatePasswords()
-        {
-            using (var context = new Model.PBL3_demoEntities())
-            {
-                var accounts = context.Accounts.ToList();
+        //string HashPassword(string password, string salt)
+        //{
+        //    using (var sha256 = SHA256.Create())
+        //    {
+        //        string saltedPassword = password + salt; // Kết hợp mật khẩu và salt
+        //        byte[] hashedBytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(saltedPassword));
+        //        return Convert.ToBase64String(hashedBytes);
+        //    }
+        //}
+        //string GenerateSalt()
+        //{
+        //    byte[] saltBytes = new byte[16]; // Độ dài salt có thể thay đổi
+        //    using (var rng = new RNGCryptoServiceProvider())
+        //    {
+        //        rng.GetBytes(saltBytes);
+        //    }
+        //    return Convert.ToBase64String(saltBytes);
+        //}
+        //void UpdatePasswords()
+        //{
+        //    using (var context = new Model.PBL3_demoEntities())
+        //    {
+        //        var accounts = context.Accounts.ToList();
 
-                foreach (var account in accounts)
-                {
-                    if (account.Salt == null)
-                    {
-                        string salt = GenerateSalt(); // Tạo salt mới
-                        string hashedPassword = HashPassword(account.accountPassword, salt); // Băm mật khẩu với salt mới
+        //        foreach (var account in accounts)
+        //        {
+        //            if (account.Salt == null)
+        //            {
+        //                string salt = GenerateSalt(); // Tạo salt mới
+        //                string hashedPassword = HashPassword(account.accountPassword, salt); // Băm mật khẩu với salt mới
 
-                        account.Salt = salt; // Cập nhật giá trị salt
-                        account.accountPassword = hashedPassword; // Cập nhật mật khẩu đã băm
+        //                account.Salt = salt; // Cập nhật giá trị salt
+        //                account.accountPassword = hashedPassword; // Cập nhật mật khẩu đã băm
 
-                        context.SaveChanges(); // Lưu các thay đổi vào cơ sở dữ liệu
-                    }
-                }
-            }
-        }
+        //                context.SaveChanges(); // Lưu các thay đổi vào cơ sở dữ liệu
+        //            }
+        //        }
+        //    }
+        //}
 
     }
 }
