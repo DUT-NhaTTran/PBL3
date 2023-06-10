@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\hoang\Downloads\PBL3_SemiFinal\Demo1\obj\Debug\
+C:\Users\hoang\source\repos\PBL3\Demo1\obj\Debug\
 Demo1
 none
 false
 DEBUG;TRACE
-C:\Users\hoang\Downloads\PBL3_SemiFinal\Demo1\App.xaml
+C:\Users\hoang\source\repos\PBL3\Demo1\App.xaml
 18-872906334
 2739969757
 60-390269758
-41-1399631216
+41964837800
 Styles\ButtonStyles.xaml;View\AddFuncView.xaml;View\CustomMessageBox.xaml;View\Invoice.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;ResourceXAML\MainResource.xaml;View\ManageEmployeesView.xaml;View\MessageBoxWindow.xaml;View\OrderTracking.xaml;View\ResultOfSearch.xaml;View\ResultOfUpdateStatusParcel.xaml;View\SearchParcel.xaml;Styles\ScrollViewer.xaml;Styles\UIColors.xaml;View\StatisticsView.xaml;View\UpdateUserInfoView.xaml;View\WarehouseTracking.xaml;
 
 False

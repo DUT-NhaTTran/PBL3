@@ -349,6 +349,7 @@ namespace Demo1.ViewModel
 
         public ObservableCollection<string> ResetWarehouse(ObservableCollection<Warehouse> warehouses, int month, int year, PBL3_demoEntities context)
         {
+            SearchWHID = "";
             StatisticsManager SM = new StatisticsManager();
             return SM.ResetWarehouse(warehouses, month, year, context);
         }

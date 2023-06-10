@@ -265,7 +265,7 @@
                                                            FontSize="30" 
                                                            TextChanged="TextBox_TextChanged"
                                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                                           Text="{Binding CustomerName}" 
+                                                           Text="{Binding SearchWHID}" 
                                                            BorderThickness="0"
                                                            Foreground="#B0B0B2" Width="270" Height="49" />
                                             </StackPanel>

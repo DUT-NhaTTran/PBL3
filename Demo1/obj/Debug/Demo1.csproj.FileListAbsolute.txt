@@ -389,7 +389,6 @@ C:\Users\hoang\Source\Repos\PBL3\Demo1\bin\Debug\System.Windows.Interactivity.xm
 C:\Users\hoang\Source\Repos\PBL3\Demo1\obj\Debug\Demo1.csproj.AssemblyReference.cache
 C:\Users\hoang\Source\Repos\PBL3\Demo1\obj\Debug\Demo1.csproj.SuggestedBindingRedirects.cache
 C:\Users\hoang\Source\Repos\PBL3\Demo1\obj\Debug\Styles\ButtonStyles.baml
-C:\Users\hoang\Source\Repos\PBL3\Demo1\obj\Debug\View\RouteParcel.baml
 C:\Users\hoang\Source\Repos\PBL3\Demo1\obj\Debug\View\SearchParcel.baml
 C:\Users\hoang\Source\Repos\PBL3\Demo1\obj\Debug\Styles\ScrollViewer.baml
 C:\Users\hoang\Source\Repos\PBL3\Demo1\obj\Debug\Styles\UIColors.baml
@@ -403,7 +402,6 @@ C:\Users\hoang\Source\Repos\PBL3\Demo1\obj\Debug\View\MessageBoxWindow.g.cs
 C:\Users\hoang\Source\Repos\PBL3\Demo1\obj\Debug\View\OrderTracking.g.cs
 C:\Users\hoang\Source\Repos\PBL3\Demo1\obj\Debug\View\ResultOfSearch.g.cs
 C:\Users\hoang\Source\Repos\PBL3\Demo1\obj\Debug\View\ResultOfUpdateStatusParcel.g.cs
-C:\Users\hoang\Source\Repos\PBL3\Demo1\obj\Debug\View\RouteParcel.g.cs
 C:\Users\hoang\Source\Repos\PBL3\Demo1\obj\Debug\View\SearchParcel.g.cs
 C:\Users\hoang\Source\Repos\PBL3\Demo1\obj\Debug\View\StatisticsView.g.cs
 C:\Users\hoang\Source\Repos\PBL3\Demo1\obj\Debug\View\WarehouseTracking.g.cs
@@ -819,3 +817,7 @@ C:\Users\hoang\Downloads\PBL3_SemiFinal\Demo1\obj\Debug\Demo1.csproj.CoreCompile
 C:\Users\hoang\Downloads\PBL3_SemiFinal\Demo1\obj\Debug\Demo1.csproj.CopyComplete
 C:\Users\hoang\Downloads\PBL3_SemiFinal\Demo1\obj\Debug\Demo1.exe
 C:\Users\hoang\Downloads\PBL3_SemiFinal\Demo1\obj\Debug\Demo1.pdb
+C:\Users\hoang\source\repos\PBL3\Demo1\obj\Debug\View\ManageEmployeesView.g.cs
+C:\Users\hoang\source\repos\PBL3\Demo1\obj\Debug\View\UpdateUserInfoView.g.cs
+C:\Users\hoang\source\repos\PBL3\Demo1\obj\Debug\View\ManageEmployeesView.baml
+C:\Users\hoang\source\repos\PBL3\Demo1\obj\Debug\View\UpdateUserInfoView.baml
